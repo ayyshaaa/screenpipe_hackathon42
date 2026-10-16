@@ -1,6 +1,6 @@
 {
   "Squad sync – Google Meet → Squad sync notes – Notion": {
-    "name": "Capture Action Items",
+    "name": "Capture action items",
     "run": "2026-10-05",
     "steps": [
       {
@@ -18,32 +18,32 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 52.8
+    "seconds": 7.2
   },
   "Orders overview – Metabase → Weekly KPI report – Gmail": {
-    "name": "Export and Report",
+    "name": "Generate Weekly KPI Report",
     "run": "2026-09-07",
     "steps": [
       {
-        "text": "Orders overview week 37 | Last 7 days | Paris + Lyon\nOrders 2623 | Revenue €74 862 | Avg basket €29.31\nFilter: last 7 days, all cities, status = delivered",
+        "text": "Orders overview week 37 | Last 7 days | Paris + Lyon",
         "session_id": "s_9623598350",
         "quote": "Orders overview week 37 | Last 7 days | Paris + Lyon",
         "kind": "normal"
       },
       {
-        "text": "Download full results | orders_week_37.csv\nExport complete: 2623 rows, 14 columns\nSaved to Downloads/orders_week_37.csv",
+        "text": "Download full results | orders_week_37.csv",
         "session_id": "s_2c7b9c00b1",
         "quote": "Download full results | orders_week_37.csv",
         "kind": "normal"
       },
       {
-        "text": "Weekly KPI report | tab Week 37 | paste orders_week_37.csv\nTotal orders 2623 | Revenue €74 862 | vs last week -2.2%\nUpdate chart: revenue by day, week 37",
+        "text": "Total orders 2623 | Revenue €74 862 | vs last week -2.2%",
         "session_id": "s_e4eeedfea0",
-        "quote": "paste orders_week_37.csv",
+        "quote": "Total orders 2623 | Revenue €74 862 | vs last week -2.2%",
         "kind": "normal"
       },
       {
-        "text": "To: leadership@tavola.fr | Subject: Weekly KPI report – week 37\nHi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue.\nAttachment: Weekly KPI report week 37.pdf | Sent",
+        "text": "Hi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue.",
         "session_id": "s_b563fe9962",
         "quote": "Hi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue.",
         "kind": "normal"
@@ -51,7 +51,7 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 85.2
+    "seconds": 7.5
   },
   "Refund requests – Zendesk → Ticket ## – Zendesk": {
     "name": "Process Refund",
@@ -78,10 +78,10 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 61.1
+    "seconds": 6.1
   },
   "Partners – Tavola Admin → Partner onboarding checklist – Notion": {
-    "name": "Onboard partner",
+    "name": "Add Partner",
     "run": "2026-10-01",
     "steps": [
       {
@@ -105,6 +105,6 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 79.6
+    "seconds": 6.3
   }
 }

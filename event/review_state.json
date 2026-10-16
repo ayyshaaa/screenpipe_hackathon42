@@ -20,7 +20,7 @@
       }
     },
     "Refund requests – Zendesk → Ticket ## – Zendesk": {
-      "status": "confirmed",
+      "status": "rejected",
       "name": "Refund requests – Zendesk → Ticket ## – Zendesk",
       "removed": [],
       "kinds": {
@@ -30,7 +30,7 @@
       }
     },
     "Partners – Tavola Admin → Partner onboarding checklist – Notion": {
-      "status": "confirmed",
+      "status": "rejected",
       "name": "Partners – Tavola Admin → Partner onboarding checklist – Notion",
       "removed": [],
       "kinds": {}
