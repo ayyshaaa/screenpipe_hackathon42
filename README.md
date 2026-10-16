@@ -127,7 +127,7 @@ The Python scripts only use the standard library plus **numpy** and **model2vec*
 
 ```bash
 sudo apt update && sudo apt install -y python3 python3-venv python3-pip curl git
-cd ~/throught
+cd ~/screenpipe_hackathon42
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -137,7 +137,7 @@ pip install -r requirements.txt   # or just: pip install numpy model2vec
 From now on, open every terminal with:
 
 ```bash
-cd ~/throught/event && source ../.venv/bin/activate
+cd ~/screenpipe_hackathon42/event && source ../.venv/bin/activate
 ```
 
 ### 5.2 Embedding model: VTX-JEV-2 (about 30 MB, runs on CPU)
@@ -171,7 +171,7 @@ Step 4 is optional: the review page works without it, it just doesn't show sugge
 curl -fsSL https://bun.sh/install | bash
 exec $SHELL                    # reload PATH so `bun` is found
 bun --version                  # needs >= 1.3
-cd ~/throught
+cd ~/screenpipe_hackathon42
 git clone https://github.com/screenpipe/hackathon-starter.git   # skip if the folder already exists
 cd hackathon-starter && bun run demo   # sanity check: no dependencies needed
 ```
@@ -185,7 +185,7 @@ You need **two terminals**: one keeps the fake screenpipe running, the other run
 **Terminal A** (leave it running):
 
 ```bash
-cd ~/throught/event && source ../.venv/bin/activate
+cd ~/screenpipe_hackathon42/event && source ../.venv/bin/activate
 python3 fake_story.py                              # 0  : generate the synthetic month
 python3 fake_screenpipe.py serve --port 3031       # 0b : fake screenpipe API
 ```
@@ -193,7 +193,7 @@ python3 fake_screenpipe.py serve --port 3031       # 0b : fake screenpipe API
 **Terminal B:**
 
 ```bash
-cd ~/throught/event && source ../.venv/bin/activate
+cd ~/screenpipe_hackathon42/event && source ../.venv/bin/activate
 export HF_HUB_OFFLINE=1
 
 python3 ingest.py --url http://localhost:3031 --since 2026-09-07T00:00:00Z --once   # 1
@@ -211,7 +211,7 @@ session, press **Save decisions**. Then stop `review.py` with `Ctrl+C` and conti
 ```bash
 python3 export_starter.py                                                           # 6
 
-cd ~/throught/hackathon-starter
+cd ~/screenpipe_hackathon42/hackathon-starter
 bun run repetition --input ~/throught/event/starter_records.json                     # 7 → output/repetition-*.md
 bun start --draft ~/throught/event/desk_draft.json                                   # 8 → open http://localhost:4242
 ```
