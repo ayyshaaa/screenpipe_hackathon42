@@ -26,3 +26,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Cloned separately (see README)
+hackathon-starter/
