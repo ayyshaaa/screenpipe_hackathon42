@@ -93,9 +93,11 @@ reviewable procedure (SOP).
 
 ```
 ~/throught/
-├── .venv/                     Python virtual environment (shared)
+├── README.md                  this file
+├── requirements.txt           Python dependencies (pip install -r requirements.txt)
+├── .venv/                     Python virtual environment (shared, not committed)
 ├── hackathon-starter/         screenpipe's starter (Bun / TypeScript), steps 7 and 8
-└── event/                     ← this folder: run every python command from here
+└── event/                     run every python command from here
     ├── common.py              shared helpers
     ├── fake_story.py          step 0  – generate the synthetic month
     ├── fake_screenpipe.py     step 0b – serve it like screenpipe does
@@ -129,7 +131,7 @@ cd ~/throught
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install numpy model2vec
+pip install -r requirements.txt   # or just: pip install numpy model2vec
 ```
 
 From now on, open every terminal with:
