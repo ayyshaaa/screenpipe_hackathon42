@@ -212,8 +212,8 @@ session, press **Save decisions**. Then stop `review.py` with `Ctrl+C` and conti
 python3 export_starter.py                                                           # 6
 
 cd ~/screenpipe_hackathon42/hackathon-starter
-bun run repetition --input ~/throught/event/starter_records.json                     # 7 → output/repetition-*.md
-bun start --draft ~/throught/event/desk_draft.json                                   # 8 → open http://localhost:4242
+bun run repetition --input ~/screenpipe_hackathon42/event/starter_records.json                     # 7 → output/repetition-*.md
+bun start --draft ~/screenpipe_hackathon42/event/desk_draft.json                                   # 8 → open http://localhost:4242
 ```
 
 No time for the review page? Use the answer key instead of your own decisions:
