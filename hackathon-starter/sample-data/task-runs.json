@@ -1,0 +1,38 @@
+[
+  {
+    "id": "time1",
+    "timestamp": "2026-10-16T10:00:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: Weekly paid-order report\nRun: week-a\nMinutes: 12"
+  },
+  {
+    "id": "time2",
+    "timestamp": "2026-10-16T10:05:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: Weekly paid-order report\nRun: week-b\nMinutes: 15"
+  },
+  {
+    "id": "time3",
+    "timestamp": "2026-10-16T10:10:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: Weekly paid-order report\nRun: week-b\nMinutes: 15"
+  },
+  {
+    "id": "time4",
+    "timestamp": "2026-10-16T10:15:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: Account setup checklist\nRun: account-a\nMinutes: 8"
+  },
+  {
+    "id": "time5",
+    "timestamp": "2026-10-16T10:20:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: Account setup checklist\nRun: account-b\nMinutes: 9"
+  },
+  {
+    "id": "time6",
+    "timestamp": "2026-10-16T10:25:00Z",
+    "app": "Reviewed task log",
+    "text": "Task: One-time export investigation\nRun: incident-a\nMinutes: 40"
+  }
+]

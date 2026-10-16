@@ -1,0 +1,6 @@
+order_id,customer,total,status
+201,Atlas,10.10,paid
+202,Atlas,0.20,paid
+203,Cedar,45.00,paid
+204,Cedar,99.00,refunded
+205,Beacon,30.00,pending

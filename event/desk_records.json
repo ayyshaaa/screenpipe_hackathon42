@@ -1,0 +1,37 @@
+[
+  {
+    "id": "s_8c2ab90e5c",
+    "timestamp": "2026-09-21T12:00:00.000000Z",
+    "app": "Google Chrome",
+    "text": "Orders overview week 39 | Last 7 days | Paris + Lyon\nOrders 2835 | Revenue €85 365 | Avg basket €27.66\nFilter: last 7 days, all cities, status = delivered",
+    "source": "screenpipe://frame/1369"
+  },
+  {
+    "id": "s_89d611684c",
+    "timestamp": "2026-09-21T12:06:15.698793Z",
+    "app": "Google Chrome",
+    "text": "Your session has expired. Please sign in again.\nPassword expired – choose a new password (12 characters minimum)\nPassword updated. Redirecting to Metabase…",
+    "source": "screenpipe://frame/1378"
+  },
+  {
+    "id": "s_68fcd0366e",
+    "timestamp": "2026-09-21T12:12:24.484311Z",
+    "app": "Google Chrome",
+    "text": "Download full results | orders_week_39.csv\nExport complete: 2835 rows, 14 columns\nSaved to Downloads/orders_week_39.csv",
+    "source": "screenpipe://frame/1387"
+  },
+  {
+    "id": "s_be07cefe82",
+    "timestamp": "2026-09-21T12:16:57.149657Z",
+    "app": "Google Chrome",
+    "text": "Weekly KPI report | tab Week 39 | paste orders_week_39.csv\nTotal orders 2835 | Revenue €85 365 | vs last week -1.3%\nUpdate chart: revenue by day, week 39",
+    "source": "screenpipe://frame/1393"
+  },
+  {
+    "id": "s_dc52a1346f",
+    "timestamp": "2026-09-21T12:26:14.230396Z",
+    "app": "Google Chrome",
+    "text": "To: leadership@tavola.fr | Subject: Weekly KPI report – week 39\nHi all, here is the weekly report for week 39: 2835 orders, €85 365 revenue.\nAttachment: Weekly KPI report week 39.pdf | Sent",
+    "source": "screenpipe://frame/1406"
+  }
+]

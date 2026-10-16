@@ -1,0 +1,38 @@
+[
+  {
+    "id": "w1",
+    "timestamp": "2026-10-16T16:00:00Z",
+    "app": "Orders",
+    "text": "Export completed: orders.csv has order_id, customer, total, status. Amounts are USD."
+  },
+  {
+    "id": "w2",
+    "timestamp": "2026-10-16T16:02:00Z",
+    "app": "Spreadsheet",
+    "text": "Filter status to paid. Pending and refunded orders are excluded from this report."
+  },
+  {
+    "id": "w3",
+    "timestamp": "2026-10-16T16:04:00Z",
+    "app": "Spreadsheet",
+    "text": "Order 104 is refunded. It remains in the input but must not contribute to paid totals."
+  },
+  {
+    "id": "w4",
+    "timestamp": "2026-10-16T16:06:00Z",
+    "app": "Browser",
+    "text": "The export page froze once. Refreshing the browser fixed this incident. This is not part of the daily report procedure."
+  },
+  {
+    "id": "w5",
+    "timestamp": "2026-10-16T16:08:00Z",
+    "app": "Spreadsheet",
+    "text": "Sum the paid amounts by customer. Calculate in cents and display two decimal places."
+  },
+  {
+    "id": "w6",
+    "timestamp": "2026-10-16T16:10:00Z",
+    "app": "Files",
+    "text": "Save a separate paid-orders.csv and compare the totals with the source export. Do not overwrite orders.csv."
+  }
+]

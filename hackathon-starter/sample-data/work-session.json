@@ -1,0 +1,6 @@
+[
+  { "id": "step-1", "action": "Open the exported orders CSV and check its columns." },
+  { "id": "step-2", "action": "Keep only paid orders; exclude pending and refunded rows." },
+  { "id": "step-3", "action": "Sum each customer's paid amounts to two decimal places." },
+  { "id": "step-4", "action": "Review the customer totals and save a separate report." }
+]

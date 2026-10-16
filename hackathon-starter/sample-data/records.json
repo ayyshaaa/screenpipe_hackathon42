@@ -1,0 +1,8 @@
+[
+  { "id": "r1", "timestamp": "2026-10-16T16:30:00Z", "app": "Meeting", "text": "Maya: Let's make the demo work without an API key.\nDecision: Ship a synthetic-data mode before connecting live Screenpipe history.\nAction (Maya): Add the sample dataset before Saturday's workshop.\nAction (Alex): Test the setup on Windows before the demo." },
+  { "id": "r2", "timestamp": "2026-10-16T17:00:00Z", "app": "Browser", "text": "Research: a useful handoff explains the task, the last verified result and the next step. It should link to evidence instead of inventing missing context." },
+  { "id": "r3", "timestamp": "2026-10-17T08:15:00Z", "app": "Spreadsheet", "text": "Daily report workflow: open orders.csv, filter status to paid, sum totals per customer, save paid-orders.csv. Yesterday: Atlas 150.00, Beacon 80.00." },
+  { "id": "r4", "timestamp": "2026-10-17T09:20:00Z", "app": "Editor", "text": "Dashboard prototype: search across records, filter by app and open original evidence. Bug: empty searches need a clear result count." },
+  { "id": "r5", "timestamp": "2026-10-17T10:00:00Z", "app": "Meeting", "text": "Decision: Use sample data in the public demo.\nAction (Alex): Record a two-minute walkthrough after the setup test.\nAction (Maya): Write the README with the expected output." },
+  { "id": "r6", "timestamp": "2026-10-17T11:10:00Z", "app": "Browser", "text": "Test-swap feedback: another team ran the starter. They wanted the local-data switch next to the sample-data instructions. This fixture is fictional, not a claim about real testing." }
+]

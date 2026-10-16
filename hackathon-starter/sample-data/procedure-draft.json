@@ -1,0 +1,94 @@
+{
+  "title": "Daily paid-order report",
+  "context": "Operations reviewer preparing a USD report from a simple order export. This draft covers one fictional work session, not a verified company-wide standard.",
+  "revision": 1,
+  "origin": "Curated synthetic candidate for learning the review flow",
+  "evidence": [
+    {
+      "id": "w1",
+      "timestamp": "2026-10-16T16:00:00Z",
+      "app": "Orders",
+      "text": "Export completed: orders.csv has order_id, customer, total, status. Amounts are USD."
+    },
+    {
+      "id": "w2",
+      "timestamp": "2026-10-16T16:02:00Z",
+      "app": "Spreadsheet",
+      "text": "Filter status to paid. Pending and refunded orders are excluded from this report."
+    },
+    {
+      "id": "w3",
+      "timestamp": "2026-10-16T16:04:00Z",
+      "app": "Spreadsheet",
+      "text": "Order 104 is refunded. It remains in the input but must not contribute to paid totals."
+    },
+    {
+      "id": "w4",
+      "timestamp": "2026-10-16T16:06:00Z",
+      "app": "Browser",
+      "text": "The export page froze once. Refreshing the browser fixed this incident. This is not part of the daily report procedure."
+    },
+    {
+      "id": "w5",
+      "timestamp": "2026-10-16T16:08:00Z",
+      "app": "Spreadsheet",
+      "text": "Sum the paid amounts by customer. Calculate in cents and display two decimal places."
+    },
+    {
+      "id": "w6",
+      "timestamp": "2026-10-16T16:10:00Z",
+      "app": "Files",
+      "text": "Save a separate paid-orders.csv and compare the totals with the source export. Do not overwrite orders.csv."
+    }
+  ],
+  "steps": [
+    {
+      "text": "Open the order export and verify its columns and currency.",
+      "sourceId": "w1",
+      "quote": "Export completed: orders.csv has order_id, customer, total, status. Amounts are USD.",
+      "kind": "normal",
+      "reviewed": false
+    },
+    {
+      "text": "Keep paid orders only.",
+      "sourceId": "w2",
+      "quote": "Filter status to paid. Pending and refunded orders are excluded from this report.",
+      "kind": "normal",
+      "reviewed": false
+    },
+    {
+      "text": "Exclude refunded rows even when they contain a positive amount.",
+      "sourceId": "w3",
+      "quote": "Order 104 is refunded. It remains in the input but must not contribute to paid totals.",
+      "kind": "exception",
+      "reviewed": false
+    },
+    {
+      "text": "One-off export-page troubleshooting. Do not turn refreshing the browser into a mandatory daily step.",
+      "sourceId": "w4",
+      "quote": "The export page froze once. Refreshing the browser fixed this incident. This is not part of the daily report procedure.",
+      "kind": "troubleshooting",
+      "reviewed": false
+    },
+    {
+      "text": "Sum paid amounts for each customer.",
+      "sourceId": "w5",
+      "quote": "Sum the paid amounts by customer. Calculate in cents and display two decimal places.",
+      "kind": "normal",
+      "reviewed": false
+    },
+    {
+      "text": "Review totals and save a separate report.",
+      "sourceId": "w6",
+      "quote": "Save a separate paid-orders.csv and compare the totals with the source export. Do not overwrite orders.csv.",
+      "kind": "normal",
+      "reviewed": false
+    }
+  ],
+  "questions": [
+    {
+      "question": "Does the process owner confirm that pending and refunded orders should both be excluded?",
+      "answer": ""
+    }
+  ]
+}

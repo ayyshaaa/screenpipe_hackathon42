@@ -1,0 +1,548 @@
+[
+  {
+    "id": "s_9623598350",
+    "timestamp": "2026-09-07T12:13:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-07\nMinutes: 23.02\nSession: Orders overview – Metabase | Orders overview week 37 | Last 7 days | Paris + Lyon Orders 2623 | Revenue €74 862 | Avg basket €29.31 Filter: last 7 days, all cities, status = delivered"
+  },
+  {
+    "id": "s_2c7b9c00b1",
+    "timestamp": "2026-09-07T12:17:38.453178Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-07\nMinutes: 23.02\nSession: Export results – Metabase | Download full results | orders_week_37.csv Export complete: 2623 rows, 14 columns Saved to Downloads/orders_week_37.csv"
+  },
+  {
+    "id": "s_e4eeedfea0",
+    "timestamp": "2026-09-07T12:22:35.469127Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-07\nMinutes: 23.02\nSession: Weekly KPI report – Google Sheets | Weekly KPI report | tab Week 37 | paste orders_week_37.csv Total orders 2623 | Revenue €74 862 | vs last week -2.2% Update chart: revenue by day, week 37"
+  },
+  {
+    "id": "s_b563fe9962",
+    "timestamp": "2026-09-07T12:31:19.387039Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-07\nMinutes: 23.02\nSession: Weekly KPI report – Gmail | To: leadership@tavola.fr | Subject: Weekly KPI report – week 37 Hi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue. Attachment: Weekly "
+  },
+  {
+    "id": "s_5c3ae18049",
+    "timestamp": "2026-09-14T12:15:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-14\nMinutes: 25\nSession: Orders overview – Metabase | Orders overview week 38 | Last 7 days | Paris + Lyon Orders 2869 | Revenue €87 101 | Avg basket €28.11 Filter: last 7 days, all cities, status = delivered"
+  },
+  {
+    "id": "s_8665803ee9",
+    "timestamp": "2026-09-14T12:20:26.308155Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-14\nMinutes: 25\nSession: Export results – Metabase | Download full results | orders_week_38.csv Export complete: 2869 rows, 14 columns Saved to Downloads/orders_week_38.csv"
+  },
+  {
+    "id": "s_484e81ae96",
+    "timestamp": "2026-09-14T12:24:25.079692Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-14\nMinutes: 25\nSession: Weekly KPI report – Google Sheets | Weekly KPI report | tab Week 38 | paste orders_week_38.csv Total orders 2869 | Revenue €87 101 | vs last week +5.7% Update chart: revenue by day, week 38"
+  },
+  {
+    "id": "s_ea36d13c83",
+    "timestamp": "2026-09-14T12:35:20.212967Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-14\nMinutes: 25\nSession: Weekly KPI report – Gmail | To: leadership@tavola.fr | Subject: Weekly KPI report – week 38 Hi all, here is the weekly report for week 38: 2869 orders, €87 101 revenue. Attachment: Weekly "
+  },
+  {
+    "id": "s_8c2ab90e5c",
+    "timestamp": "2026-09-21T12:00:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-21\nMinutes: 30.29\nSession: Orders overview – Metabase | Orders overview week 39 | Last 7 days | Paris + Lyon Orders 2835 | Revenue €85 365 | Avg basket €27.66 Filter: last 7 days, all cities, status = delivered"
+  },
+  {
+    "id": "s_89d611684c",
+    "timestamp": "2026-09-21T12:06:15.698793Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-21\nMinutes: 30.29\nSession: Sign in – Tavola SSO | Your session has expired. Please sign in again. Password expired – choose a new password (12 characters minimum) Password updated. Redirecting to Metabase…"
+  },
+  {
+    "id": "s_68fcd0366e",
+    "timestamp": "2026-09-21T12:12:24.484311Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-21\nMinutes: 30.29\nSession: Export results – Metabase | Download full results | orders_week_39.csv Export complete: 2835 rows, 14 columns Saved to Downloads/orders_week_39.csv"
+  },
+  {
+    "id": "s_be07cefe82",
+    "timestamp": "2026-09-21T12:16:57.149657Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-21\nMinutes: 30.29\nSession: Weekly KPI report – Google Sheets | Weekly KPI report | tab Week 39 | paste orders_week_39.csv Total orders 2835 | Revenue €85 365 | vs last week -1.3% Update chart: revenue by day, week 39"
+  },
+  {
+    "id": "s_dc52a1346f",
+    "timestamp": "2026-09-21T12:26:14.230396Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-21\nMinutes: 30.29\nSession: Weekly KPI report – Gmail | To: leadership@tavola.fr | Subject: Weekly KPI report – week 39 Hi all, here is the weekly report for week 39: 2835 orders, €85 365 revenue. Attachment: Weekly "
+  },
+  {
+    "id": "s_8097190e76",
+    "timestamp": "2026-09-28T12:05:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-28\nMinutes: 28.92\nSession: Orders overview – Metabase | Orders overview week 40 | Last 7 days | Paris + Lyon Orders 2297 | Revenue €63 117 | Avg basket €29.14 Filter: last 7 days, all cities, status = delivered"
+  },
+  {
+    "id": "s_4444c47fa6",
+    "timestamp": "2026-09-28T12:10:14.213309Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-28\nMinutes: 28.92\nSession: Export results – Metabase | Download full results | orders_week_40.csv Export complete: 2297 rows, 14 columns Saved to Downloads/orders_week_40.csv"
+  },
+  {
+    "id": "s_16f2cc0f15",
+    "timestamp": "2026-09-28T12:14:21.418262Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-28\nMinutes: 28.92\nSession: Weekly KPI report – Google Sheets | Weekly KPI report | tab Week 40 | paste orders_week_40.csv Total orders 2297 | Revenue €63 117 | vs last week +5.4% Update chart: revenue by day, week 40"
+  },
+  {
+    "id": "s_9f08df2e37",
+    "timestamp": "2026-09-28T12:25:24.132330Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-28\nMinutes: 28.92\nSession: Weekly KPI report – Lyon – Google Sheets | Lyon tab | week 40 | orders Lyon 461 City breakdown added: Paris 1836 / Lyon 461"
+  },
+  {
+    "id": "s_29f898878c",
+    "timestamp": "2026-09-28T12:29:59.241068Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-09-28\nMinutes: 28.92\nSession: Weekly KPI report – Gmail | To: leadership@tavola.fr | Subject: Weekly KPI report – week 40 Hi all, here is the weekly report for week 40: 2297 orders, €63 117 revenue. Attachment: Weekly "
+  },
+  {
+    "id": "s_7f83b9424f",
+    "timestamp": "2026-10-05T12:09:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-10-05\nMinutes: 31.26\nSession: Orders overview – Metabase | Orders overview week 41 | Last 7 days | Paris + Lyon Orders 2414 | Revenue €74 073 | Avg basket €28.76 Filter: last 7 days, all cities, status = delivered"
+  },
+  {
+    "id": "s_2c6f28fe47",
+    "timestamp": "2026-10-05T12:15:01.995256Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-10-05\nMinutes: 31.26\nSession: Export results – Metabase | Download full results | orders_week_41.csv Export complete: 2414 rows, 14 columns Saved to Downloads/orders_week_41.csv"
+  },
+  {
+    "id": "s_190eea676c",
+    "timestamp": "2026-10-05T12:20:05.110004Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-10-05\nMinutes: 31.26\nSession: Weekly KPI report – Google Sheets | Weekly KPI report | tab Week 41 | paste orders_week_41.csv Total orders 2414 | Revenue €74 073 | vs last week +1.0% Update chart: revenue by day, week 41"
+  },
+  {
+    "id": "s_ec7abd80d7",
+    "timestamp": "2026-10-05T12:30:54.961110Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-10-05\nMinutes: 31.26\nSession: Weekly KPI report – Lyon – Google Sheets | Lyon tab | week 41 | orders Lyon 591 City breakdown added: Paris 1823 / Lyon 591"
+  },
+  {
+    "id": "s_2cfd52d17d",
+    "timestamp": "2026-10-05T12:35:10.738014Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Send weekly KPI report\nRun: 2026-10-05\nMinutes: 31.26\nSession: Weekly KPI report – Gmail | To: leadership@tavola.fr | Subject: Weekly KPI report – week 41 Hi all, here is the weekly report for week 41: 2414 orders, €74 073 revenue. Attachment: Weekly "
+  },
+  {
+    "id": "s_a73a7656ec",
+    "timestamp": "2026-09-07T07:03:46.535848Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-07\nMinutes: 2.47\nSession: Payments – Stripe | Search: TAV-91000 | €26.70 | Succeeded Refund €26.70 to J. Martin | Refund issued"
+  },
+  {
+    "id": "s_993f24dbd2",
+    "timestamp": "2026-09-07T07:05:40.480358Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-07\nMinutes: 2.47\nSession: Ticket #48210 – Zendesk | Macro: Refund confirmed | Hello J. Martin, your refund of €26.70 is on its way. Ticket #48210 status: Solved"
+  },
+  {
+    "id": "s_430a775aee",
+    "timestamp": "2026-09-08T07:05:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-08\nMinutes: 4.32\nSession: Refund requests – Zendesk | Refund requests | 8 open | oldest ticket #48247 #48247 M. Durand: refund request order TAV-91113"
+  },
+  {
+    "id": "s_214a2848ce",
+    "timestamp": "2026-09-08T07:06:36.222869Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-08\nMinutes: 4.32\nSession: Payments – Stripe | Search: TAV-91113 | €11.43 | Succeeded Refund €11.43 to M. Durand | Refund issued"
+  },
+  {
+    "id": "s_d22a5527d7",
+    "timestamp": "2026-09-08T07:08:00.033351Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-08\nMinutes: 4.32\nSession: Ticket #48247 – Zendesk | Macro: Refund confirmed | Hello M. Durand, your refund of €11.43 is on its way. Ticket #48247 status: Solved"
+  },
+  {
+    "id": "s_7eff1b08f8",
+    "timestamp": "2026-09-09T07:03:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-09\nMinutes: 4.72\nSession: Refund requests – Zendesk | Refund requests | 8 open | oldest ticket #48284 #48284 J. Martin: refund request order TAV-91226"
+  },
+  {
+    "id": "s_e18f4fef4b",
+    "timestamp": "2026-09-09T07:05:04.966974Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-09\nMinutes: 4.72\nSession: Payments – Stripe | Search: TAV-91226 | €34.07 | Succeeded Refund €34.07 to J. Martin | Refund issued"
+  },
+  {
+    "id": "s_9f4f1e9179",
+    "timestamp": "2026-09-09T07:07:02.189903Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-09\nMinutes: 4.72\nSession: Ticket #48284 – Zendesk | Macro: Refund confirmed | Hello J. Martin, your refund of €34.07 is on its way. Ticket #48284 status: Solved"
+  },
+  {
+    "id": "s_1fc96c6eea",
+    "timestamp": "2026-09-10T07:09:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-10\nMinutes: 5.06\nSession: Refund requests – Zendesk | Refund requests | 4 open | oldest ticket #48321 #48321 J. Martin: refund request order TAV-91339"
+  },
+  {
+    "id": "s_3e166e32f0",
+    "timestamp": "2026-09-10T07:10:57.746459Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-10\nMinutes: 5.06\nSession: Payments – Stripe | Search: TAV-91339 | €27.76 | Succeeded Refund €27.76 to J. Martin | Refund issued"
+  },
+  {
+    "id": "s_04acdb05ec",
+    "timestamp": "2026-09-10T07:12:55.668566Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-10\nMinutes: 5.06\nSession: Ticket #48321 – Zendesk | Macro: Refund confirmed | Hello J. Martin, your refund of €27.76 is on its way. Ticket #48321 status: Solved"
+  },
+  {
+    "id": "s_c0b825f350",
+    "timestamp": "2026-09-11T07:20:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-11\nMinutes: 4.47\nSession: Refund requests – Zendesk | Refund requests | 9 open | oldest ticket #48358 #48358 A. Petit: refund request order TAV-91452"
+  },
+  {
+    "id": "s_302ffb1d38",
+    "timestamp": "2026-09-11T07:21:56.779327Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-11\nMinutes: 4.47\nSession: Payments – Stripe | Search: TAV-91452 | €10.45 | Succeeded Refund €10.45 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_fdeeefecea",
+    "timestamp": "2026-09-11T07:23:40.924290Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-11\nMinutes: 4.47\nSession: Ticket #48358 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €10.45 is on its way. Ticket #48358 status: Solved"
+  },
+  {
+    "id": "s_effee0384c",
+    "timestamp": "2026-09-14T07:06:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-14\nMinutes: 3.73\nSession: Refund requests – Zendesk | Refund requests | 9 open | oldest ticket #48395 #48395 S. Moreau: refund request order TAV-91565"
+  },
+  {
+    "id": "s_1ebcbcae66",
+    "timestamp": "2026-09-14T07:07:35.725202Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-14\nMinutes: 3.73\nSession: Payments – Stripe | Search: TAV-91565 | €21.39 | Succeeded Refund €21.39 to S. Moreau | Refund issued"
+  },
+  {
+    "id": "s_de7cfcbbb3",
+    "timestamp": "2026-09-14T07:09:00.055778Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-14\nMinutes: 3.73\nSession: Ticket #48395 – Zendesk | Macro: Refund confirmed | Hello S. Moreau, your refund of €21.39 is on its way. Ticket #48395 status: Solved"
+  },
+  {
+    "id": "s_09ba596841",
+    "timestamp": "2026-09-16T07:05:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-16\nMinutes: 4.2\nSession: Refund requests – Zendesk | Refund requests | 11 open | oldest ticket #48432 #48432 M. Durand: refund request order TAV-91678"
+  },
+  {
+    "id": "s_f486aaa705",
+    "timestamp": "2026-09-16T07:07:01.921577Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-16\nMinutes: 4.2\nSession: Payments – Stripe | Search: TAV-91678 | €33.17 | Succeeded Refund €33.17 to M. Durand | Refund issued"
+  },
+  {
+    "id": "s_8d9c37fcd8",
+    "timestamp": "2026-09-16T07:08:33.875362Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-16\nMinutes: 4.2\nSession: Ticket #48432 – Zendesk | Macro: Refund confirmed | Hello M. Durand, your refund of €33.17 is on its way. Ticket #48432 status: Solved"
+  },
+  {
+    "id": "s_3f9e147722",
+    "timestamp": "2026-09-17T07:11:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-17\nMinutes: 5.09\nSession: Refund requests – Zendesk | Refund requests | 11 open | oldest ticket #48469 #48469 M. Durand: refund request order TAV-91791"
+  },
+  {
+    "id": "s_896fc2a273",
+    "timestamp": "2026-09-17T07:12:45.155863Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-17\nMinutes: 5.09\nSession: Payments – Stripe | Search: TAV-91791 | €40.21 | Succeeded Refund €40.21 to M. Durand | Refund issued"
+  },
+  {
+    "id": "s_6063c0e709",
+    "timestamp": "2026-09-17T07:14:46.531438Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-17\nMinutes: 5.09\nSession: Ticket #48469 – Zendesk | Macro: Refund confirmed | Hello M. Durand, your refund of €40.21 is on its way. Ticket #48469 status: Solved"
+  },
+  {
+    "id": "s_ba2d99f51a",
+    "timestamp": "2026-09-18T07:11:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-18\nMinutes: 5.03\nSession: Refund requests – Zendesk | Refund requests | 4 open | oldest ticket #48506 #48506 A. Petit: refund request order TAV-91904"
+  },
+  {
+    "id": "s_b4b8822b13",
+    "timestamp": "2026-09-18T07:12:57.993364Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-18\nMinutes: 5.03\nSession: Payments – Stripe | Search: TAV-91904 | €40.51 | Succeeded Refund €40.51 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_a979ee4fe2",
+    "timestamp": "2026-09-18T07:14:53.505097Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-18\nMinutes: 5.03\nSession: Ticket #48506 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €40.51 is on its way. Ticket #48506 status: Solved"
+  },
+  {
+    "id": "s_5162d77517",
+    "timestamp": "2026-09-21T07:15:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-21\nMinutes: 6.52\nSession: Refund requests – Zendesk | Refund requests | 5 open | oldest ticket #48543 #48543 A. Petit: refund request order TAV-92017"
+  },
+  {
+    "id": "s_2cb2498d15",
+    "timestamp": "2026-09-21T07:16:55.229815Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-21\nMinutes: 6.52\nSession: Payments – Stripe | Search: TAV-92017 | €64.80 | Succeeded Refund €64.80 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_91e9fc991e",
+    "timestamp": "2026-09-21T07:19:01.633397Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-21\nMinutes: 6.52\nSession: Escalate refund – Zendesk | Refund €64.80 exceeds the €50 auto-approval limit Escalated to Finance | assignee: Finance team | priority: normal"
+  },
+  {
+    "id": "s_05244fd7c1",
+    "timestamp": "2026-09-21T07:20:54.494603Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-21\nMinutes: 6.52\nSession: Ticket #48543 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €64.80 is on its way. Ticket #48543 status: Solved"
+  },
+  {
+    "id": "s_a68bb1f74e",
+    "timestamp": "2026-09-22T07:03:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-22\nMinutes: 4.54\nSession: Refund requests – Zendesk | Refund requests | 4 open | oldest ticket #48580 #48580 M. Durand: refund request order TAV-92130"
+  },
+  {
+    "id": "s_25f3399416",
+    "timestamp": "2026-09-22T07:04:48.440650Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-22\nMinutes: 4.54\nSession: Payments – Stripe | Search: TAV-92130 | €16.47 | Succeeded Refund €16.47 to M. Durand | Refund issued"
+  },
+  {
+    "id": "s_6527009e75",
+    "timestamp": "2026-09-22T07:06:44.140041Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-22\nMinutes: 4.54\nSession: Ticket #48580 – Zendesk | Macro: Refund confirmed | Hello M. Durand, your refund of €16.47 is on its way. Ticket #48580 status: Solved"
+  },
+  {
+    "id": "s_e8035560e4",
+    "timestamp": "2026-09-23T07:05:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-23\nMinutes: 4.18\nSession: Refund requests – Zendesk | Refund requests | 10 open | oldest ticket #48617 #48617 S. Moreau: refund request order TAV-92243"
+  },
+  {
+    "id": "s_4b28293492",
+    "timestamp": "2026-09-23T07:06:48.519878Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-23\nMinutes: 4.18\nSession: Payments – Stripe | Search: TAV-92243 | €15.05 | Succeeded Refund €15.05 to S. Moreau | Refund issued"
+  },
+  {
+    "id": "s_9cba45db5c",
+    "timestamp": "2026-09-23T07:08:30.576701Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-23\nMinutes: 4.18\nSession: Ticket #48617 – Zendesk | Macro: Refund confirmed | Hello S. Moreau, your refund of €15.05 is on its way. Ticket #48617 status: Solved"
+  },
+  {
+    "id": "s_a228445150",
+    "timestamp": "2026-09-24T07:07:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-24\nMinutes: 5.29\nSession: Refund requests – Zendesk | Refund requests | 6 open | oldest ticket #48654 #48654 S. Moreau: refund request order TAV-92356"
+  },
+  {
+    "id": "s_44d202a53c",
+    "timestamp": "2026-09-24T07:08:53.906757Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-24\nMinutes: 5.29\nSession: Payments – Stripe | Search: TAV-92356 | €13.19 | Succeeded Refund €13.19 to S. Moreau | Refund issued"
+  },
+  {
+    "id": "s_d5c87c3ddb",
+    "timestamp": "2026-09-24T07:11:08.210551Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-24\nMinutes: 5.29\nSession: Ticket #48654 – Zendesk | Macro: Refund confirmed | Hello S. Moreau, your refund of €13.19 is on its way. Ticket #48654 status: Solved"
+  },
+  {
+    "id": "s_5ba8d50d80",
+    "timestamp": "2026-09-25T07:03:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-25\nMinutes: 4.34\nSession: Refund requests – Zendesk | Refund requests | 10 open | oldest ticket #48691 #48691 J. Martin: refund request order TAV-92469"
+  },
+  {
+    "id": "s_1e5c96bedc",
+    "timestamp": "2026-09-25T07:04:31.699819Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-25\nMinutes: 4.34\nSession: Payments – Stripe | Search: TAV-92469 | €39.99 | Succeeded Refund €39.99 to J. Martin | Refund issued"
+  },
+  {
+    "id": "s_b87d173c76",
+    "timestamp": "2026-09-25T07:06:33.424365Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-25\nMinutes: 4.34\nSession: Ticket #48691 – Zendesk | Macro: Refund confirmed | Hello J. Martin, your refund of €39.99 is on its way. Ticket #48691 status: Solved"
+  },
+  {
+    "id": "s_f81e9bd7bc",
+    "timestamp": "2026-09-29T07:20:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-29\nMinutes: 4.26\nSession: Refund requests – Zendesk | Refund requests | 7 open | oldest ticket #48728 #48728 J. Martin: refund request order TAV-92582"
+  },
+  {
+    "id": "s_15d9362fcb",
+    "timestamp": "2026-09-29T07:21:37.321374Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-29\nMinutes: 4.26\nSession: Payments – Stripe | Search: TAV-92582 | €43.84 | Succeeded Refund €43.84 to J. Martin | Refund issued"
+  },
+  {
+    "id": "s_f2edce74d9",
+    "timestamp": "2026-09-29T07:23:08.825890Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-29\nMinutes: 4.26\nSession: Ticket #48728 – Zendesk | Macro: Refund confirmed | Hello J. Martin, your refund of €43.84 is on its way. Ticket #48728 status: Solved"
+  },
+  {
+    "id": "s_0340ac7d9f",
+    "timestamp": "2026-09-30T07:20:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-30\nMinutes: 4.82\nSession: Refund requests – Zendesk | Refund requests | 6 open | oldest ticket #48765 #48765 S. Moreau: refund request order TAV-92695"
+  },
+  {
+    "id": "s_b1308b2f08",
+    "timestamp": "2026-09-30T07:21:46.359173Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-30\nMinutes: 4.82\nSession: Payments – Stripe | Search: TAV-92695 | €12.44 | Succeeded Refund €12.44 to S. Moreau | Refund issued"
+  },
+  {
+    "id": "s_dc04c3c490",
+    "timestamp": "2026-09-30T07:23:33.289214Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-09-30\nMinutes: 4.82\nSession: Ticket #48765 – Zendesk | Macro: Refund confirmed | Hello S. Moreau, your refund of €12.44 is on its way. Ticket #48765 status: Solved"
+  },
+  {
+    "id": "s_80a3fd0caa",
+    "timestamp": "2026-10-01T07:04:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-01\nMinutes: 4.55\nSession: Refund requests – Zendesk | Refund requests | 5 open | oldest ticket #48802 #48802 A. Petit: refund request order TAV-92808"
+  },
+  {
+    "id": "s_aaef5b26ec",
+    "timestamp": "2026-10-01T07:05:54.377454Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-01\nMinutes: 4.55\nSession: Payments – Stripe | Search: TAV-92808 | €24.92 | Succeeded Refund €24.92 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_1e94268d66",
+    "timestamp": "2026-10-01T07:07:23.938970Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-01\nMinutes: 4.55\nSession: Ticket #48802 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €24.92 is on its way. Ticket #48802 status: Solved"
+  },
+  {
+    "id": "s_5e85a56f0b",
+    "timestamp": "2026-10-02T07:18:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-02\nMinutes: 4.07\nSession: Refund requests – Zendesk | Refund requests | 10 open | oldest ticket #48839 #48839 A. Petit: refund request order TAV-92921"
+  },
+  {
+    "id": "s_10ff2b3b5b",
+    "timestamp": "2026-10-02T07:19:52.026278Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-02\nMinutes: 4.07\nSession: Payments – Stripe | Search: TAV-92921 | €30.63 | Succeeded Refund €30.63 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_2ac6df4719",
+    "timestamp": "2026-10-02T07:21:16.905634Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-02\nMinutes: 4.07\nSession: Ticket #48839 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €30.63 is on its way. Ticket #48839 status: Solved"
+  },
+  {
+    "id": "s_ed56572d1c",
+    "timestamp": "2026-10-05T07:10:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-05\nMinutes: 5.19\nSession: Refund requests – Zendesk | Refund requests | 6 open | oldest ticket #48876 #48876 A. Petit: refund request order TAV-93034"
+  },
+  {
+    "id": "s_7544959785",
+    "timestamp": "2026-10-05T07:11:52.960812Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-05\nMinutes: 5.19\nSession: Payments – Stripe | Search: TAV-93034 | €15.53 | Succeeded Refund €15.53 to A. Petit | Refund issued"
+  },
+  {
+    "id": "s_323e5002e3",
+    "timestamp": "2026-10-05T07:13:58.427849Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-05\nMinutes: 5.19\nSession: Ticket #48876 – Zendesk | Macro: Refund confirmed | Hello A. Petit, your refund of €15.53 is on its way. Ticket #48876 status: Solved"
+  },
+  {
+    "id": "s_8ce35cfb01",
+    "timestamp": "2026-10-06T07:06:00.000000Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-06\nMinutes: 5.06\nSession: Refund requests – Zendesk | Refund requests | 9 open | oldest ticket #48913 #48913 M. Durand: refund request order TAV-93147"
+  },
+  {
+    "id": "s_477317997a",
+    "timestamp": "2026-10-06T07:07:50.957716Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-06\nMinutes: 5.06\nSession: Payments – Stripe | Search: TAV-93147 | €12.14 | Succeeded Refund €12.14 to M. Durand | Refund issued"
+  },
+  {
+    "id": "s_04e6a5ba5f",
+    "timestamp": "2026-10-06T07:09:51.678059Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Refund requests – Zendesk → Ticket ## – Zendesk\nRun: 2026-10-06\nMinutes: 5.06\nSession: Ticket #48913 – Zendesk | Macro: Refund confirmed | Hello M. Durand, your refund of €12.14 is on its way. Ticket #48913 status: Solved"
+  },
+  {
+    "id": "s_1cda73f3c3",
+    "timestamp": "2026-09-10T13:23:39.177479Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-09-10\nMinutes: 14.64\nSession: Pappers – Le Petit Zinc | Search company: Le Petit Zinc SIRET 812 345 678 00019 | Le Petit Zinc SAS | status: active"
+  },
+  {
+    "id": "s_557e730793",
+    "timestamp": "2026-09-10T13:27:07.413733Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-09-10\nMinutes: 14.64\nSession: Partners – Tavola Admin | Create partner: Le Petit Zinc | city Paris | commission 15% Menu upload: 24 dishes imported | photos pending Partner Le Petit Zinc saved with SIRET 812 345 678 "
+  },
+  {
+    "id": "s_738d0e289f",
+    "timestamp": "2026-09-10T13:34:26.771919Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-09-10\nMinutes: 14.64\nSession: Partner onboarding checklist – Notion | Onboarding checklist – Le Petit Zinc Contract sent ✓ | Menu ✓ | Bank details ✓ | Go-live date 2026-09-24"
+  },
+  {
+    "id": "s_b36d9c3068",
+    "timestamp": "2026-09-17T13:35:52.839038Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-09-17\nMinutes: 11.6\nSession: Partners – Tavola Admin | Create partner: Mamma Rosa | city Lyon | commission 15% Menu upload: 31 dishes imported | photos pending Partner Mamma Rosa saved with SIRET 790 112 334 00027"
+  },
+  {
+    "id": "s_b5dad89a32",
+    "timestamp": "2026-09-17T13:43:48.694370Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-09-17\nMinutes: 11.6\nSession: Partner onboarding checklist – Notion | Onboarding checklist – Mamma Rosa Contract sent ✓ | Menu ✓ | Bank details ✓ | Go-live date 2026-10-01"
+  },
+  {
+    "id": "s_f51356db93",
+    "timestamp": "2026-10-01T13:43:47.297647Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-10-01\nMinutes: 15.63\nSession: Pappers – La Cantine Verte | Search company: La Cantine Verte SIRET 853 990 101 00011 | La Cantine Verte SAS | status: active"
+  },
+  {
+    "id": "s_c130b42077",
+    "timestamp": "2026-10-01T13:47:06.386203Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-10-01\nMinutes: 15.63\nSession: Partners – Tavola Admin | Create partner: La Cantine Verte | city Lyon | commission 15% Menu upload: 18 dishes imported | photos pending Partner La Cantine Verte saved with SIRET 853 990"
+  },
+  {
+    "id": "s_a1e752fc55",
+    "timestamp": "2026-10-01T13:55:19.981389Z",
+    "app": "THROUGHT (reviewed)",
+    "text": "Task: Partners – Tavola Admin → Partner onboarding checklist – Notion\nRun: 2026-10-01\nMinutes: 15.63\nSession: Partner onboarding checklist – Notion | Onboarding checklist – La Cantine Verte Contract sent ✓ | Menu ✓ | Bank details ✓ | Go-live date 2026-10-15"
+  }
+]

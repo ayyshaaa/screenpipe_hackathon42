@@ -1,0 +1,32 @@
+[
+  {
+    "id": "t1",
+    "timestamp": "2026-10-16T09:00:00Z",
+    "app": "Support",
+    "text": "Symptom: The fictional Atlas order export stops after selecting a date range.\nQuestion: Does the failure affect every date range or only the current month?"
+  },
+  {
+    "id": "t2",
+    "timestamp": "2026-10-16T09:05:00Z",
+    "app": "Browser",
+    "text": "Attempt: Reload the export page and retry the same date range.\nResult: The same timeout occurs. Recovery has not been verified."
+  },
+  {
+    "id": "t3",
+    "timestamp": "2026-10-16T09:10:00Z",
+    "app": "Team notes",
+    "text": "Decision: Keep the last verified report available while investigating.\nBlocker: The current-month export is still unavailable.\nAction (Maya): Test one completed week and record the result."
+  },
+  {
+    "id": "t4",
+    "timestamp": "2026-10-16T09:20:00Z",
+    "app": "Support",
+    "text": "Attempt: Export a completed week.\nResult: The small export downloads, but full-month recovery is unverified.\nAction (Unassigned): Confirm impact and assign the next investigation owner."
+  },
+  {
+    "id": "t5",
+    "timestamp": "2026-10-16T09:25:00Z",
+    "app": "Notes",
+    "text": "An unstructured observation can still be searched. It is not automatically turned into an action or resolution."
+  }
+]

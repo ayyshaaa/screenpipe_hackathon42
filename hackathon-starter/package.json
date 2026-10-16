@@ -1,0 +1,27 @@
+{
+  "name": "screenpipe-hackathon-starter",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts",
+    "demo": "bun src/procedure-cli.ts draft",
+    "meeting": "bun src/cli.ts meeting",
+    "workflow": "bun src/procedure-cli.ts replay",
+    "capture": "bun src/cli.ts capture",
+    "doctor": "bun src/cli.ts doctor",
+    "test": "bun test",
+    "sop": "bun src/procedure-cli.ts draft",
+    "replay": "bun src/procedure-cli.ts replay",
+    "escalation": "bun src/project-cli.ts escalation",
+    "handoff": "bun src/project-cli.ts handoff",
+    "search": "bun src/project-cli.ts search",
+    "changes": "bun src/project-cli.ts changes",
+    "onboarding": "bun src/project-cli.ts onboarding",
+    "repetition": "bun src/project-cli.ts repetition",
+    "projects": "bun src/projects-demo.ts"
+  },
+  "engines": {
+    "bun": ">=1.3.0"
+  }
+}

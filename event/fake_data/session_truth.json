@@ -1,0 +1,2570 @@
+{
+  "s_09df219dd2": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-07",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_a73a7656ec": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-07",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_993f24dbd2": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-07",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_c57286aaaf": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "call",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a0cad4b8ea": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "notes",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c671869fbd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c9ac9c61a3": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2b27a6a475": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1f74fe468b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_46bd7a3574": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_9623598350": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-07",
+    "step": "dashboard",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_2c7b9c00b1": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-07",
+    "step": "export",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_e4eeedfea0": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-07",
+    "step": "sheet",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_b563fe9962": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-07",
+    "step": "email",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_64f5c9862e": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_43b47f48b7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f9757b40e4": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Bug TAV-2231 – Jira",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4e1254af06": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_430a775aee": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-08",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_214a2848ce": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-08",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_d22a5527d7": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-08",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_c917dc65b2": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6024a0850f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_db85e78220": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0d4741a06d": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8600ac6fa9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e334879dd7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_10dac0c54b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_d4887f6bed": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Candidate interview – Google Meet",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_90389ad77c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_aa4e58d2bf": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7eff1b08f8": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-09",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_e18f4fef4b": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-09",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_9f4f1e9179": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-09",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_c75883d65c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_70c81777d7": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b26a43b5b0": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5061c880e8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1ba88d6a43": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b358d5b0e7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1d087b4728": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3f534f2bde": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_37414a2af2": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Q4 pricing deck – Google Slides",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1fc96c6eea": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-10",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_3e166e32f0": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-10",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_04acdb05ec": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-10",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_aa135fe5ef": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e3992d1dc2": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6829680cde": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign spec – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_254a9331ef": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a08ecdaab1": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ba7dccf47c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6bb74424c5": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b90b71f1d2": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-10",
+    "step": "application",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_1cda73f3c3": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-10",
+    "step": "siret",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_557e730793": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-10",
+    "step": "admin",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_738d0e289f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-10",
+    "step": "checklist",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_f17453b79f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b6a2d45c9c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_d44817406c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_00205e3100": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2ab3dbd0e1": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_788920d46e": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c0b825f350": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-11",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_302ffb1d38": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-11",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_fdeeefecea": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-11",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_600ad9bc47": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_30eed30841": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign spec – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_899d5b032d": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_232e97c7d6": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1f9f09af84": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4b682bb402": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a927fac674": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_98356c691c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2ebf74b1d5": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ecde6843ea": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_effee0384c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-14",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_1ebcbcae66": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-14",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_de7cfcbbb3": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-14",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_47a1341f66": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "call",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_30170658fb": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "notes",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_bb45d62a2b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a144ec66cd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0b8d4ab231": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5c3ae18049": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-14",
+    "step": "dashboard",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_8665803ee9": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-14",
+    "step": "export",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_484e81ae96": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-14",
+    "step": "sheet",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_54380dd338": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack_popup",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ea36d13c83": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-14",
+    "step": "email",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_d2420d8cec": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e88d2ee742": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2a79400290": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_eae08b7c9a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_162a100652": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_977964d31e": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8327ca59c7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_195784311e": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign spec – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7dbd5bf78a": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2353653296": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_716d8dfa36": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5ab5caa408": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7514b3612d": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c85620378a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_91d2d278a4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_aa4fbaa735": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_270304d8b4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_09ba596841": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-16",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_f486aaa705": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-16",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_8d9c37fcd8": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-16",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_d151b2b86c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_dbfaf2a547": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_eff0dcfdf9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1a1a3dcf76": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_65d8a32ac5": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_70424c6733": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1539dfe164": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3523522406": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3f9e147722": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-17",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_896fc2a273": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-17",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_6063c0e709": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-17",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_a70df25718": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_84a499c1e9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8b48f9cb24": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_09311995f4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4f617c09c1": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5470c5ebd4": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-17",
+    "step": "application",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_36c0cca5d4": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-17",
+    "step": "siret",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_b36d9c3068": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-17",
+    "step": "admin",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_b5dad89a32": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-17",
+    "step": "checklist",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_20d2317e9f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_665df9cdd6": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0b4a73c5fe": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ba2d99f51a": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-18",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_b4b8822b13": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-18",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_a979ee4fe2": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-18",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_50416fc08f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e0b8908ae3": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5af1a28f1b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8f3a4ec1e2": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8e2fe60b2e": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6b9d163604": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0ff54b5475": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6490e29bbe": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c918c71421": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b33dfbb9a4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5162d77517": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-21",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_2cb2498d15": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-21",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_91e9fc991e": {
+    "category": "task",
+    "kind": "exception",
+    "run": "refund_check-2026-09-21",
+    "step": "escalation",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_05244fd7c1": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-21",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_b85c389541": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "call",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1439c9e79f": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "notes",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ac4f23cb57": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_828bdd7f67": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_72e69197b5": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e39c3f9ffd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8c2ab90e5c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-21",
+    "step": "dashboard",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_89d611684c": {
+    "category": "task",
+    "kind": "troubleshooting",
+    "run": "weekly_report-2026-09-21",
+    "step": "login_detour",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_68fcd0366e": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-21",
+    "step": "export",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_be07cefe82": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-21",
+    "step": "sheet",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_dc52a1346f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-21",
+    "step": "email",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_06cb50cfab": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0081f54729": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5cea999476": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_36dbf44993": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f54c8f3090": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_31c3b93a4a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a68bb1f74e": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-22",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_25f3399416": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-22",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_6527009e75": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-22",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_94f1eae786": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_31b433b8a9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_acfbe1bcf7": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_70644f4f67": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_878721e96b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7f765ebcb5": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e2abf6f40e": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_d017f2bc43": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_155c190b5f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e8035560e4": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-23",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_4b28293492": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-23",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_9cba45db5c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-23",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_5dadf0d8eb": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1a957d7541": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5c52588af0": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7e83b1cac9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5853c9466d": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_df439f8d58": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_da2a0dfcc8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a228445150": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-24",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_44d202a53c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-24",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_d5c87c3ddb": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-24",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_f6b2d233d8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b721cec211": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_93b0e39f0d": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_15556a1bac": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_fe7480d039": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b96c78c01f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-24",
+    "step": "application",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_b39f72b51b": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-24",
+    "step": "siret",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_77563f8368": {
+    "category": "task",
+    "kind": "exception",
+    "run": "partner_onboard-2026-09-24",
+    "step": "ask_siret",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_309d5248a3": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-24",
+    "step": "admin",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_2198776760": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-09-24",
+    "step": "checklist",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_92343da8b8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3617df455d": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Expense report September – Spendesk",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_79478d00a0": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f1a63003d9": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5ba8d50d80": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-25",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_1e5c96bedc": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-25",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_b87d173c76": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-25",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_a5f8cc439c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a680119150": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_17bff56f80": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_bde49aec9d": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign spec – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f2c6545f44": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_9e3416aab7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b09ae6169c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_05fc5f7232": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_17d9e5fddd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3c62fd0db8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_194d544236": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_cec4b9062c": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "call",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c1fa953331": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "notes",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3f11ba20ea": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_cf5f79ab3c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_779e9cb8dc": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8097190e76": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-28",
+    "step": "dashboard",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_4444c47fa6": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-28",
+    "step": "export",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_16f2cc0f15": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-28",
+    "step": "sheet",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_9f08df2e37": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-28",
+    "step": "lyon",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_29f898878c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-09-28",
+    "step": "email",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_0132e58acd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_09192f8ba4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5e36c217ca": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_928c96f997": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3ccbd2b252": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f81e9bd7bc": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-29",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_15d9362fcb": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-29",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_f2edce74d9": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-29",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_e0b7d85733": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7116fe2796": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign spec – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c5d670b48d": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Menu redesign – Figma",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0058f75735": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5675495e4c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_023024ce97": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_88a25ebd25": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0d396b6fc3": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_48be9cf870": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_18708140c1": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3979d7f2ed": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_324551a8e6": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_0340ac7d9f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-30",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_b1308b2f08": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-30",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_dc04c3c490": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-09-30",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_9bb28f3c02": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_d80588f2af": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_bd3274c76a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4cd8c0236f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2e721beeb7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_db958e66f2": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5eba93e063": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ef362612c6": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c0b479ffd1": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_80a3fd0caa": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-01",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_aaef5b26ec": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-01",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_1e94268d66": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-01",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_04cb3958ce": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5db853fd7c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_d2f476d005": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4737b0faf3": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_9c0c56b8d8": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_252d5f9371": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3568b8238c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-10-01",
+    "step": "application",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_f51356db93": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-10-01",
+    "step": "siret",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_c130b42077": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-10-01",
+    "step": "admin",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_a1e752fc55": {
+    "category": "task",
+    "kind": "normal",
+    "run": "partner_onboard-2026-10-01",
+    "step": "checklist",
+    "task": "partner_onboard",
+    "purity": 1.0
+  },
+  "s_386db1dd19": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Offsite Lisbon – Booking.com",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f21de5699b": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_5e85a56f0b": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-02",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_10ff2b3b5b": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-02",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_2ac6df4719": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-02",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_e7e1d8c420": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_60da576afc": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_034ffabb63": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_db7fa67953": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_6200046f2a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c65b98d2e7": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f178088059": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_f7d7dc69fd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_b446c1debc": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_bff944d524": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_385e6ab15a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_dfe1a1da23": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_2e30d14267": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ed56572d1c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-05",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_7544959785": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-05",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_323e5002e3": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-05",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_a797d79981": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "call",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_428e8fd1c9": {
+    "category": "meeting",
+    "kind": null,
+    "run": null,
+    "step": "notes",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_70c812e6e6": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8ff331fa77": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_ba7d9107da": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "spotify",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_c79e695c79": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_7f83b9424f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-10-05",
+    "step": "dashboard",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_2c6f28fe47": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-10-05",
+    "step": "export",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_190eea676c": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-10-05",
+    "step": "sheet",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_ec7abd80d7": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-10-05",
+    "step": "lyon",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_2cfd52d17d": {
+    "category": "task",
+    "kind": "normal",
+    "run": "weekly_report-2026-10-05",
+    "step": "email",
+    "task": "weekly_report",
+    "purity": 1.0
+  },
+  "s_e763aeb4d4": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_1545acf4ff": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "mail",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_4d25f67f93": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_3c247772fd": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_359ede5957": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8ce35cfb01": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-06",
+    "step": "queue",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_477317997a": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-06",
+    "step": "stripe",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_04e6a5ba5f": {
+    "category": "task",
+    "kind": "normal",
+    "run": "refund_check-2026-10-06",
+    "step": "reply",
+    "task": "refund_check",
+    "purity": 1.0
+  },
+  "s_9c23f01162": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_a93b639f2f": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e458605e97": {
+    "category": "project",
+    "kind": null,
+    "run": null,
+    "step": "Dovetail – Menu interviews",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_bb049ecf9c": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_db8e12c9ee": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_8ee82006d5": {
+    "category": "one_off",
+    "kind": null,
+    "run": null,
+    "step": "Salesforce migration notes – Notion",
+    "task": null,
+    "purity": 1.0
+  },
+  "s_e370ffd59a": {
+    "category": "noise",
+    "kind": null,
+    "run": null,
+    "step": "slack",
+    "task": null,
+    "purity": 1.0
+  }
+}
