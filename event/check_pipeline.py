@@ -63,7 +63,7 @@ def main():
         server = subprocess.Popen([py, "fake_screenpipe.py", "serve", "--port", str(port)], cwd=work,
                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         time.sleep(1.5)
-        run([py, "ingest.py", "--url", f"http://127.0.0.1:{port}", "--since", "2026-09-07T00:00:00Z", "--once"], work)
+        run([py, "ingest.py", "--url", f"http://127.0.0.1:{port}", "--from", "2026-09-07", "--once"], work)
         run([py, "label_sessions.py"], work)
         run([py, "embed.py", "--model", args.model], work)
         print(run([py, "find_tasks.py", "--threshold", str(args.threshold), "--score"], work))

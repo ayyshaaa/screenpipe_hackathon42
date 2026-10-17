@@ -10,11 +10,19 @@ What it does, in order:
      longer than --gap-min minutes. Identical text inside a session is kept once
      (OCR and the accessibility tree often capture the same screen).
 
+Time range: --from START [--to END]. With --from alone the range runs from START to the most
+recent data screenpipe has. --to needs --from. A bare date is a whole UTC day: --from 2026-09-07
+starts at 00:00, --to 2026-09-13 ends at 23:59:59. trail.db only keeps the chosen range: captures
+outside it are deleted before the new ones are stored, then sessions are rebuilt. When the range
+changes, the outputs of later steps (embeddings, runs, descriptions, exports) are deleted too,
+since they describe the old range; review_state.json (the reviewer's decisions) is kept.
+
 Never used: content_type=memory (AI summaries, not exact quotes) and
 content_type=input (keystrokes can contain passwords).
 
 Examples:
-  python3 ingest.py --url http://localhost:3031 --since 2026-09-07T00:00:00Z --once
+  python3 ingest.py --url http://localhost:3031 --from 2026-09-07 --once
+  python3 ingest.py --url http://localhost:3031 --from 2026-09-14 --to 2026-09-27 --once
   python3 ingest.py --url http://localhost:3030 --types ocr,accessibility,audio --once
 """
 import argparse
@@ -31,6 +39,10 @@ import urllib.request
 from datetime import datetime, timezone
 
 PAGE_SIZE = 200
+# outputs of later steps, next to trail.db: stale as soon as the range changes
+DERIVED = ["embeddings.npz", "throught_runs.json", "task_descriptions.json", "reviewed_runs.json",
+           "starter_records.json", "desk_records.json", "desk_draft.json",
+           "fake_data/session_truth.json", "fake_data/truth_runs.json"]
 SESSION_TEXT_MAX = 4000  # characters kept per session (enough for embeddings and quotes)
 
 
@@ -51,6 +63,17 @@ def parse_ts(value):
 
 def iso(dt):
     return dt.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+
+def parse_bound(value, end_of_day):
+    """CLI date -> UTC datetime. A bare date (2026-09-07) means the start or the end of that day."""
+    try:
+        dt = parse_ts(value)
+    except ValueError:
+        sys.exit(f"bad date {value!r}: use 2026-09-07 or 2026-09-07T08:30:00Z")
+    if end_of_day and re.fullmatch(r"\d{4}-\d{2}-\d{2}", value.strip()):
+        dt = dt.replace(hour=23, minute=59, second=59, microsecond=999999)
+    return dt
 
 
 def clean(text):
@@ -151,7 +174,38 @@ CREATE TABLE IF NOT EXISTS sessions (
     source_ids TEXT NOT NULL,     -- JSON list, shown to the reviewer
     n_captures INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS meta (
+    key   TEXT PRIMARY KEY,       -- 'range': the --from/--to of the last ingest
+    value TEXT NOT NULL
+);
 """
+
+
+def keep_range(db, start, end):
+    """Delete captures outside [start, end] (end None = no upper limit). Returns how many."""
+    before = db.total_changes
+    if start:
+        db.execute("DELETE FROM captures WHERE ts < ?", (start,))
+    if end:
+        db.execute("DELETE FROM captures WHERE ts > ?", (end,))
+    return db.total_changes - before
+
+
+def set_range(db, start, end, db_path):
+    """Remember the range in trail.db; if it changed, delete the outputs built from the old one."""
+    new = json.dumps([start, end])
+    old = db.execute("SELECT value FROM meta WHERE key = 'range'").fetchone()
+    if old and old[0] == new:
+        return []
+    db.execute("INSERT OR REPLACE INTO meta VALUES ('range', ?)", (new,))
+    folder = os.path.dirname(os.path.abspath(db_path))
+    removed = []
+    for name in DERIVED:
+        path = os.path.join(folder, name)
+        if os.path.exists(path):
+            os.remove(path)
+            removed.append(name)
+    return removed
 
 
 def store(db, captures):
@@ -207,7 +261,7 @@ def rebuild_sessions(db, gap_min):
 def run_once(args, db, since):
     new = 0
     for ctype in args.types:
-        caps = [c for c in (to_capture(i) for i in fetch_all(args.url, ctype, since, args.until, args.api_key)) if c]
+        caps = [c for c in (to_capture(i) for i in fetch_all(args.url, ctype, since, args.to, args.api_key)) if c]
         added = store(db, caps)
         new += added
         print(f"  {ctype}: {len(caps)} results, {added} new captures")
@@ -219,8 +273,9 @@ def run_once(args, db, since):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--url", default="http://localhost:3030")
-    p.add_argument("--since", help="UTC ISO start, e.g. 2026-09-07T00:00:00Z")
-    p.add_argument("--until", help="UTC ISO end (optional)")
+    p.add_argument("--from", dest="from_", metavar="START",
+                   help="UTC start, e.g. 2026-09-07 or 2026-09-07T08:00:00Z (default: all history)")
+    p.add_argument("--to", metavar="END", help="UTC end, needs --from (default: most recent data)")
     p.add_argument("--types", default="ocr,accessibility",
                    help="comma list from: ocr, accessibility, audio (memory/input are refused)")
     p.add_argument("--gap-min", type=float, default=5, help="new session after this many idle minutes")
@@ -231,6 +286,15 @@ def main():
                    or os.environ.get("SCREENPIPE_LOCAL_API_KEY"))
     args = p.parse_args()
 
+    if args.to and not args.from_:
+        p.error("--to needs --from")
+    start = parse_bound(args.from_, end_of_day=False) if args.from_ else None
+    end = parse_bound(args.to, end_of_day=True) if args.to else None
+    if start and end and end < start:
+        p.error("--to is before --from")
+    args.from_ = iso(start) if start else None
+    args.to = iso(end) if end else None
+
     args.types = [t.strip() for t in args.types.split(",") if t.strip()]
     bad = set(args.types) - {"ocr", "accessibility", "audio"}
     if bad:
@@ -238,10 +302,17 @@ def main():
 
     db = sqlite3.connect(args.db)
     db.executescript(SCHEMA)
+    dropped = keep_range(db, args.from_, args.to)
+    stale = set_range(db, args.from_, args.to, args.db)
+    db.commit()
 
-    since = args.since
+    print(f"ingest from {args.url}, range {args.from_ or 'the beginning'} -> {args.to or 'most recent data'}")
+    if dropped:
+        print(f"  removed {dropped} captures outside the range from {args.db}")
+    if stale:
+        print(f"  new range: removed outputs of the old one ({', '.join(stale)}), re-run the next steps")
+    since = args.from_
     while True:
-        print(f"ingest from {args.url} since {since or 'the beginning'}")
         run_once(args, db, since)
         if args.once:
             break

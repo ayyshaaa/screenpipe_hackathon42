@@ -7,7 +7,7 @@ Data in `fake_data/` is SYNTHETIC (Inès at Tavola). Say so in the demo.
 |---|---------|--------|
 | 0 | `python3 fake_story.py` | `fake_data/story.json` (fake history + answer key per capture) |
 | 0b | `python3 fake_screenpipe.py serve --port 3031` (own terminal) | — (serves `/search`) |
-| 1 | `python3 ingest.py --url http://localhost:3031 --since 2026-09-07T00:00:00Z --once` | `trail.db` (captures, sessions) |
+| 1 | `python3 ingest.py --url http://localhost:3031 --from 2026-09-07 [--to 2026-09-27] --once` | `trail.db` (captures, sessions) |
 | 1b | `python3 label_sessions.py` (fake data only, after every ingest) | `fake_data/session_truth.json`, `fake_data/truth_runs.json` |
 | 2 | `HF_HUB_OFFLINE=1 python3 embed.py` | `embeddings.npz` |
 | 2b | `python3 find_tasks.py --sweep` (pick the threshold) | — (precision/recall table) |
@@ -18,6 +18,9 @@ Data in `fake_data/` is SYNTHETIC (Inès at Tavola). Say so in the demo.
 | 7 | in `~/hackathon-starter`: `bun run repetition --input ~/throught/starter_records.json` | report in `output/` |
 | 8 | in `~/hackathon-starter`: `bun start --draft ~/throught/desk_draft.json` → http://localhost:4242 | — |
 | ✓ | `python3 check_pipeline.py --threshold 0.8 --starter ~/hackathon-starter` | — (PASSED / FAILED) |
+
+Shortcut: `make pipeline FROM=… [TO=…]` from the repo root runs 0b → 3 (`make help`).
+`--to` needs `--from`; trail.db only keeps the chosen range.
 
 Real screenpipe instead of the fake: step 1 with `--url http://localhost:3030` (key read from
 `$SCREENPIPE_API_KEY` or `$SCREENPIPE_LOCAL_API_KEY`), skip 1b, `--score` and `--show-truth`.

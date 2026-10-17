@@ -29,3 +29,4 @@ Thumbs.db
 
 # Cloned separately (see README)
 hackathon-starter/
+.fake_screenpipe.pid

@@ -94,6 +94,7 @@ reviewable procedure (SOP).
 ```
 ~/throught/
 ├── README.md                  this file
+├── Makefile                   runs the pipeline (make help)
 ├── requirements.txt           Python dependencies (pip install -r requirements.txt)
 ├── .venv/                     Python virtual environment (shared, not committed)
 ├── hackathon-starter/         screenpipe's starter (Bun / TypeScript), steps 7 and 8
@@ -180,7 +181,21 @@ cd hackathon-starter && bun run demo   # sanity check: no dependencies needed
 
 ## 6. Launch the MVP (quick start)
 
-You need **two terminals**: one keeps the fake screenpipe running, the other runs the pipeline.
+**With make (one terminal)**, from the repo root (`make help` lists every target and variable):
+
+```bash
+make install                                         # once: .venv + requirements
+make pipeline FROM=2026-09-07                        # fake screenpipe + steps 1 → 3, 7 Sep → latest data
+make pipeline FROM=2026-09-14 TO=2026-09-27          # same on a fixed range (trail.db keeps only this range)
+make review                                          # 5 → http://localhost:4300, Save, then Ctrl+C
+make export repetition desk                          # 6, 7, 8
+```
+
+Variables: `FROM`, `TO`, `FAKE=0` (real screenpipe on :3030), `MODEL=hashing` (+ `THRESHOLD=0.6`),
+`THRESHOLD` (default 0.9), `TYPES`, `URL`. A weekly task needs at least 3 runs in the range to be
+found (`--min-days 3`), so keep ranges of 3+ weeks for weekly tasks.
+
+**By hand**, you need **two terminals**: one keeps the fake screenpipe running, the other runs the pipeline.
 
 **Terminal A** (leave it running):
 
@@ -196,7 +211,7 @@ python3 fake_screenpipe.py serve --port 3031       # 0b : fake screenpipe API
 cd ~/screenpipe_hackathon42/event && source ../.venv/bin/activate
 export HF_HUB_OFFLINE=1
 
-python3 ingest.py --url http://localhost:3031 --since 2026-09-07T00:00:00Z --once   # 1
+python3 ingest.py --url http://localhost:3031 --from 2026-09-07 --once              # 1
 python3 label_sessions.py                                                           # 1b (fake data only)
 python3 embed.py                                                                    # 2
 python3 find_tasks.py --sweep                                                       # 2b (optional: precision/recall table)
@@ -272,7 +287,8 @@ Each step below has **Concept** (what it means in plain words) and **In the code
   2. `to_capture()` turns `OCR`, `UI` and `Audio` results into one common shape with a **stable source ID** (`ocr:<frame_id>`, `ui:<id>`, `audio:<chunk_id>`), cleans whitespace, and drops empty ones. `Input` and `Memory` are ignored on purpose (see section 14).
   3. `store()` does `INSERT OR IGNORE` into `captures` (primary key = source ID), so re-running ingest never duplicates.
   4. `rebuild_sessions()` walks all captures in time order and starts a new session when the **app or window changes** or the **gap is longer than `--gap-min`** (default 5 min). Inside a session, identical text (SHA-1 of lowercased text) is kept once — OCR and UI often see the same screen. Session text is capped at 4,000 characters. The table `sessions` is rebuilt from scratch each time.
-  - `--once` runs one pass; without it, it polls every `--every` seconds (default 60), asking only for captures newer than the latest stored one.
+  - **Time range:** `--from START` alone = from START to the most recent data; `--from START --to END` = a fixed range; no `--from` = all history. `--to` without `--from` is an error. A bare date is a whole UTC day (`--to 2026-09-13` ends at 23:59:59). `trail.db` only keeps the chosen range: captures outside it are deleted before ingesting. The range is stored in table `meta`; when it changes, the outputs of later steps (`embeddings.npz`, `throught_runs.json`, `task_descriptions.json`, `reviewed_runs.json`, exports, answer-key files) are deleted because they describe the old range. `review_state.json` is kept.
+  - `--once` runs one pass; without it, it polls every `--every` seconds (default 60), asking only for captures newer than the latest stored one (still capped by `--to` if given).
   - **Result on the synthetic data:** 2,386 captures → **321 sessions**.
 
 ### Step 1b — `label_sessions.py`: answer key per session (synthetic only)
@@ -489,7 +505,7 @@ Results today:
 2. If it requires a key: `export SCREENPIPE_API_KEY=…` (or `SCREENPIPE_LOCAL_API_KEY`).
 3. Run the same pipeline, but:
    - skip steps 0, 0b and **1b** (there is no answer key for real data),
-   - step 1: `python3 ingest.py --url http://localhost:3030 --since <UTC ISO date> --once` (add `--types ocr,accessibility,audio` for audio transcripts; drop `--once` to keep polling),
+   - step 1: `python3 ingest.py --url http://localhost:3030 --from <date> [--to <date>] --once` (or `make pipeline FAKE=0 FROM=<date> [TO=<date>]`) (add `--types ocr,accessibility,audio` for audio transcripts; drop `--once` to keep polling),
    - drop `--score`, `--sweep` and `--show-truth` (they need the answer key).
 4. Only capture permissioned work. Review everything before sharing.
 
@@ -520,7 +536,7 @@ Results today:
 | File | Written by | Shape |
 |---|---|---|
 | `fake_data/story.json` | `fake_story.py` | `{"meta": {...}, "captures": [screenpipe /search results], "truth": {source_id: {category, task, step, run, kind}}}` |
-| `trail.db` | `ingest.py` | SQLite. `captures(source_id, kind, ts, app, window, url, text)`; `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids, n_captures)` |
+| `trail.db` | `ingest.py` | SQLite. `captures(source_id, kind, ts, app, window, url, text)`; `meta(key, value)` (the `--from`/`--to` range); `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids, n_captures)` |
 | `fake_data/session_truth.json` | `label_sessions.py` | `{session_id: {category, task, step, run, kind, purity}}` |
 | `fake_data/truth_runs.json` | `label_sessions.py` | like `throught_runs.json` + `session_kinds` |
 | `embeddings.npz` | `embed.py` | numpy archive: `ids`, `vectors` (n × 256, float32), `model`, `input`, `centered` |
