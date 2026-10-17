@@ -11,7 +11,8 @@ The rule, in plain words:
      Sessions inside a run that are not one of its steps are kept as "extra" for the reviewer
      (possible exception, troubleshooting, or noise to remove).
 
-  python3 find_tasks.py --threshold 0.8
+  python3 find_tasks.py                  # threshold picked from the embedding model (common.DEFAULT_THRESHOLDS)
+  python3 find_tasks.py --threshold 0.85
   python3 find_tasks.py --sweep          # Sunday's exercise: precision/recall per threshold (needs answer key)
   python3 find_tasks.py --score          # compare the result with the answer key
 """
@@ -23,7 +24,7 @@ from itertools import combinations
 
 import numpy as np
 
-from common import (DB_PATH, RUNS_PATH, TRUTH_RUNS_PATH, TRUTH_SESSIONS_PATH, load_sessions, local_day,
+from common import (DB_PATH, DEFAULT_THRESHOLDS, FALLBACK_THRESHOLD, RUNS_PATH, TRUTH_RUNS_PATH, TRUTH_SESSIONS_PATH, load_sessions, local_day,
                     parse_ts, read_json, run_minutes, write_json)
 
 
@@ -40,7 +41,15 @@ def load(db, emb_path):
     for s in sessions:
         s["day"] = local_day(s["start_ts"])
         s["t0"], s["t1"] = parse_ts(s["start_ts"]), parse_ts(s["end_ts"])
-    return sessions, vectors
+    return sessions, vectors, str(data["model"])
+
+
+def default_threshold(model):
+    if model in DEFAULT_THRESHOLDS:
+        return DEFAULT_THRESHOLDS[model], f"default for {model}"
+    print(f"WARNING: no tested threshold for model {model!r}: using {FALLBACK_THRESHOLD}, "
+          "check it with --sweep (synthetic data) or set --threshold")
+    return FALLBACK_THRESHOLD, "fallback, untested model"
 
 
 # ---------- 1. step types ----------
@@ -234,7 +243,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--db", default=DB_PATH)
     p.add_argument("--embeddings", default="embeddings.npz")
-    p.add_argument("--threshold", type=float, default=0.8, help="'same step?' cosine threshold")
+    p.add_argument("--threshold", type=float,
+                   help="'same step?' cosine threshold (default: picked from the embedding model)")
     p.add_argument("--window-min", type=float, default=60)
     p.add_argument("--min-days", type=int, default=3)
     p.add_argument("--min-support", type=float, default=0.6)
@@ -244,12 +254,15 @@ def main():
     p.add_argument("--score", action="store_true")
     args = p.parse_args()
 
-    sessions, vectors = load(args.db, args.embeddings)
+    sessions, vectors, model = load(args.db, args.embeddings)
     if args.sweep:
         return sweep(sessions, vectors)
+    why = "set by --threshold"
+    if args.threshold is None:
+        args.threshold, why = default_threshold(model)
     runs, labels = build(sessions, vectors, args)
     write_json(args.out, runs)
-    print(f"{len(set(labels))} step types from {len(sessions)} sessions (threshold {args.threshold})")
+    print(f"{len(set(labels))} step types from {len(sessions)} sessions (threshold {args.threshold}, {why})")
     for task in dict.fromkeys(r["task"] for r in runs):
         rs = [r for r in runs if r["task"] == task]
         print(f"  {task}: {len(rs)} runs, {sum(r['minutes'] for r in rs):.1f} observed minutes")

@@ -1,7 +1,8 @@
 # THROUGHT pipeline. Run `make help` from the repo root.
 #
+#   make pipeline FROM=2026-09-07 TO=2026-10-06      # fake data, the whole month (7 Sep -> 6 Oct)
+#   make pipeline FROM=2026-09-14 TO=2026-09-27      # fake data, 2 weeks
 #   make pipeline FROM=2026-09-07                    # fake data, 7 Sep -> most recent data
-#   make pipeline FROM=2026-09-14 TO=2026-09-27      # fake data, a fixed range
 #   make pipeline FAKE=0 FROM=2026-10-01             # real screenpipe on :3030
 #   make review                                      # then confirm/reject, Save, Ctrl+C
 #   make export repetition desk
@@ -30,12 +31,16 @@ endif
 FROM      ?=
 TO        ?=
 TYPES     ?= ocr,accessibility
-# MODEL=hashing needs no download (use THRESHOLD=0.6 with it)
+# MODEL=hashing needs no download
 MODEL     ?= VTXAI/VTX-JEV-2
-THRESHOLD ?= 0.9
+# empty = picked from MODEL (0.9 JEV-2, 0.6 hashing, see event/common.py); set it to override
+THRESHOLD ?=
+# a task must repeat on at least MIN_DAYS different days to count as repetitive
+MIN_DAYS  ?= 3
 LLM       ?= qwen3:4b-instruct
 REVIEW_PORT ?= 4300
 
+THR   := $(if $(THRESHOLD),--threshold $(THRESHOLD))
 RANGE := $(if $(FROM),--from $(FROM)) $(if $(TO),--to $(TO))
 PIDFILE := $(EVENT)/.fake_screenpipe.pid
 export HF_HUB_OFFLINE ?= 1
@@ -44,9 +49,11 @@ export HF_HUB_OFFLINE ?= 1
         review export repetition desk check clean
 
 help:
-	@echo "THROUGHT — make targets (variables: FROM, TO, FAKE, MODEL, THRESHOLD, URL, TYPES)"
+	@echo "THROUGHT — make targets (variables: FROM, TO, FAKE, MODEL, THRESHOLD, MIN_DAYS, URL, TYPES)"
 	@echo "  install      create .venv and install requirements.txt"
-	@echo "  pipeline     ingest -> (label) -> embed -> tasks   e.g. make pipeline FROM=2026-09-07 TO=2026-09-20"
+	@echo "  pipeline     ingest -> (label) -> embed -> tasks"
+	@echo "               whole month: make pipeline FROM=2026-09-07 TO=2026-10-06"
+	@echo "               2 weeks:     make pipeline FROM=2026-09-14 TO=2026-09-27"
 	@echo "  ingest       step 1  screenpipe -> trail.db (only the FROM/TO range is kept)"
 	@echo "  label        step 1b answer key per session (FAKE=1 only)"
 	@echo "  embed        step 2  sessions -> embeddings.npz"
@@ -108,7 +115,7 @@ sweep:
 	cd $(EVENT) && $(PY) find_tasks.py --sweep
 
 tasks:
-	cd $(EVENT) && $(PY) find_tasks.py --threshold $(THRESHOLD) $(SCORE)
+	cd $(EVENT) && $(PY) find_tasks.py $(THR) --min-days $(MIN_DAYS) $(SCORE)
 
 describe:
 	cd $(EVENT) && $(PY) describe_tasks.py --model $(LLM)
@@ -136,7 +143,7 @@ desk:
 	cd $(STARTER) && bun start --draft $(EVENT)/desk_draft.json
 
 check:
-	cd $(EVENT) && $(PY) check_pipeline.py --model $(MODEL) --threshold $(THRESHOLD)
+	cd $(EVENT) && $(PY) check_pipeline.py --model $(MODEL) $(THR)
 
 clean:
 	cd $(EVENT) && rm -f trail.db embeddings.npz throught_runs.json task_descriptions.json \

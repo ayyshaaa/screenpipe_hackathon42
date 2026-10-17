@@ -30,3 +30,8 @@ Thumbs.db
 # Cloned separately (see README)
 hackathon-starter/
 .fake_screenpipe.pid
+
+# Export outputs (export_starter.py), generated per run
+event/starter_records.json
+event/desk_records.json
+event/desk_draft.json
