@@ -45,3 +45,4 @@ event/reviewed_runs.json
 event/review_state.json
 event/fake_data/session_truth.json
 event/fake_data/truth_runs.json
+event/fake_data/story.json
