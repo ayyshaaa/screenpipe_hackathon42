@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     session_id TEXT PRIMARY KEY,  -- stable: hash of the first capture's source ID
     start_ts   TEXT NOT NULL,
     end_ts     TEXT NOT NULL,
-    minutes    REAL NOT NULL,     -- observed, end - start
+    minutes    REAL NOT NULL,     -- observed, first to last capture
     app        TEXT NOT NULL,
     window     TEXT NOT NULL,
     url        TEXT NOT NULL,

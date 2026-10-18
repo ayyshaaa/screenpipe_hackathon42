@@ -174,8 +174,11 @@ matters is the final task score above.
    Sessions that fall *inside* a run but are not one of its usual steps (the login detour, a Slack interruption, the new
    Lyon tab) are kept as **extras** for the reviewer instead of being silently dropped or silently included. Each
    session shows in how many runs its kind of step appears ("in 2/5 runs").
-5. **Ranking** by total observed minutes, the starter's own criterion. `MIN_DAYS` (default 3) is the "at least 3 days"
-   rule: on a 2-week range a weekly task has only 2 runs and is, correctly, not proposed.
+5. **Ranking** by total observed minutes, the starter's own criterion. A run's minutes are **the durations of its
+   sessions plus the short gaps between them** (≤ 5 minutes, the same idle limit that ends a session at ingest):
+   switching windows counts, a coffee break or a meeting between two steps does not (`run_minutes` in `common.py`).
+   `MIN_DAYS` (default 3) is the "at least 3 days" rule: on a 2-week range a weekly task has only 2 runs and is,
+   correctly, not proposed.
 
 The squad sync is proposed because it follows exactly the pattern of a task (same two steps every Monday, same order).
 No rule can tell a meeting from a task here, which is precisely what the human review is for.
@@ -222,7 +225,8 @@ and capture count (source IDs on hover) and, with `--show-truth`, the answer key
 | **Split here / merge back** | button on each session except the first of a run (open the line to see it) | the run is saved as two, `<run>` and `<run>.2`, each with its own minutes |
 
 The minutes shown (run headers, bars, card total) are the ones that will be saved: they update as soon as a session
-is removed or a run is split, with the same rule as the server (first session start to last session end).
+is removed or a run is split, with the same rule as the server. A removed session's duration stops counting, wherever it
+sits in the run; the short gaps around it still count, since they are time spent switching windows.
 
 **LLM suggestion.** When `task_descriptions.json` exists, a folded "Local LLM suggests" block shows the proposed name and
 numbered steps, each with its kind, quote and session; in the run it was read from, the cited sessions carry an
@@ -302,6 +306,9 @@ written during the event.
   could be proposed as "possible runs" for the reviewer.
 - **A first step can be lost** when its screens resemble other tasks' (the onboarding's application email), so minutes are
   under-counted.
+- **Minutes are slightly under-counted:** a session lasts from its first to its last capture, so the time spent on the
+  last screen of each session (about one capture interval, ~40 s on our data) is not counted. Long pauses (> 5 min)
+  between two steps are not counted either, on purpose.
 - **Word order is ignored** by the embeddings; order is only checked between steps, not inside a session.
 - **The LLM's step texts are weak:** `qwen3:4b-instruct` often copies the session text instead of describing the step, and
   the desk draft reuses those texts for another run (week 37 numbers next to week 39 quotes; the quotes themselves are

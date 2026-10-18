@@ -76,7 +76,7 @@ def save(args, data, decisions):
                     "proposed_as": task["name"],  # links back to task_descriptions.json
                     "run": run["run"] if i == 0 else f"{run['run']}.{i + 1}",
                     "sessions": [s["id"] for s in kept],
-                    "minutes": run_minutes([sessions[s["id"]] for s in kept]),
+                    "minutes": run_minutes([sessions[s["id"]] for s in part], removed),
                     "session_kinds": {s["id"]: d.get("kinds", {}).get(s["id"], s["kind"]) for s in kept},
                 })
     write_json(REVIEWED_PATH, out)

@@ -82,8 +82,17 @@ const remember=()=>{try{localStorage.openTasks=JSON.stringify([...open])}catch{}
 const D=t=>{const d=dec[t]??={status:'pending',name:t,removed:[],kinds:{},splits:[]};d.splits??=[];return d};
 // a run split by the reviewer: a session in d.splits starts a new run (same rule as review.py's save)
 const partsOf=(run,d)=>run.sessions.reduce((ps,s,i)=>{if(i&&d.splits.includes(s.id))ps.push([]);ps[ps.length-1].push(s);return ps},[[]]);
-const partMinutes=(part,d)=>{const k=part.filter(s=>!d.removed.includes(s.id));if(!k.length)return 0;
-  const t0=Math.min(...k.map(s=>+new Date(s.start))),t1=Math.max(...k.map(s=>+new Date(s.start)+s.minutes*60000));return Math.round((t1-t0)/6000)/10};
+// minutes of a run: kept sessions' durations + gaps <= 5 min between them, longer pauses not counted
+// (same rule as common.run_minutes; the gaps around a removed session still count, its duration does not)
+const PAUSE_MIN=5;
+const partMinutes=(part,d)=>{
+  const ss=[...part].sort((a,b)=>a.start<b.start?-1:1),kept=ss.flatMap((s,i)=>d.removed.includes(s.id)?[]:[i]);
+  if(!kept.length)return 0;
+  let total=kept.reduce((n,i)=>n+ss[i].minutes,0),end=+new Date(ss[kept[0]].start)+ss[kept[0]].minutes*60000;
+  for(const s of ss.slice(kept[0]+1,kept[kept.length-1]+1)){
+    const gap=(+new Date(s.start)-end)/60000;if(gap>0&&gap<=PAUSE_MIN)total+=gap;
+    end=Math.max(end,+new Date(s.start)+s.minutes*60000)}
+  return Math.round(total*10)/10};
 const time=ts=>new Date(ts).toLocaleString('en-GB',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 function render(){
   const root=document.getElementById('tasks');root.replaceChildren();

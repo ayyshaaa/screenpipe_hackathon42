@@ -55,11 +55,25 @@ def load_sessions(db_path=DB_PATH):
     return sessions
 
 
-def run_minutes(sessions):
-    """Observed minutes of a run = first session start -> last session end. Never estimated."""
-    start = min(parse_ts(s["start_ts"]) for s in sessions)
-    end = max(parse_ts(s["end_ts"]) for s in sessions)
-    return round((end - start).total_seconds() / 60, 2)
+PAUSE_MIN = 5  # same as ingest.py --gap-min: a longer gap between two sessions is a pause, not work
+
+
+def run_minutes(sessions, removed=()):
+    """Observed minutes of a run, never estimated: the durations of its sessions, plus the short gaps between
+    them (switching windows, <= PAUSE_MIN). Longer pauses are not counted, so a break does not inflate a run.
+    removed: session IDs the reviewer left out; their duration is not counted, the gaps around them still are."""
+    ss = sorted(sessions, key=lambda s: s["start_ts"])
+    kept = [i for i, s in enumerate(ss) if s["session_id"] not in removed]
+    if not kept:
+        return 0.0
+    total = sum(ss[i]["minutes"] for i in kept)
+    end = parse_ts(ss[kept[0]]["end_ts"])
+    for s in ss[kept[0] + 1:kept[-1] + 1]:  # gaps between the first and the last kept session only
+        gap = (parse_ts(s["start_ts"]) - end).total_seconds() / 60
+        if 0 < gap <= PAUSE_MIN:
+            total += gap
+        end = max(end, parse_ts(s["end_ts"]))
+    return round(total, 2)
 
 
 def read_json(path):
