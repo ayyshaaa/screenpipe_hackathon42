@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Local LLM (Ollama) names each candidate task and drafts its steps with exact quotes.
 
-  python3 describe_tasks.py                         # all tasks in throught_runs.json
-  python3 describe_tasks.py --model qwen3:4b-instruct --runs throught_runs.json
+  python3 describe_tasks.py                         # all tasks in concentration_runs.json
+  python3 describe_tasks.py --model qwen3:4b-instruct --runs concentration_runs.json
 
 For each task it sends ONE representative run, sessions numbered 1, 2, 3... (small models copy
 short numbers reliably, long IDs not), and asks for JSON: {name, steps: [{text, session, quote, kind}]}.

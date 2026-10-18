@@ -11,9 +11,9 @@ Writes:
   desk_records.json     the sessions of ONE run, as plain evidence for the review desk
   desk_draft.json       the same run as a procedure draft (steps, quotes, kinds) for the review desk
 
-Then, in ~/hackathon-starter:
-  bun run repetition --input ~/throught/starter_records.json
-  bun start --draft ~/throught/desk_draft.json      (or --input ~/throught/desk_records.json)
+Then, in ../hackathon-starter:
+  bun run repetition --input ../event/starter_records.json
+  bun start --draft ../event/desk_draft.json      (or --input ../event/desk_records.json)
 """
 import argparse
 import os
@@ -46,7 +46,7 @@ def starter_records(runs, sessions):
         head = f"Task: {one_line(r['task'], 120)}\nRun: {r['run']}\nMinutes: {minutes_str(m)}"
         for sid in r["sessions"]:
             s = sessions[sid]
-            records.append({"id": sid, "timestamp": s["start_ts"], "app": "THROUGHT (reviewed)",
+            records.append({"id": sid, "timestamp": s["start_ts"], "app": "CONCENTRATION (reviewed)",
                             "text": f"{head}\nSession: {one_line(s['window'], 80)} | {one_line(s['text'])}"})
     return records, skipped
 
@@ -99,10 +99,10 @@ def desk_files(run, sessions, descriptions, n_runs, total_minutes):
                       "reviewed": False})
     draft = {
         "title": run["task"],
-        "context": (f"Proposed by THROUGHT from {n_runs} confirmed runs ({total_minutes:.1f} observed minutes). "
+        "context": (f"Proposed by CONCENTRATION from {n_runs} confirmed runs ({total_minutes:.1f} observed minutes). "
                     f"This is run {run['run']}. Steps and kinds come from a person's review; check each against its evidence."),
         "revision": 1,
-        "origin": "THROUGHT: repeated sessions found in screen history, confirmed by a person",
+        "origin": "CONCENTRATION: repeated sessions found in screen history, confirmed by a person",
         "evidence": evidence,
         "steps": steps,
         "questions": [{"question": "What outcome, role and boundaries does this procedure cover?", "answer": ""},

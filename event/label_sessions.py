@@ -3,7 +3,7 @@
 
 Reads trail.db sessions + fake_data/story.json truth (per capture) and writes:
   fake_data/session_truth.json  session_id -> {category, task, step, run, kind, purity}
-  fake_data/truth_runs.json     the perfect throught_runs.json (same format + session_kinds)
+  fake_data/truth_runs.json     the perfect concentration_runs.json (same format + session_kinds)
 
 Run it again every time you re-run ingest: session IDs come from trail.db.
 """

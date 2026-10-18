@@ -1,4 +1,4 @@
-# THROUGHT pipeline. Run `make help` from the repo root.
+# CONCENTRATION pipeline. Run `make help` from the repo root.
 #
 #   make pipeline FROM=2026-09-07 TO=2026-10-06      # fake data, the whole month (7 Sep -> 6 Oct)
 #   make pipeline FROM=2026-09-14 TO=2026-09-27      # fake data, 2 weeks
@@ -49,7 +49,7 @@ export HF_HUB_OFFLINE ?= 1
         review export repetition desk check clean
 
 help:
-	@echo "THROUGHT — make targets (variables: FROM, TO, FAKE, MODEL, THRESHOLD, MIN_DAYS, URL, TYPES)"
+	@echo "CONCENTRATION — make targets (variables: FROM, TO, FAKE, MODEL, THRESHOLD, MIN_DAYS, URL, TYPES)"
 	@echo "  install      create .venv and install requirements.txt"
 	@echo "  pipeline     ingest -> (label) -> embed -> tasks"
 	@echo "               whole month: make pipeline FROM=2026-09-07 TO=2026-10-06"
@@ -58,13 +58,13 @@ help:
 	@echo "  label        step 1b answer key per session (FAKE=1 only)"
 	@echo "  embed        step 2  sessions -> embeddings.npz"
 	@echo "  sweep        step 2b precision/recall per threshold (FAKE=1 only)"
-	@echo "  tasks        step 3  -> throught_runs.json"
+	@echo "  tasks        step 3  -> concentration_runs.json"
 	@echo "  describe     step 4  local LLM names the tasks (optional, needs ollama)"
 	@echo "  review       step 5  review page on :$(REVIEW_PORT) (Save, then Ctrl+C)"
 	@echo "  export       step 6  -> starter_records.json, desk_records.json, desk_draft.json"
 	@echo "  repetition   step 7  bun run repetition in hackathon-starter"
 	@echo "  desk         step 8  bun start --draft in hackathon-starter (:4242)"
-	@echo "  check        end-to-end test on the synthetic data"
+	@echo "  check        end-to-end test on the synthetic data (+ starter ranking if STARTER exists)"
 	@echo "  fake-up / fake-down   start / stop the fake screenpipe in the background"
 	@echo "  clean        delete trail.db and every generated output"
 
@@ -143,9 +143,9 @@ desk:
 	cd $(STARTER) && bun start --draft $(EVENT)/desk_draft.json
 
 check:
-	cd $(EVENT) && $(PY) check_pipeline.py --model $(MODEL) $(THR)
+	cd $(EVENT) && $(PY) check_pipeline.py --model $(MODEL) $(THR) $(if $(wildcard $(STARTER)/package.json),--starter $(STARTER))
 
 clean:
-	cd $(EVENT) && rm -f trail.db embeddings.npz throught_runs.json task_descriptions.json \
+	cd $(EVENT) && rm -f trail.db embeddings.npz concentration_runs.json task_descriptions.json \
 	  reviewed_runs.json review_state.json starter_records.json desk_records.json desk_draft.json \
 	  fake_screenpipe.log

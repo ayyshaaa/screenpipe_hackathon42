@@ -1,4 +1,4 @@
-"""Small helpers shared by every THROUGHT script (no business logic here)."""
+"""Small helpers shared by every CONCENTRATION script (no business logic here)."""
 import json
 import re
 import sqlite3
@@ -11,7 +11,7 @@ except Exception:  # no tz database installed: Paris summer time is good enough 
     LOCAL_TZ = timezone(timedelta(hours=2))
 
 DB_PATH = "trail.db"
-RUNS_PATH = "throught_runs.json"
+RUNS_PATH = "concentration_runs.json"
 REVIEWED_PATH = "reviewed_runs.json"
 DESCRIPTIONS_PATH = "task_descriptions.json"
 TRUTH_SESSIONS_PATH = "fake_data/session_truth.json"

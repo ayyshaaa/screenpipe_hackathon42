@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Review page (http://localhost:4300): a person confirms or rejects each proposed task.
 
-  python3 review.py                          # review throught_runs.json
+  python3 review.py                          # review concentration_runs.json
   python3 review.py --runs other.json
   python3 review.py --truth-runs             # look at the answer key (synthetic data only)
   python3 review.py --show-truth             # add answer-key badges next to each session
@@ -74,7 +74,7 @@ def save(args, data, decisions):
     return len(out)
 
 
-PAGE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8"><title>THROUGHT review</title>
+PAGE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8"><title>CONCENTRATION review</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 :root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1f;--muted:#6b6b70;--line:#e2e0da;--accent:#3a5bd9;--ok:#1f7a4d;--bad:#b3261e;--warn:#9a6200;--extra:#fff6e0}
@@ -94,7 +94,7 @@ button.ok{border-color:var(--ok);color:var(--ok)}button.bad{border-color:var(--b
 .badge{font-size:11px;padding:1px 6px;border-radius:10px;border:1px solid var(--line)}.badge.truth{border-style:dashed}
 .warn{color:var(--warn)}.desc{font-size:12px;margin-top:6px}.desc li{margin:2px 0}
 </style></head><body>
-<header><h1>THROUGHT · review proposed tasks</h1><span class="muted" id="src"></span><span style="flex:1"></span>
+<header><h1>CONCENTRATION · review proposed tasks</h1><span class="muted" id="src"></span><span style="flex:1"></span>
 <span id="status" class="muted"></span><button class="primary" id="save">Save decisions</button></header>
 <main id="tasks"></main>
 <script>

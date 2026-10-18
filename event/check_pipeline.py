@@ -4,7 +4,7 @@
   python3 check_pipeline.py                                     # JEV-2, its default threshold
   python3 check_pipeline.py --model hashing                      # no model download needed
   python3 check_pipeline.py --threshold 0.85                     # force a threshold
-  python3 check_pipeline.py --starter ~/hackathon-starter        # also runs bun run repetition
+  python3 check_pipeline.py --starter ../hackathon-starter       # also runs bun run repetition
 
 Fails (exit 1) if: a hidden task is missed (< 80% of its runs), the 3 tasks are not ranked
 weekly_report > refund_check > partner_onboard, a proposed task is mostly noise (chat, music, inbox),
@@ -52,7 +52,7 @@ def main():
         args.starter = os.path.abspath(os.path.expanduser(args.starter))
 
     t0 = time.time()
-    work = tempfile.mkdtemp(prefix="throught_check_")
+    work = tempfile.mkdtemp(prefix="concentration_check_")
     for f in glob.glob(os.path.join(HERE, "*.py")):
         shutil.copy(f, work)
     py = sys.executable
@@ -73,7 +73,7 @@ def main():
         sys.path.insert(0, work)
         from common import read_json
         os.chdir(work)
-        runs, truth_runs = read_json("throught_runs.json"), read_json("fake_data/truth_runs.json")
+        runs, truth_runs = read_json("concentration_runs.json"), read_json("fake_data/truth_runs.json")
         truth = read_json("fake_data/session_truth.json")
 
         # which hidden task does each proposed task mostly contain?

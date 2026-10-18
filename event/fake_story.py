@@ -5,7 +5,7 @@ Writes fake_data/story.json:
   captures: list of screenpipe-shaped results ({"type": "OCR"|"UI", "content": {...}})
   truth:    source_id -> label (category, task, step, run, kind). Scoring only, never pipeline input.
 
-Hidden repeated tasks (what THROUGHT should find, in this order by observed minutes):
+Hidden repeated tasks (what CONCENTRATION should find, in this order by observed minutes):
   weekly_report    5 Monday runs, ~25 min. Run 3: one-off expired-login detour (troubleshooting).
                    From run 4: extra "Lyon tab" step (process change, still normal).
   refund_check     20 morning runs, ~4 min. One EUR 64.80 refund escalated (exception).

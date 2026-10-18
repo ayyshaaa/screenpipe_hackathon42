@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sessions + embeddings -> step types -> candidate tasks and their runs -> throught_runs.json
+"""Sessions + embeddings -> step types -> candidate tasks and their runs -> concentration_runs.json
 
 The rule, in plain words:
   1. "Same step?"  two sessions are the same kind of step if cosine >= --threshold.

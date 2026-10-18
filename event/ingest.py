@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""THROUGHT ingest: screenpipe /search -> captures -> sessions in trail.db.
+"""CONCENTRATION ingest: screenpipe /search -> captures -> sessions in trail.db.
 
 What it does, in order:
   1. Asks screenpipe /search for each content type (default: ocr, accessibility),
@@ -40,7 +40,7 @@ from datetime import datetime, timezone
 
 PAGE_SIZE = 200
 # outputs of later steps, next to trail.db: stale as soon as the range changes
-DERIVED = ["embeddings.npz", "throught_runs.json", "task_descriptions.json", "reviewed_runs.json",
+DERIVED = ["embeddings.npz", "concentration_runs.json", "task_descriptions.json", "reviewed_runs.json",
            "starter_records.json", "desk_records.json", "desk_draft.json",
            "fake_data/session_truth.json", "fake_data/truth_runs.json"]
 SESSION_TEXT_MAX = 4000  # characters kept per session (enough for embeddings and quotes)
