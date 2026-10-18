@@ -1,11 +1,12 @@
-# THROUGHT
+# CONCENTRATION
 
-*The tasks that run **through** your week, and the **thought** behind automating them.*
+*Named after the memory card game: turn over a month of screens, find the cards that match, and the pairs that keep
+coming back are the tasks worth automating.*
 
 Built at **"Build Agents That Remember" (screenpipe × 42 Paris, Oct 16–18 2026)**, Track 1 *Find what to automate*.
 
 The starter's repeated-task finder (`bun run repetition`) ranks tasks by observed minutes, but only for records where a person
-typed one `Task:`, one `Run:` and one `Minutes:` line. **THROUGHT proposes those annotations from raw screen history, and a
+typed one `Task:`, one `Run:` and one `Minutes:` line. **CONCENTRATION proposes those annotations from raw screen history, and a
 person confirms them before anything is ranked.** Steps are described with exact quotes, exceptions and one-off
 troubleshooting are kept apart from the normal process, and nothing predicts savings.
 
@@ -52,7 +53,7 @@ Then:
 
 ```bash
 make pipeline FROM=2026-09-07                      # fake screenpipe + ingest + answer key + embed + tasks
-make describe                                      # local LLM names tasks and drafts steps (~1 min per task on CPU)
+make describe                                      # optional: local LLM names tasks and drafts steps (~1.5 min per task on CPU)
 make review                                        # http://localhost:4300: confirm / reject, classify, Save, then Ctrl+C
 make export repetition desk                        # starter records, bun run repetition, review desk on :4242
 make check                                         # end-to-end test on the synthetic data
@@ -60,6 +61,8 @@ make check                                         # end-to-end test on the synt
 
 `make help` lists every target; `ingest`, `label`, `embed`, `sweep` and `tasks` also run one step at a time.
 `make pipeline` starts the fake screenpipe itself and stops it at the end.
+`make describe` is optional: without `task_descriptions.json`, review and export still work, with the `app – window`
+names found by step 3 and no LLM-drafted steps on the desk.
 
 | Variable | Default | Effect |
 |---|---|---|
@@ -111,11 +114,11 @@ captures in the same app and window, with no pause longer than 5 minutes.
 Each session (`app | window` + text) becomes 256 numbers; sessions with similar content land close together.
 
 **Why VTX-JEV-2.** It is a *static* model, distilled with Model2Vec: a table of one vector per token, averaged over the text.
-It needs no GPU and no PyTorch, embeds our 321 sessions in about 7 s on a laptop CPU (model loading included), weighs ~125 MB, and handles the
+It needs no GPU and no PyTorch, embeds our 321 sessions in about 7.5 s on a laptop CPU (model loading included), weighs ~125 MB on disk (~165 MB to download), and handles the
 French/English mix of real screens. We load the FP32 file through the `model2vec` library; the 2-bit LF2 variant exists,
 but its model card publishes no quality figures, and at our scale size and speed are not the bottleneck.
 
-**What averaging costs:** word order is lost ("export then email" = "email then export"). THROUGHT therefore checks the
+**What averaging costs:** word order is lost ("export then email" = "email then export"). CONCENTRATION therefore checks the
 order of steps itself, in step 4.
 
 **Mean-centering, our main fix.** Without it, almost every pair of sessions scored above 0.8 and everything merged into
@@ -177,7 +180,7 @@ quote, a session and a kind (`normal`, `exception`, `troubleshooting`). **The LL
   `temperature: 0` makes it reproducible.
 - **Prompt choices that fixed real failures:** sessions are **numbered 1, 2, 3** (a 4B model copies long IDs badly), quotes
   must come from **one line**, text is cut to 300 characters per session (prompt reading dominates CPU time), and the reply
-  limit is 1,500 tokens (900 cut the JSON mid-string). Result: 0 rejected quotes on the 4 tasks, ~50–85 s per task.
+  limit is 1,500 tokens (900 cut the JSON mid-string). Result: 0 rejected quotes on the 4 tasks, ~65–100 s per task (5.5 min for all 4).
 - **Verification:** code maps numbers back to session IDs and **rejects any quote not found word for word** in the source.
 - **Prompt injection:** screen text can contain anything, including instructions from an email or a web page. The prompt
   marks captures as untrusted data, the schema limits the output, the LLM has no tools, quotes are checked, and a person
@@ -210,8 +213,8 @@ written during the event.
 - `label_sessions.py` writes the answer key (`fake_data/session_truth.json`, `fake_data/truth_runs.json`). **It is only used
   for scoring, never as pipeline input.** `review.py --truth-runs` and `export_starter.py --truth-runs` show the perfect answer.
 - `check_pipeline.py` (`make check`) runs everything in a throw-away copy and fails if a hidden task loses more than 20 %
-  of its runs, the ranking is wrong, noise is proposed as a task, or the export breaks the starter's rules. Run directly with
-  `--starter ../hackathon-starter`, it also checks the ranking produced by `bun run repetition` (`make check` skips that). With JEV-2 it reports **one expected failure, Sushi Kan
+  of its runs, the ranking is wrong, noise is proposed as a task, or the export breaks the starter's rules. With
+  `--starter` (`make check` passes `$(STARTER)` when that folder exists), it also checks the ranking produced by `bun run repetition`. With JEV-2 it reports **one expected failure, Sushi Kan
   (3/4)**, and one warning, the squad sync. With `MODEL=hashing` it passes (4/4 onboarding runs): exact shared words such as
   "SIRET" are a strong signal on synthetic text, but we keep JEV-2 as the default because real screens are messier.
 
@@ -223,7 +226,7 @@ written during the event.
 |---|---|---|
 | `trail.db` | ingest | `captures`, `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids)`, `meta` (the ingested range) |
 | `embeddings.npz` | embed | session IDs + one centred, normalised vector each |
-| `throught_runs.json` | find_tasks | `[{task, run, sessions, minutes, extra_sessions, step_share}]` |
+| `concentration_runs.json` | find_tasks | `[{task, run, sessions, minutes, extra_sessions, step_share}]` |
 | `task_descriptions.json` | describe_tasks | per task: `name`, `steps[{text, session_id, quote, kind}]`, `rejected` |
 | `reviewed_runs.json` | review page | confirmed runs only: `[{task, proposed_as, run, sessions, minutes, session_kinds}]` |
 | `starter_records.json` | export | `[{id, timestamp, app, text: "Task: …\nRun: …\nMinutes: …\nSession: …"}]` |
@@ -259,7 +262,7 @@ written during the event.
 - **The LLM's step texts are weak:** `qwen3:4b-instruct` often copies the session text instead of describing the step, and
   the desk draft reuses those texts for another run (week 37 numbers next to week 39 quotes; the quotes themselves are
   correct). The reviewer rewrites them on the desk; a larger model or a stricter prompt would help.
-- **CPU-only LLM** takes ~1 min per task: descriptions are generated before a demo, not live.
+- **CPU-only LLM** takes ~1.5 min per task: descriptions are generated before a demo, not live.
 - **Not measured yet:** time saved. The starter's next step applies: measure the same task manually and with assistance
   before claiming any benefit.
 
