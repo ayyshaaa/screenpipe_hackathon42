@@ -159,7 +159,8 @@ What matters is the final task score above.
    They are also what filters noise: Slack or Spotify appear every day, but not in a consistent order next to anything.
 3. **Tasks.** Linked pairs are merged *transitively* (union-find): if dashboard–export, export–sheet and sheet–email are
    linked, all four are one task even if dashboard and email were never directly linked.
-4. **Runs.** Each day's cluster of a task's steps is one run. Sessions that fall *inside* a run but are not one of its usual
+4. **Runs.** Each day's cluster of a task's steps is one run: a run goes on while each step starts **within 60 minutes of
+   the previous step's end**, so a task with many or long steps is not cut at one hour. Sessions that fall *inside* a run but are not one of its usual
    steps (the login detour, a Slack interruption, the new Lyon tab) are kept as **extras** for the reviewer instead of being
    silently dropped or silently included. Each session shows in how many runs its kind of step appears ("in 2/5 runs").
 5. **Ranking** by total observed minutes, the starter's own criterion. `MIN_DAYS` (default 3) is the "at least 3 days"
@@ -231,19 +232,6 @@ written during the event.
 | `reviewed_runs.json` | review page | confirmed runs only: `[{task, proposed_as, run, sessions, minutes, session_kinds}]` |
 | `starter_records.json` | export | `[{id, timestamp, app, text: "Task: …\nRun: …\nMinutes: …\nSession: …"}]` |
 | `desk_draft.json` | export | the review desk's procedure format: `title, context, evidence, steps, questions` |
-
----
-
-## Bugs we hit, and what they taught us
-
-| Symptom | Cause | Fix |
-|---|---|---|
-| Every pair similar, 8 step types | shared direction of static embeddings + common `app \| window` prefix | mean-centering |
-| LLM: 1 min for 20 tokens | `qwen3:4b` points to the thinking-only model | use `qwen3:4b-instruct` (check tag IDs) |
-| LLM: "unknown session_id", quotes not found | small model can't copy long IDs; joined lines with a literal `\n` | number the sessions, one-line quotes |
-| LLM: "Unterminated string" | reply hit `num_predict` | raise it to 1,500, send shorter text |
-| Empty review page, `ERR_CONNECTION_RESET` | Windows → WSL localhost bridge reset HTTP/1.0 connections | HTTP/1.1 keep-alive + retries (or WSL `networkingMode=mirrored`) |
-| A shorter range loses the daily task | centering uses the range's own mean, so the right threshold shifts | re-run the sweep on a new range (fix planned below) |
 
 ---
 

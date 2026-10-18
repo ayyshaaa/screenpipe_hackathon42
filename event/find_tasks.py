@@ -7,7 +7,8 @@ The rule, in plain words:
   2. Two step types belong to one task if, on >= --min-days different days, they happen
      within --window-min minutes of each other, in a consistent order (>= --min-order),
      and they usually come together (co-occurring days / days either one appears >= --min-support).
-  3. Linked step types form a candidate task. Each day's cluster of its steps is one run.
+  3. Linked step types form a candidate task. Each day's cluster of its steps is one run; a run goes on
+     while each step starts within --window-min of the previous step's end.
      Sessions inside a run that are not one of its steps are kept as "extra" for the reviewer
      (possible exception, troubleshooting, or noise to remove).
 
@@ -134,7 +135,10 @@ def find_runs(sessions, labels, types, args, taken):
     core = sorted((s for s, lab in zip(sessions, labels) if lab in types), key=lambda s: s["t0"])
     groups, cur = [], []
     for s in core:
-        if cur and (s["day"] != cur[0]["day"] or (s["t0"] - cur[0]["t0"]).total_seconds() > args.window_min * 60):
+        # a run continues while each step starts within --window-min of the previous step's end,
+        # so a task with many steps can last longer than the window
+        if cur and (s["day"] != cur[0]["day"]
+                    or (s["t0"] - max(x["t1"] for x in cur)).total_seconds() > args.window_min * 60):
             groups.append(cur)
             cur = []
         cur.append(s)
