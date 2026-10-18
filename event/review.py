@@ -15,6 +15,7 @@ Nothing is confirmed automatically.
 import argparse
 import json
 import os
+import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from common import (DB_PATH, DESCRIPTIONS_PATH, REVIEWED_PATH, RUNS_PATH, TRUTH_RUNS_PATH, TRUTH_SESSIONS_PATH,
@@ -107,6 +108,7 @@ def make_handler(args, data):
             body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
             try:
                 n = save(args, data, json.loads(body))
+                args.saved = n
                 reply = {"runs": n}
             except Exception as e:  # show the reason on the page instead of a silent failure
                 reply = {"error": f"save failed: {e}"}
@@ -135,8 +137,22 @@ def main():
     if args.truth_runs:
         args.runs = TRUTH_RUNS_PATH
     data = build_data(args)
+    args.saved = None  # confirmed runs written by the last Save of this session
+    try:
+        server = ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(args, data))
+    except OSError as e:
+        sys.exit(f"review: port {args.port} is not free ({e.strerror}). Is the review page already running? "
+                 f"Stop it, or use --port (make review REVIEW_PORT=...).")
     print(f"review page for {args.runs}: http://localhost:{args.port}  (Ctrl+C to stop)")
-    ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(args, data)).serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        if args.saved is None:
+            print(f"\nreview stopped. Nothing saved in this session: {REVIEWED_PATH} is unchanged.")
+        else:
+            print(f"\nreview stopped. Last save: {args.saved} confirmed runs in {REVIEWED_PATH}.")
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":

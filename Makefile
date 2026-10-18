@@ -131,7 +131,7 @@ endif
 	@echo "next: make review  (then make export repetition desk)"
 
 review:
-	cd $(EVENT) && $(PY) review.py $(TRUTH) --port $(REVIEW_PORT)
+	cd $(EVENT) && exec $(PY) review.py $(TRUTH) --port $(REVIEW_PORT)
 
 export:
 	cd $(EVENT) && $(PY) export_starter.py
