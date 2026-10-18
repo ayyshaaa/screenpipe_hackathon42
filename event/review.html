@@ -1,0 +1,167 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>THROUGHT review</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* screenpipe palette (screenpi.pe), light only: warm off-white / near-black, "phosphor" lime accent, IBM Plex Mono */
+:root{--bg:#f6f6f3;--card:#fff;--ink:#0a0a0a;--muted:#666;--line:#dcdcd6;--primary:#0a0a0a;--on-primary:#fff;
+  --phosphor:#c7ff3e;--bar:#0a0a0a;--ok:#14803c;--bad:#dc2626;--warn:#c26a05;--extra:#f6fbe4;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;font:13px/1.5 'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;z-index:1;background:var(--bg);padding:12px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:16px;font-weight:600;margin:0;display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+h1::before{content:'';width:10px;height:10px;border-radius:2px;background:var(--phosphor);box-shadow:0 0 0 1px var(--ink)}.muted{color:var(--muted)}main{padding:12px 20px;display:grid;gap:8px}
+details>summary{list-style:none;cursor:pointer;display:flex;gap:8px;align-items:center}
+details>summary::-webkit-details-marker{display:none}
+.task{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 1px 2px -1px rgb(0 0 0/.08);padding:8px 12px}
+.task.confirmed{border-color:var(--ok);box-shadow:inset 3px 0 0 var(--ok)}.task.rejected{opacity:.55}
+.task>summary{flex-wrap:wrap}
+.task>summary::before{content:'▸';color:var(--muted);transition:transform .15s}
+.task[open]>summary::before{transform:rotate(90deg)}
+.task[open]>summary{padding-bottom:8px;border-bottom:1px solid var(--line)}
+.name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:420px}
+.bars{display:flex;gap:2px;align-items:center}.bars i{height:6px;border-radius:1px;background:var(--bar);opacity:.8}
+.top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px}.top input{flex:1;min-width:240px;font-weight:600;font-size:14px;font-family:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink)}
+button{font:inherit;font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+summary button{padding:2px 10px}
+button.ok{border-color:var(--ok);color:var(--ok)}button.bad{border-color:var(--bad);color:var(--bad)}button.primary{background:var(--primary);color:var(--on-primary);border-color:var(--primary);font-weight:600}
+button:hover{border-color:var(--ink)}button.primary:hover{filter:brightness(1.15)}
+:focus-visible{outline:2px solid var(--phosphor);outline-offset:2px}
+/* 4 runs per row, extra runs wrap below: no horizontal scrolling */
+.runs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding-top:10px;align-items:start}
+@media (max-width:1100px){.runs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.runs{grid-template-columns:minmax(0,1fr)}}
+.run{min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px}
+.run h3{font-size:13px;margin:0 0 6px}.s{border-top:1px solid var(--line);padding:4px 0}.s.extra{background:var(--extra);margin:0 -8px;padding:4px 8px}
+.s>summary{font-size:12px}.s[open]>summary{padding-bottom:2px}
+.s .w{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.s.removed>summary .w{text-decoration:line-through}.s.removed{opacity:.45}
+.dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--muted)}
+.exception .dot{background:var(--warn)}.troubleshooting .dot{background:var(--bad)}
+.unclassified .dot{background:var(--warn);outline:2px solid var(--warn);outline-offset:1px}
+.txt{white-space:pre-wrap;font-size:12px;color:var(--muted);max-height:3.2em;overflow:hidden;cursor:pointer}.txt.open{max-height:none}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}select{font:inherit;font-size:12px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px}
+.badge{font-size:11px;padding:1px 6px;border-radius:10px;border:1px solid var(--line)}.badge.truth{border-style:dashed}
+.badge.warn{border-color:var(--warn)}
+.warn{color:var(--warn)}.desc{font-size:12px;margin-top:8px}.desc>summary{display:inline-flex}.desc li{margin:4px 0}
+.filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;flex-basis:100%}
+.chip{display:inline-flex;gap:5px;align-items:center;padding:2px 10px;border-radius:999px}
+.chip[aria-pressed="false"]{opacity:.45;text-decoration:line-through;border-style:dashed}
+.chip .n{color:var(--muted)}.chip.pending .dot{background:var(--ink)}.chip.confirmed .dot{background:var(--ok)}.chip.rejected .dot{background:var(--bad)}
+.chip.removed .dot{background:transparent;border:1px solid var(--muted)}
+.sep{width:1px;height:16px;background:var(--line);margin:0 4px}.hidden-note{font-size:11px;color:var(--muted);padding-top:4px}
+</style></head><body>
+<header><h1>THROUGHT · review</h1><span class="muted" id="src"></span>
+<button id="expand">Tout déplier</button><button id="collapse">Tout replier</button>
+<span style="flex:1"></span>
+<span id="status" class="muted"></span><button class="primary" id="save">Save decisions</button>
+<div class="filters" id="filters"></div></header>
+<main id="tasks"></main>
+<script>
+const el=(t,p={},...kids)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(p)){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const k of kids)e.append(k);return e};
+let data,dec={};
+// filter chips: what is hidden (task statuses + session kinds), remembered per browser
+const FILTERS=[['tâches',[['pending','en attente'],['confirmed','confirmées'],['rejected','rejetées']]],
+  ['sessions',[['normal','normal'],['exception','exception'],['troubleshooting','troubleshooting'],['unclassified','à classer'],['removed','retirées']]]];
+const hidden=new Set((()=>{try{return JSON.parse(localStorage.hidden||'[]')}catch{return[]}})());
+function renderFilters(){
+  const count={};const add=k=>count[k]=(count[k]||0)+1;
+  data.tasks.forEach(t=>{const d=D(t.name);add(d.status);
+    t.runs.forEach(r=>r.sessions.forEach(s=>add(d.removed.includes(s.id)?'removed':(d.kinds[s.id]??s.kind))))});
+  document.getElementById('filters').replaceChildren(el('span',{class:'muted'},'afficher :'),...FILTERS.flatMap(([group,items],i)=>[
+    ...(i?[el('span',{class:'sep'})]:[]),el('span',{class:'muted'},group),
+    ...items.map(([k,label])=>el('button',{class:'chip '+k,'aria-pressed':String(!hidden.has(k)),title:'cliquer pour afficher / masquer',
+      onclick:()=>{hidden.has(k)?hidden.delete(k):hidden.add(k);try{localStorage.hidden=JSON.stringify([...hidden])}catch{};render()}},
+      el('span',{class:'dot'}),label,el('span',{class:'n'},String(count[k]||0))))]));
+}
+// which task cards are unfolded: kept across render() and page reloads (per browser)
+const load_open=()=>{try{return JSON.parse(localStorage.openTasks||'[]')}catch{return[]}};
+const open=new Set(load_open());
+const remember=()=>{try{localStorage.openTasks=JSON.stringify([...open])}catch{}};
+const D=t=>dec[t]??={status:'pending',name:t,removed:[],kinds:{}};
+const time=ts=>new Date(ts).toLocaleString('en-GB',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+function render(){
+  const root=document.getElementById('tasks');root.replaceChildren();
+  renderFilters();
+  data.tasks.forEach(task=>{
+    const d=D(task.name);
+    if(hidden.has(d.status))return;
+    const total=task.runs.reduce((n,r)=>n+r.minutes,0);
+    const max=Math.max(...task.runs.map(r=>r.minutes),1);
+    const pending=task.runs.flatMap(r=>r.sessions).filter(s=>!d.removed.includes(s.id)&&(d.kinds[s.id]??s.kind)==='unclassified').length;
+    const confirm=e=>{e.preventDefault();if(pending){alert(pending+' extra session(s) still unclassified: classify or remove them first.');return}d.status='confirmed';render()};
+    const reject=e=>{e.preventDefault();d.status='rejected';render()};
+    const name=el('input',{value:d.name,oninput:e=>{d.name=e.target.value}});
+    const card=el('details',{class:'task '+d.status,...(open.has(task.name)?{open:''}:{}),
+        ontoggle:e=>{if(e.target!==card)return;card.open?open.add(task.name):open.delete(task.name);remember()}},
+      el('summary',{},
+        el('b',{class:'name',title:d.name},d.name),
+        el('span',{class:'bars',title:'duration of each run'},...task.runs.map(r=>el('i',{style:`width:${4+r.minutes/max*40}px`,title:`run ${r.run} · ${r.minutes} min`}))),
+        el('span',{class:'muted'},`${task.runs.length} runs · ${total.toFixed(0)} min`),
+        pending?el('span',{class:'badge warn'},`${pending} to classify`):'',
+        el('span',{style:'flex:1'}),
+        el('span',{class:'badge'},d.status),
+        el('button',{class:'ok',title:'Confirm task',onclick:confirm},'✓'),
+        el('button',{class:'bad',title:'Reject (not a task)',onclick:reject},'✗')),
+      // the input stays out of <summary>: typing a space in it would fold the card in Firefox
+      el('div',{class:'top'},name,
+        el('button',{class:'ok',onclick:confirm},'Confirm task'),
+        el('button',{class:'bad',onclick:reject},'Reject (not a task)')),
+      pending?el('div',{class:'warn row'},`${pending} highlighted session(s) are not regular steps: classify as exception / troubleshooting / normal, or remove.`):'');
+    // LLM draft of the procedure, read from ONE run: one numbered step per cited session
+    const stepOf={};
+    if(task.description){const ds=task.description;
+      (ds.steps||[]).forEach((st,i)=>(stepOf[st.session_id]??=[]).push(i+1));
+      card.append(el('details',{class:'desc'},
+        el('summary',{},el('span',{class:'muted'},'▸ Local LLM suggests: '),el('b',{},ds.name||''),
+          el('button',{onclick:e=>{e.preventDefault();d.name=ds.name;render()}},'use name')),
+        el('div',{class:'muted'},`Procédure proposée d'après le run ${ds.run} . Chaque étape cite une session de ce run, repérée par le badge « étape N ».`),
+        el('ol',{},...(ds.steps||[]).map(st=>el('li',{},
+          el('b',{},st.text.split('\n')[0]),
+          el('div',{class:'muted'},`[${st.kind}] preuve à l'écran : “${st.quote}” — ${st.session_id}`))))))}
+    const runs=el('div',{class:'runs'});
+    task.runs.forEach(run=>{
+      const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${run.minutes} min`));
+      let skipped=0;
+      run.sessions.forEach(s=>{
+        const removed=d.removed.includes(s.id);
+        const k=d.kinds[s.id]??s.kind;
+        if(hidden.has(removed?'removed':k)){skipped++;return}
+        const kind=el('select',{onchange:e=>{d.kinds[s.id]=e.target.value;render()}},...['normal','exception','troubleshooting','unclassified'].map(x=>{const o=el('option',{value:x},x);if(k===x)o.selected=true;return o}));
+        const txt=el('div',{class:'txt',onclick:e=>e.target.classList.toggle('open')},s.text);
+        // one line per session; unfolded only when it still needs a decision
+        box.append(el('details',{class:'s '+k+(s.extra?' extra':'')+(removed?' removed':''),...(k==='unclassified'&&!removed?{open:''}:{})},
+          el('summary',{title:k},el('span',{class:'dot'}),el('span',{class:'w'},s.window||s.app),
+            stepOf[s.id]?el('span',{class:'badge',title:'step of the LLM suggestion above'},(stepOf[s.id].length>1?'étapes ':'étape ')+stepOf[s.id].join(', ')):'',
+            el('span',{class:'muted'},`${s.minutes} min`)),
+          el('div',{class:'row muted'},`${time(s.start)} · ${s.app}`,s.share?el('span',{class:'badge',title:'runs of this task that contain this kind of step'},'in '+s.share+' runs'):''),
+          txt,
+          el('div',{class:'row'},kind,
+            el('button',{onclick:()=>{d.removed=removed?d.removed.filter(x=>x!==s.id):[...d.removed,s.id];render()}},removed?'restore':'remove'),
+            el('span',{class:'muted',title:s.sources.join(', ')},`${s.id} · ${s.sources.length} captures`),
+            s.truth?el('span',{class:'badge truth',title:'answer key, synthetic data only'},`key: ${s.truth.task||s.truth.category}${s.truth.kind&&s.truth.kind!=='normal'?' · '+s.truth.kind:''}`):'')));
+      });
+      if(skipped)box.append(el('div',{class:'hidden-note'},`${skipped} session(s) masquée(s) par les filtres`));
+      runs.append(box);
+    });
+    card.append(runs);root.append(card);
+  });
+}
+async function load(){
+  let j;
+  for(let attempt=1;attempt<=3&&!j;attempt++){  // WSL's localhost bridge sometimes resets a connection: retry
+    try{const r=await fetch('/api/data',{cache:'no-store'});j=await r.json()}
+    catch(e){document.getElementById('status').textContent=`loading failed (${e.message}), retry ${attempt}/3…`;await new Promise(ok=>setTimeout(ok,700))}
+  }
+  if(!j){document.getElementById('status').textContent='could not load the data: see the terminal running review.py';return}
+  document.getElementById('status').textContent='';
+  data=j.data;dec=j.decisions||{};
+  document.getElementById('src').textContent='source: '+data.source;render();
+}
+document.getElementById('expand').onclick=()=>{data.tasks.forEach(t=>open.add(t.name));remember();render()};
+document.getElementById('collapse').onclick=()=>{open.clear();remember();render()};
+document.getElementById('save').onclick=async()=>{
+  const r=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(dec)});
+  const j=await r.json();document.getElementById('status').textContent=j.error||`saved · ${j.runs} confirmed runs → reviewed_runs.json`;
+};
+load();
+</script></body></html>
