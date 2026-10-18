@@ -69,15 +69,18 @@ names found by step 3 and no LLM-drafted steps on the desk.
 |---|---|---|
 | `FROM` | empty = all history | first day kept (UTC); a bare date is a whole day |
 | `TO` | empty = most recent data | last day kept (UTC); **needs `FROM`**, refused otherwise |
-| `THRESHOLD` | empty = picked from the model | "same step?" cosine threshold (0.9 for JEV-2, 0.6 for `hashing`) |
+| `THRESHOLD` | empty = picked from the model | "same step?" cosine threshold (0.89 for JEV-2, 0.6 for `hashing`) |
 | `MODEL` | `VTXAI/VTX-JEV-2` | `hashing` = built-in stand-in, no download |
 | `MIN_DAYS` | `3` | a task must repeat on at least this many different days |
 | `FAKE` | `1` | `0` = real screenpipe on `:3030`, no answer key (no `--score`, no `--show-truth`) |
+| `REVIEW_PORT`, `FAKE_PORT` | `4300`, `3031` | ports of the review page and of the fake screenpipe |
 | `TYPES`, `LLM`, `STARTER` | `ocr,accessibility`, `qwen3:4b-instruct`, `./hackathon-starter` | passed to ingest, describe, and the Bun steps |
 
 **Changing the range invalidates later steps.** `trail.db` keeps only the chosen range, and when the range changes, ingest
 deletes the outputs built from the old one (embeddings, runs, descriptions, reviewed runs, exports, answer key), so a stale
-review can never be exported against new sessions. Re-run `make pipeline`, then review again.
+review can never be exported against new sessions. Re-run `make pipeline`, then review again. The reviewer's decisions
+(`review_state.json`) are kept: they are matched by task name and session ID, so work done on sessions that still exist
+is not lost, but check the confirmed tasks again before saving.
 
 ---
 
@@ -114,10 +117,11 @@ captures in the same app and window, with no pause longer than 5 minutes.
 
 Each session (`app | window` + text) becomes 256 numbers; sessions with similar content land close together.
 
-**Why VTX-JEV-2.** It is a *static* model, distilled with Model2Vec: a table of one vector per token, averaged over the text.
-It needs no GPU and no PyTorch, embeds our 327 sessions in about 7.5 s on a laptop CPU (model loading included), weighs ~125 MB on disk (~165 MB to download), and handles the
-French/English mix of real screens. We load the FP32 file through the `model2vec` library; the 2-bit LF2 variant exists,
-but its model card publishes no quality figures, and at our scale size and speed are not the bottleneck.
+**Why VTX-JEV-2.** It is a *static* model, distilled with Model2Vec: a table of one vector per token, averaged over the
+text. It needs no GPU and no PyTorch, embeds our 327 sessions in about 7.5 s on a laptop CPU (model loading included),
+weighs ~125 MB on disk (~165 MB to download), and handles the French/English mix of real screens. We load the FP32 file
+through the `model2vec` library; the 2-bit LF2 variant exists, but its model card publishes no quality figures, and at
+our scale size and speed are not the bottleneck.
 
 **What averaging costs:** word order is lost ("export then email" = "email then export"). CONCENTRATION therefore checks the
 order of steps itself, in step 4.
@@ -143,13 +147,13 @@ measured it against the answer key:
 **The default is 0.89 for JEV-2** (`DEFAULT_THRESHOLDS` in `common.py`; `hashing` gets 0.6; `--threshold` overrides it).
 It has the best precision while recall stays above 0.8, and it sits inside the range that works, now only **0.88–0.89**:
 below 0.88 the three short refund screens (Zendesk queue, Stripe, Zendesk reply) merge into one step type, a task needs
-two linked step types, so refunds vanish (0/20 at 0.87); from 0.90 the onboarding runs split apart (0/4). The default was
-0.9 until we added the long payout task: its 16 sessions moved the mean used for centering, and the onboarding fell from
-3/4 to 0/4 at 0.9. That narrow range is the main fragility of this design (see limitations). **Recall matters more than precision:**
-a missed pair can make a whole task disappear, with nobody to catch it; a false pair is filtered by the rules in step 4
-and then by the reviewer. The modest precision is partly an artefact: the answer key only
-calls task steps "the same", so two near-identical Slack messages count as an error even though grouping them is harmless.
-What matters is the final task score above.
+two linked step types, so refunds vanish (0/20 at 0.87); from 0.90 the onboarding runs split apart (0/4). The default
+was 0.9 until we added the long payout task: its 16 sessions moved the mean used for centering, and the onboarding fell
+from 3/4 to 0/4 at 0.9. That narrow range is the main fragility of this design (see limitations). **Recall matters more
+than precision:** a missed pair can make a whole task disappear, with nobody to catch it; a false pair is filtered by
+the rules in step 4 and then by the reviewer. The modest precision is partly an artefact: the answer key only calls task
+steps "the same", so two near-identical Slack messages count as an error even though grouping them is harmless. What
+matters is the final task score above.
 
 ### 4. Step types → tasks → runs (`find_tasks.py`)
 
@@ -186,21 +190,58 @@ quote, a session and a kind (`normal`, `exception`, `troubleshooting`). **The LL
   20-token answer.
 - **Structured output:** Ollama's `format` takes a JSON schema, so the reply can only have the expected fields and kinds.
   `temperature: 0` makes it reproducible.
-- **Prompt choices that fixed real failures:** sessions are **numbered 1, 2, 3** (a 4B model copies long IDs badly), quotes
-  must come from **one line**, text is cut to 300 characters per session (prompt reading dominates CPU time), and the reply
-  limit is 1,500 tokens (900 cut the JSON mid-string). Result: 0 rejected quotes on the 4 tasks, ~65–100 s per task (5.5 min for all 4).
+- **Prompt choices that fixed real failures:** sessions are **numbered 1, 2, 3** (a 4B model copies long IDs badly),
+  quotes must come from **one line**, text is cut to 300 characters per session (prompt reading dominates CPU time), and
+  the reply limit is 1,500 tokens (900 cut the JSON mid-string). Result: 0 rejected quotes on the 4 tasks, ~65–100 s per
+  task (5.5 min for all 4).
 - **Verification:** code maps numbers back to session IDs and **rejects any quote not found word for word** in the source.
 - **Prompt injection:** screen text can contain anything, including instructions from an email or a web page. The prompt
   marks captures as untrusted data, the schema limits the output, the LLM has no tools, quotes are checked, and a person
   approves. The worst it can do is write a bad description that a human reads.
 
-### 6. Human review (`review.py`, http://localhost:4300)
+### 6. Human review (`review.py` + `review.html`, http://localhost:4300)
 
-One card per candidate task, its runs side by side. The reviewer renames the task, **rejects** false positives,
-**removes** wrong sessions, **splits** a run that is really two ("split here": saved as run `<day>.2`, minutes
-recomputed), and **classifies** extras as normal, exception or troubleshooting. A task cannot be confirmed while an
-extra is unclassified. Only confirmed tasks are saved (`reviewed_runs.json`); minutes are recomputed from the sessions
-kept. With `--show-truth`, answer-key badges appear next to each session (synthetic data only).
+`review.py` is a small local server: it serves `review.html` and two endpoints, `GET /api/data` (runs, sessions, LLM
+suggestions, saved decisions) and `POST /api/save`. The page is plain HTML and JavaScript, with no framework and no build
+step; `review.html` is read again on every request, so an edit shows after F5. **Nothing is confirmed automatically.**
+
+**What the reviewer sees.** One card per candidate task, in ranking order, folded to one line: the name, one bar per run
+(its length is the run's minutes), the number of runs and total minutes, how many sessions still need a decision, and
+quick ✓ / ✗ buttons. Unfolded, the runs sit side by side (4 per row on a wide screen). Each session is one line with a
+coloured dot for its kind: grey *normal*, orange *exception*, red *troubleshooting*, orange ring *to classify*. Extras
+(sessions inside a run that are not one of its usual steps) are highlighted and open by default; any other line opens on
+click and shows its time and app, the screen text, how many runs contain this kind of step ("in 2/5 runs"), the session ID
+and capture count (source IDs on hover) and, with `--show-truth`, the answer key.
+
+| Action | Where | What is saved |
+|---|---|---|
+| **Rename** | field at the top of the card, or "use name" on the LLM suggestion | `task` = new name; `proposed_as` keeps the proposed one |
+| **Confirm / reject** | ✓ / ✗ on the folded line, or the buttons at the top | only confirmed tasks are saved; confirming is refused while a highlighted session is unclassified |
+| **Classify** | menu on each session | `session_kinds`; the desk draft uses it over the LLM's kind |
+| **Remove / restore** | button on each session | the session is left out and the run's minutes recomputed |
+| **Split here / merge back** | button on each session except the first of a run (open the line to see it) | the run is saved as two, `<run>` and `<run>.2`, each with its own minutes |
+
+The minutes shown (run headers, bars, card total) are the ones that will be saved: they update as soon as a session
+is removed or a run is split, with the same rule as the server (first session start to last session end).
+
+**LLM suggestion.** When `task_descriptions.json` exists, a folded "Local LLM suggests" block shows the proposed name and
+numbered steps, each with its kind, quote and session; in the run it was read from, the cited sessions carry an
+"step N" badge. It is only a suggestion: nothing changes unless the reviewer clicks "use name".
+
+**Filters.** Chips in the header hide tasks by status (pending, confirmed, rejected) and sessions by kind (normal,
+exception, troubleshooting, to classify, removed), with counts; "Expand all / Collapse all" opens or folds every card.
+Filters and open cards are remembered by the browser (`localStorage`), not saved with the decisions.
+
+**Saving.** Nothing is written until **Save decisions**. The server then writes `review_state.json` (every decision,
+loaded again the next time the page opens on the same runs file) and `reviewed_runs.json` (confirmed runs only, minutes
+recomputed from the sessions kept). Closing or reloading the tab with unsaved changes asks for confirmation; if a save
+fails (server stopped, connection reset), the page retries, then says **NOT SAVED** and keeps the decisions so you can
+save again. Ctrl+C stops the server and says whether this session saved anything; if the port is taken, it says so
+instead of crashing.
+
+**Safety.** Screen text is inserted into the page as text, never as HTML, so a captured web page or email cannot run
+script in the review page. The server listens on 127.0.0.1 only. The page loads its font from Google Fonts (no screen text
+is sent); offline, it falls back to the system monospace font.
 
 ### 7. Export to the starter (`export_starter.py`)
 
@@ -241,7 +282,8 @@ written during the event.
 | `trail.db` | ingest | `captures`, `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids)`, `meta` (the ingested range) |
 | `embeddings.npz` | embed | session IDs + one centred, normalised vector each |
 | `concentration_runs.json` | find_tasks | `[{task, run, sessions, minutes, extra_sessions, step_share}]` |
-| `task_descriptions.json` | describe_tasks | per task: `name`, `steps[{text, session_id, quote, kind}]`, `rejected` |
+| `task_descriptions.json` | describe_tasks | per task: `name`, `run` (the run it was read from), `steps[{text, session_id, quote, kind}]`, `rejected`, `model`, `seconds` |
+| `review_state.json` | review page | `{source, decisions: {task: {status, name, removed, kinds, splits}}}`, every decision, reloaded by the page |
 | `reviewed_runs.json` | review page | confirmed runs only: `[{task, proposed_as, run, sessions, minutes, session_kinds}]` |
 | `starter_records.json` | export | `[{id, timestamp, app, text: "Task: …\nRun: …\nMinutes: …\nSession: …"}]` |
 | `desk_draft.json` | export | the review desk's procedure format: `title, context, evidence, steps, questions` |

@@ -52,25 +52,26 @@ button:hover{border-color:var(--ink)}button.primary:hover{filter:brightness(1.15
 .sep{width:1px;height:16px;background:var(--line);margin:0 4px}.hidden-note{font-size:11px;color:var(--muted);padding-top:4px}
 </style></head><body>
 <header><h1>CONCENTRATION · review</h1><span class="muted" id="src"></span>
-<button id="expand">Tout déplier</button><button id="collapse">Tout replier</button>
+<button id="expand">Expand all</button><button id="collapse">Collapse all</button>
 <span style="flex:1"></span>
 <span id="status" class="muted"></span><button class="primary" id="save">Save decisions</button>
 <div class="filters" id="filters"></div></header>
 <main id="tasks"></main>
 <script>
 const el=(t,p={},...kids)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(p)){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const k of kids)e.append(k);return e};
-let data,dec={};
+let data,dec={},savedDec='{}';  // savedDec: decisions as last loaded or saved, to detect unsaved changes
+const dirty=()=>data&&JSON.stringify(dec)!==savedDec;
 // filter chips: what is hidden (task statuses + session kinds), remembered per browser
-const FILTERS=[['tâches',[['pending','en attente'],['confirmed','confirmées'],['rejected','rejetées']]],
-  ['sessions',[['normal','normal'],['exception','exception'],['troubleshooting','troubleshooting'],['unclassified','à classer'],['removed','retirées']]]];
+const FILTERS=[['tasks',[['pending','pending'],['confirmed','confirmed'],['rejected','rejected']]],
+  ['sessions',[['normal','normal'],['exception','exception'],['troubleshooting','troubleshooting'],['unclassified','to classify'],['removed','removed']]]];
 const hidden=new Set((()=>{try{return JSON.parse(localStorage.hidden||'[]')}catch{return[]}})());
 function renderFilters(){
   const count={};const add=k=>count[k]=(count[k]||0)+1;
   data.tasks.forEach(t=>{const d=D(t.name);add(d.status);
     t.runs.forEach(r=>r.sessions.forEach(s=>add(d.removed.includes(s.id)?'removed':(d.kinds[s.id]??s.kind))))});
-  document.getElementById('filters').replaceChildren(el('span',{class:'muted'},'afficher :'),...FILTERS.flatMap(([group,items],i)=>[
+  document.getElementById('filters').replaceChildren(el('span',{class:'muted'},'show:'),...FILTERS.flatMap(([group,items],i)=>[
     ...(i?[el('span',{class:'sep'})]:[]),el('span',{class:'muted'},group),
-    ...items.map(([k,label])=>el('button',{class:'chip '+k,'aria-pressed':String(!hidden.has(k)),title:'cliquer pour afficher / masquer',
+    ...items.map(([k,label])=>el('button',{class:'chip '+k,'aria-pressed':String(!hidden.has(k)),title:'click to show / hide',
       onclick:()=>{hidden.has(k)?hidden.delete(k):hidden.add(k);try{localStorage.hidden=JSON.stringify([...hidden])}catch{};render()}},
       el('span',{class:'dot'}),label,el('span',{class:'n'},String(count[k]||0))))]));
 }
@@ -90,8 +91,11 @@ function render(){
   data.tasks.forEach(task=>{
     const d=D(task.name);
     if(hidden.has(d.status))return;
-    const total=task.runs.reduce((n,r)=>n+r.minutes,0);
-    const max=Math.max(...task.runs.map(r=>r.minutes),1);
+    // runs as they will be saved: splits applied, removed sessions left out, minutes recomputed (same rule as review.py)
+    const pieces=task.runs.flatMap(r=>partsOf(r,d).map((p,i)=>({run:i?`${r.run}.${i+1}`:r.run,minutes:partMinutes(p,d),
+      kept:p.some(s=>!d.removed.includes(s.id))}))).filter(p=>p.kept);
+    const total=pieces.reduce((n,p)=>n+p.minutes,0);
+    const max=Math.max(...pieces.map(p=>p.minutes),1);
     const pending=task.runs.flatMap(r=>r.sessions).filter(s=>!d.removed.includes(s.id)&&(d.kinds[s.id]??s.kind)==='unclassified').length;
     const confirm=e=>{e.preventDefault();if(pending){alert(pending+' extra session(s) still unclassified: classify or remove them first.');return}d.status='confirmed';render()};
     const reject=e=>{e.preventDefault();d.status='rejected';render()};
@@ -100,8 +104,8 @@ function render(){
         ontoggle:e=>{if(e.target!==card)return;card.open?open.add(task.name):open.delete(task.name);remember()}},
       el('summary',{},
         el('b',{class:'name',title:d.name},d.name),
-        el('span',{class:'bars',title:'duration of each run'},...task.runs.map(r=>el('i',{style:`width:${4+r.minutes/max*40}px`,title:`run ${r.run} · ${r.minutes} min`}))),
-        el('span',{class:'muted'},`${task.runs.reduce((n,r)=>n+partsOf(r,d).length,0)} runs · ${total.toFixed(0)} min`),
+        el('span',{class:'bars',title:'duration of each run'},...pieces.map(p=>el('i',{style:`width:${4+p.minutes/max*40}px`,title:`run ${p.run} · ${p.minutes} min`}))),
+        el('span',{class:'muted'},`${pieces.length} runs · ${total.toFixed(0)} min`),
         pending?el('span',{class:'badge warn'},`${pending} to classify`):'',
         el('span',{style:'flex:1'}),
         el('span',{class:'badge'},d.status),
@@ -119,14 +123,14 @@ function render(){
       card.append(el('details',{class:'desc'},
         el('summary',{},el('span',{class:'muted'},'▸ Local LLM suggests: '),el('b',{},ds.name||''),
           el('button',{onclick:e=>{e.preventDefault();d.name=ds.name;render()}},'use name')),
-        el('div',{class:'muted'},`Procédure proposée d'après le run ${ds.run} . Chaque étape cite une session de ce run, repérée par le badge « étape N ».`),
+        el('div',{class:'muted'},`Procedure drafted from run ${ds.run}. Each step cites a session of that run, marked with a "step N" badge.`),
         el('ol',{},...(ds.steps||[]).map(st=>el('li',{},
           el('b',{},st.text.split('\n')[0]),
-          el('div',{class:'muted'},`[${st.kind}] preuve à l'écran : “${st.quote}” — ${st.session_id}`))))))}
+          el('div',{class:'muted'},`[${st.kind}] on screen: “${st.quote}” — ${st.session_id}`))))))}
     const runs=el('div',{class:'runs'});
     task.runs.forEach(run=>{
       const parts=partsOf(run,d);
-      const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${parts.length>1?partMinutes(parts[0],d):run.minutes} min`));
+      const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${partMinutes(parts[0],d)} min`));
       let skipped=0;
       run.sessions.forEach((s,i)=>{
         const split=i>0&&d.splits.includes(s.id);
@@ -140,7 +144,7 @@ function render(){
         // one line per session; unfolded only when it still needs a decision
         box.append(el('details',{class:'s '+k+(s.extra?' extra':'')+(removed?' removed':''),...(k==='unclassified'&&!removed?{open:''}:{})},
           el('summary',{title:k},el('span',{class:'dot'}),el('span',{class:'w'},s.window||s.app),
-            stepOf[s.id]?el('span',{class:'badge',title:'step of the LLM suggestion above'},(stepOf[s.id].length>1?'étapes ':'étape ')+stepOf[s.id].join(', ')):'',
+            stepOf[s.id]?el('span',{class:'badge',title:'step of the LLM suggestion above'},(stepOf[s.id].length>1?'steps ':'step ')+stepOf[s.id].join(', ')):'',
             el('span',{class:'muted'},`${s.minutes} min`)),
           el('div',{class:'row muted'},`${time(s.start)} · ${s.app}`,s.share?el('span',{class:'badge',title:'runs of this task that contain this kind of step'},'in '+s.share+' runs'):''),
           txt,
@@ -151,7 +155,7 @@ function render(){
             el('span',{class:'muted',title:s.sources.join(', ')},`${s.id} · ${s.sources.length} captures`),
             s.truth?el('span',{class:'badge truth',title:'answer key, synthetic data only'},`key: ${s.truth.task||s.truth.category}${s.truth.kind&&s.truth.kind!=='normal'?' · '+s.truth.kind:''}`):'')));
       });
-      if(skipped)box.append(el('div',{class:'hidden-note'},`${skipped} session(s) masquée(s) par les filtres`));
+      if(skipped)box.append(el('div',{class:'hidden-note'},`${skipped} session(s) hidden by the filters`));
       runs.append(box);
     });
     card.append(runs);root.append(card);
@@ -167,12 +171,24 @@ async function load(){
   document.getElementById('status').textContent='';
   data=j.data;dec=j.decisions||{};
   document.getElementById('src').textContent='source: '+data.source;render();
+  savedDec=JSON.stringify(dec);  // after render(): it fills in defaults for tasks never decided
 }
+// closing or reloading the tab with unsaved decisions: the browser asks for confirmation
+window.addEventListener('beforeunload',e=>{if(dirty()){e.preventDefault();e.returnValue=''}});
 document.getElementById('expand').onclick=()=>{data.tasks.forEach(t=>open.add(t.name));remember();render()};
 document.getElementById('collapse').onclick=()=>{open.clear();remember();render()};
 document.getElementById('save').onclick=async()=>{
-  const r=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(dec)});
-  const j=await r.json();document.getElementById('status').textContent=j.error||`saved · ${j.runs} confirmed runs → reviewed_runs.json`;
+  const status=document.getElementById('status'),body=JSON.stringify(dec);
+  let j,err;
+  for(let attempt=1;attempt<=3&&!j;attempt++){  // same WSL connection resets as on load: retry
+    try{const r=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body});
+      if(!r.ok)throw new Error('HTTP '+r.status);j=await r.json()}
+    catch(e){err=e;status.textContent=`saving failed (${e.message}), retry ${attempt}/3…`;await new Promise(ok=>setTimeout(ok,700))}
+  }
+  if(!j||j.error){status.textContent=(j?`NOT SAVED: ${j.error}.`:`NOT SAVED: cannot reach review.py (${err.message}). Is it still running?`)
+    +' Your decisions are still in this page: fix it, then Save again.';return}
+  savedDec=body;
+  status.textContent=`saved · ${j.runs} confirmed runs → reviewed_runs.json`;
 };
 load();
 </script></body></html>

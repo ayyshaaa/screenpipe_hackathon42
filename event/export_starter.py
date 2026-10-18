@@ -156,7 +156,7 @@ def main():
     write_json(os.path.join(args.out_dir, "desk_draft.json"), draft)
     print(f"desk_records.json + desk_draft.json: run {run['run']} of '{run['task']}' ({len(evidence)} sessions)")
     here = os.path.abspath(args.out_dir)
-    print("\nnext, in ~/hackathon-starter:")
+    print("\nnext, in ../hackathon-starter:")
     print(f"  bun run repetition --input {here}/starter_records.json")
     print(f"  bun start --draft {here}/desk_draft.json   # then open http://localhost:4242")
 
