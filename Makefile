@@ -33,7 +33,7 @@ TO        ?=
 TYPES     ?= ocr,accessibility
 # MODEL=hashing needs no download
 MODEL     ?= VTXAI/VTX-JEV-2
-# empty = picked from MODEL (0.9 JEV-2, 0.6 hashing, see event/common.py); set it to override
+# empty = picked from MODEL (0.89 JEV-2, 0.6 hashing, see event/common.py); set it to override
 THRESHOLD ?=
 # a task must repeat on at least MIN_DAYS different days to count as repetitive
 MIN_DAYS  ?= 3

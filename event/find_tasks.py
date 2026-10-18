@@ -8,7 +8,8 @@ The rule, in plain words:
      within --window-min minutes of each other, in a consistent order (>= --min-order),
      and they usually come together (co-occurring days / days either one appears >= --min-support).
   3. Linked step types form a candidate task. Each day's cluster of its steps is one run; a run goes on
-     while each step starts within --window-min of the previous step's end.
+     while each step starts within --window-min of the previous step's end, and a new run starts when
+     the task's usual first step comes back after its usual last step.
      Sessions inside a run that are not one of its steps are kept as "extra" for the reviewer
      (possible exception, troubleshooting, or noise to remove).
 
@@ -131,6 +132,30 @@ def type_name(sessions, labels, t):
     return windows.most_common(1)[0][0] or "untitled"
 
 
+def split_restarts(groups, label_of):
+    """Two runs done back to back (less than --window-min apart) form one group: start a new run when
+    the task's usual first step comes back after its usual last step was reached. A back-and-forth
+    in the middle of a run (sheet -> email -> sheet) does not split it."""
+    if not groups:
+        return groups
+    lab = lambda s: label_of[s["session_id"]]
+    first = Counter(lab(g[0]) for g in groups).most_common(1)[0][0]
+    last = Counter(lab(g[-1]) for g in groups).most_common(1)[0][0]
+    if first == last:
+        return groups
+    out = []
+    for g in groups:
+        cur, ended = [], False
+        for s in g:
+            if ended and lab(s) == first:
+                out.append(cur)
+                cur, ended = [], False
+            cur.append(s)
+            ended = ended or lab(s) == last
+        out.append(cur)
+    return out
+
+
 def find_runs(sessions, labels, types, args, taken):
     core = sorted((s for s, lab in zip(sessions, labels) if lab in types), key=lambda s: s["t0"])
     groups, cur = [], []
@@ -145,6 +170,7 @@ def find_runs(sessions, labels, types, args, taken):
     if cur:
         groups.append(cur)
     label_of = {s["session_id"]: lab for s, lab in zip(sessions, labels)}
+    groups = split_restarts(groups, label_of)
     runs = []
     for g in groups:
         if len({label_of[s["session_id"]] for s in g}) < 2:
@@ -218,7 +244,7 @@ def sweep(sessions, vectors):
     i, j = i[keep], j[keep]
     same = np.array([key[a] is not None and key[a] == key[b] for a, b in zip(i, j)])
     print("threshold  precision  recall   (pairs from different days; same = same task and step)")
-    for thr in np.r_[np.arange(0.3, 0.85, 0.1), np.arange(0.9, 0.995, 0.01)]:
+    for thr in np.r_[np.arange(0.3, 0.85, 0.1), np.arange(0.85, 0.995, 0.01)]:
         pred = sims[i, j] >= thr
         tp = int((pred & same).sum())
         prec = tp / max(int(pred.sum()), 1)
@@ -234,7 +260,7 @@ def score(runs):
         ids = [sid for r in runs if r["task"] == task for sid in r["sessions"]]
         top, n = Counter(truth[sid]["task"] or truth[sid]["category"] for sid in ids).most_common(1)[0]
         n_runs = sum(r["task"] == task for r in runs)
-        verdict = "TASK" if top in ("weekly_report", "refund_check", "partner_onboard") else "FALSE POSITIVE"
+        verdict = "TASK" if top in ("payout_recon", "weekly_report", "refund_check", "partner_onboard") else "FALSE POSITIVE"
         print(f"  {verdict:14} {task}  ({n_runs} runs, mostly {top}: {n}/{len(ids)} sessions)")
     for tr_task in dict.fromkeys(r["task"] for r in truth_runs):
         expected = [set(r["sessions"]) for r in truth_runs if r["task"] == tr_task]

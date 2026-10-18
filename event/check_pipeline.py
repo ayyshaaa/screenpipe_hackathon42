@@ -6,9 +6,10 @@
   python3 check_pipeline.py --threshold 0.85                     # force a threshold
   python3 check_pipeline.py --starter ../hackathon-starter       # also runs bun run repetition
 
-Fails (exit 1) if: a hidden task is missed (< 80% of its runs), the 3 tasks are not ranked
-weekly_report > refund_check > partner_onboard, a proposed task is mostly noise (chat, music, inbox),
-or the exported records break the starter's rules. A recurring meeting being proposed is only a
+Fails (exit 1) if: a hidden task is missed (< 80% of its runs), a run of the long task (payout_recon,
+~95 min) is cut instead of found whole, the 4 tasks are not ranked
+payout_recon > weekly_report > refund_check > partner_onboard, a proposed task is mostly noise
+(chat, music, inbox), or the exported records break the starter's rules. A recurring meeting being proposed is only a
 warning: that false positive is what the human review step is for.
 """
 import argparse
@@ -23,7 +24,8 @@ import time
 from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-EXPECTED = ["weekly_report", "refund_check", "partner_onboard"]
+EXPECTED = ["payout_recon", "weekly_report", "refund_check", "partner_onboard"]
+LONG_TASK = "payout_recon"  # runs over one hour: each must be found whole, not cut
 
 
 def free_port():
@@ -95,6 +97,12 @@ def main():
             if hit < 0.8 * len(expected):
                 failures.append(f"{name}: only {hit}/{len(expected)} runs found")
 
+        long_runs = [set(r["sessions"]) for r in truth_runs if r["task"] == LONG_TASK]
+        whole = sum(any(e <= set(r["sessions"]) for r in runs) for e in long_runs)
+        print(f"  {LONG_TASK}: {whole}/{len(long_runs)} runs over one hour found whole")
+        if whole < len(long_runs):
+            failures.append(f"{LONG_TASK}: only {whole}/{len(long_runs)} runs over one hour found whole (cut runs)")
+
         order = [proposed[t] for t in proposed if proposed[t] in EXPECTED]
         if order != EXPECTED:
             failures.append(f"ranking is {order}, expected {EXPECTED}")
@@ -108,9 +116,9 @@ def main():
                       args.starter)
             pos = [out.find(f"### {n.replace('_', chr(92) + '_')}") for n in EXPECTED]
             if -1 in pos or pos != sorted(pos):
-                failures.append("bun run repetition did not rank the 3 tasks as expected")
+                failures.append(f"bun run repetition did not rank the {len(EXPECTED)} tasks as expected")
             else:
-                print("  bun run repetition: 3 tasks ranked as expected")
+                print(f"  bun run repetition: {len(EXPECTED)} tasks ranked as expected")
     finally:
         if server:
             server.terminate()

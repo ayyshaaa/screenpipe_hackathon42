@@ -19,13 +19,14 @@ troubleshooting are kept apart from the normal process, and nothing predicts sav
 
 | Hidden task | Truth | Found | Observed minutes | Note |
 |---|---|---|---|---|
+| Payout reconciliation (Fridays, ~1 h 40 per run) | 4 runs | **4/4** | 390.1 | every run found **whole**, though its last step starts ~90 min after the first |
 | Weekly KPI report (Mondays) | 5 runs | **5/5** | 138.5 | run 3's expired-login detour kept as *troubleshooting*; the Lyon tab added from run 4 kept as *normal* |
 | Refund check (mornings) | 20 runs | **20/20** | 91.9 | the €64.80 escalation kept as *exception* |
 | Partner onboarding | 4 runs | **3/4** | 41.9 | **failure case**: see below |
 | Monday squad sync (meeting) | not a task | proposed | — | classic false positive, **rejected by the reviewer** |
 
-Measured with VTX-JEV-2 at its default threshold (0.9). The starter ranks the confirmed runs **weekly report > refunds >
-onboarding**, the expected order, citing session IDs as sources.
+Measured with VTX-JEV-2 at its default threshold (0.89). The starter ranks the confirmed runs **payout reconciliation >
+weekly report > refunds > onboarding**, the expected order, citing session IDs as sources.
 
 **The failure case, shown on purpose.** The Sushi Kan onboarding run is missed: its company had no SIRET, so the screens
 differ (no result, an extra "Request SIRET" email) and too few sessions match the usual steps. The onboarding's minutes are
@@ -114,7 +115,7 @@ captures in the same app and window, with no pause longer than 5 minutes.
 Each session (`app | window` + text) becomes 256 numbers; sessions with similar content land close together.
 
 **Why VTX-JEV-2.** It is a *static* model, distilled with Model2Vec: a table of one vector per token, averaged over the text.
-It needs no GPU and no PyTorch, embeds our 321 sessions in about 7.5 s on a laptop CPU (model loading included), weighs ~125 MB on disk (~165 MB to download), and handles the
+It needs no GPU and no PyTorch, embeds our 327 sessions in about 7.5 s on a laptop CPU (model loading included), weighs ~125 MB on disk (~165 MB to download), and handles the
 French/English mix of real screens. We load the FP32 file through the `model2vec` library; the 2-bit LF2 variant exists,
 but its model card publishes no quality figures, and at our scale size and speed are not the bottleneck.
 
@@ -133,14 +134,18 @@ measured it against the answer key:
 
 | Threshold | Precision | Recall |
 |---|---|---|
-| 0.80 | 0.26 | 0.98 |
-| **0.90** | **0.37** | **0.82** |
-| 0.95 | 0.25 | 0.34 |
+| 0.80 | 0.27 | 0.98 |
+| 0.85 | 0.34 | 0.96 |
+| **0.89** | **0.37** | **0.86** |
+| 0.90 | 0.37 | 0.82 |
+| 0.95 | 0.27 | 0.35 |
 
-**The default is 0.9 for JEV-2** (`DEFAULT_THRESHOLDS` in `common.py`; `hashing` gets 0.6; `--threshold` overrides it).
-It has the best precision while recall stays above 0.8, and it sits inside the range that works: below about 0.88 the three
-short refund screens (Zendesk queue, Stripe, Zendesk reply) merge into one step type, a task needs two linked step types,
-so refunds vanish (0/20 at 0.8); above about 0.92 the onboarding runs split apart. **Recall matters more than precision:**
+**The default is 0.89 for JEV-2** (`DEFAULT_THRESHOLDS` in `common.py`; `hashing` gets 0.6; `--threshold` overrides it).
+It has the best precision while recall stays above 0.8, and it sits inside the range that works, now only **0.88–0.89**:
+below 0.88 the three short refund screens (Zendesk queue, Stripe, Zendesk reply) merge into one step type, a task needs
+two linked step types, so refunds vanish (0/20 at 0.87); from 0.90 the onboarding runs split apart (0/4). The default was
+0.9 until we added the long payout task: its 16 sessions moved the mean used for centering, and the onboarding fell from
+3/4 to 0/4 at 0.9. That narrow range is the main fragility of this design (see limitations). **Recall matters more than precision:**
 a missed pair can make a whole task disappear, with nobody to catch it; a false pair is filtered by the rules in step 4
 and then by the reviewer. The modest precision is partly an artefact: the answer key only
 calls task steps "the same", so two near-identical Slack messages count as an error even though grouping them is harmless.
@@ -150,7 +155,7 @@ What matters is the final task score above.
 
 1. **Step types.** *Leader clustering*: in time order, each session joins the group whose centre is closest if it is above
    the threshold, otherwise it starts a new group, then a clean-up pass reassigns sessions. No number of groups is fixed in
-   advance, since nobody knows how many different steps a month contains. At 0.9 this gives 63 step types.
+   advance, since nobody knows how many different steps a month contains. At 0.89 this gives 62 step types.
    We did not use HDBSCAN: our steps occur only 4 to 20 times, too few for density-based clustering to be tuned reliably,
    and a measured threshold is easier to justify.
 2. **Linked step types.** Two types belong to one task if, on **at least 3 different days**, they occur **within 60 minutes**,
@@ -159,10 +164,12 @@ What matters is the final task score above.
    They are also what filters noise: Slack or Spotify appear every day, but not in a consistent order next to anything.
 3. **Tasks.** Linked pairs are merged *transitively* (union-find): if dashboard–export, export–sheet and sheet–email are
    linked, all four are one task even if dashboard and email were never directly linked.
-4. **Runs.** Each day's cluster of a task's steps is one run: a run goes on while each step starts **within 60 minutes of
-   the previous step's end**, so a task with many or long steps is not cut at one hour. Sessions that fall *inside* a run but are not one of its usual
-   steps (the login detour, a Slack interruption, the new Lyon tab) are kept as **extras** for the reviewer instead of being
-   silently dropped or silently included. Each session shows in how many runs its kind of step appears ("in 2/5 runs").
+4. **Runs.** Each day's cluster of a task's steps is one run: a run goes on while each step starts **within 60 minutes
+   of the previous step's end**, so a task with many or long steps is not cut at one hour. Two runs done back to back
+   are still told apart: a new run starts when the task's usual first step comes back after its usual last step.
+   Sessions that fall *inside* a run but are not one of its usual steps (the login detour, a Slack interruption, the new
+   Lyon tab) are kept as **extras** for the reviewer instead of being silently dropped or silently included. Each
+   session shows in how many runs its kind of step appears ("in 2/5 runs").
 5. **Ranking** by total observed minutes, the starter's own criterion. `MIN_DAYS` (default 3) is the "at least 3 days"
    rule: on a 2-week range a weekly task has only 2 runs and is, correctly, not proposed.
 
@@ -189,10 +196,11 @@ quote, a session and a kind (`normal`, `exception`, `troubleshooting`). **The LL
 
 ### 6. Human review (`review.py`, http://localhost:4300)
 
-One card per candidate task, its runs side by side. The reviewer renames the task, **rejects** false positives, **removes**
-wrong sessions, and **classifies** extras as normal, exception or troubleshooting. A task cannot be confirmed while an extra
-is unclassified. Only confirmed tasks are saved (`reviewed_runs.json`); minutes are recomputed from the sessions kept.
-With `--show-truth`, answer-key badges appear next to each session (synthetic data only).
+One card per candidate task, its runs side by side. The reviewer renames the task, **rejects** false positives,
+**removes** wrong sessions, **splits** a run that is really two ("split here": saved as run `<day>.2`, minutes
+recomputed), and **classifies** extras as normal, exception or troubleshooting. A task cannot be confirmed while an
+extra is unclassified. Only confirmed tasks are saved (`reviewed_runs.json`); minutes are recomputed from the sessions
+kept. With `--show-truth`, answer-key badges appear next to each session (synthetic data only).
 
 ### 7. Export to the starter (`export_starter.py`)
 
@@ -209,15 +217,20 @@ With `--show-truth`, answer-key badges appear next to each session (synthetic da
 Organisers ruled that no code written before the event could be brought, so everything here, including the fake data, was
 written during the event.
 
-- `fake_story.py` writes a month of screen history with three hidden tasks, their exceptions, a recurring meeting, project
-  work, one-offs and noise; `fake_screenpipe.py` serves it with the same `/search` API as screenpipe.
+- `fake_story.py` writes a month of screen history with four hidden tasks (one lasting ~1 h 40 per run, to test that a
+  run is not cut at one hour), their exceptions, a recurring meeting, project work, one-offs and noise;
+  `fake_screenpipe.py` serves it with the same `/search` API as screenpipe. `make pipeline` reuses
+  `fake_data/story.json`: after changing `fake_story.py`, run `make clean story` first, and restart a fake screenpipe
+  started by hand, since it keeps the old story in memory.
 - `label_sessions.py` writes the answer key (`fake_data/session_truth.json`, `fake_data/truth_runs.json`). **It is only used
   for scoring, never as pipeline input.** `review.py --truth-runs` and `export_starter.py --truth-runs` show the perfect answer.
-- `check_pipeline.py` (`make check`) runs everything in a throw-away copy and fails if a hidden task loses more than 20 %
-  of its runs, the ranking is wrong, noise is proposed as a task, or the export breaks the starter's rules. With
-  `--starter` (`make check` passes `$(STARTER)` when that folder exists), it also checks the ranking produced by `bun run repetition`. With JEV-2 it reports **one expected failure, Sushi Kan
-  (3/4)**, and one warning, the squad sync. With `MODEL=hashing` it passes (4/4 onboarding runs): exact shared words such as
-  "SIRET" are a strong signal on synthetic text, but we keep JEV-2 as the default because real screens are messier.
+- `check_pipeline.py` (`make check`) runs everything in a throw-away copy and fails if a hidden task loses more than
+  20 % of its runs, a run of the long task is cut instead of found whole, the ranking is wrong, noise is proposed as a
+  task, or the export breaks the starter's rules. With `--starter` (`make check` passes `$(STARTER)` when that folder
+  exists), it also checks the ranking produced by `bun run repetition`. With JEV-2 it reports **one expected failure,
+  Sushi Kan (3/4)**, and one warning, the squad sync. With `MODEL=hashing` it passes (4/4 onboarding runs): exact shared
+  words such as "SIRET" are a strong signal on synthetic text, but we keep JEV-2 as the default because real screens are
+  messier.
 
 ---
 
@@ -240,8 +253,9 @@ written during the event.
 - **No answer key on real data.** Precision and recall exist only on synthetic data. On real data, review decisions measure
   the precision of proposals (tasks confirmed / proposed, sessions removed); labelling ~20 session pairs around the threshold
   would re-calibrate it; a few tasks declared by the person ("I do the KPI report every Monday") would measure recall.
-- **The threshold depends on the range**, through mean-centering (the average vector changes with the sessions kept).
-  Next: store the calibration mean and reuse it.
+- **The threshold depends on the range and the data**, through mean-centering (the average vector changes with the
+  sessions kept). Adding the 16 sessions of the long payout task narrowed the working range to 0.88–0.89 and moved the
+  default from 0.9 to 0.89. Next: store the calibration mean and reuse it.
 - **Exception runs can be missed** when the exception changes most screens (Sushi Kan). Runs with fewer matching steps
   could be proposed as "possible runs" for the reviewer.
 - **A first step can be lost** when its screens resemble other tasks' (the onboarding's application email), so minutes are

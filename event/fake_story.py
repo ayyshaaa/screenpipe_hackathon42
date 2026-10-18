@@ -6,6 +6,8 @@ Writes fake_data/story.json:
   truth:    source_id -> label (category, task, step, run, kind). Scoring only, never pipeline input.
 
 Hidden repeated tasks (what CONCENTRATION should find, in this order by observed minutes):
+  payout_recon     4 Friday runs, ~95 min: long steps, the last one starts over an hour after the first
+                   (tests that a run is not cut at one hour).
   weekly_report    5 Monday runs, ~25 min. Run 3: one-off expired-login detour (troubleshooting).
                    From run 4: extra "Lyon tab" step (process change, still normal).
   refund_check     20 morning runs, ~4 min. One EUR 64.80 refund escalated (exception).
@@ -89,6 +91,25 @@ PARTNERS = [
     dict(restaurant="Mamma Rosa", city="Lyon", contact="rosa@mammarosa.it", cuisine="italian", siret="790 112 334 00027", dishes=31),
     dict(restaurant="Sushi Kan", city="Paris", contact="kan@sushikan.fr", cuisine="japanese", siret="pending", dishes=40),
     dict(restaurant="La Cantine Verte", city="Lyon", contact="hello@cantineverte.fr", cuisine="vegan", siret="853 990 101 00011", dishes=18),
+]
+
+# long task: each step takes 25-35 min, the email starts ~90 min after the first step
+PAYOUT = [
+    ("payouts", "Google Chrome", "Payout reconciliation report – Stripe", "https://dashboard.stripe.com/reports/reconciliation", 25,
+     ["Payout reconciliation report | week {week} | balance change from activity",
+      "Itemized payout reconciliation: charges, refunds, fees and disputes included in each bank payout",
+      "Download itemized payout reconciliation report as CSV"]),
+    ("bank", "Qonto", "Qonto – Main account – Transactions", "", 30,
+     ["Main account transactions | filter: incoming transfers from Stripe | week {week}",
+      "Match each incoming bank transfer with a Stripe payout and attach the statement",
+      "Bank statement for week {week} downloaded as CSV"]),
+    ("recon", "Microsoft Excel", "Payout reconciliation.xlsx – Excel", "", 35,
+     ["Payout reconciliation workbook | sheet Week {week} | Stripe payouts against bank transfers",
+      "Lookup formula flags unmatched payouts | difference column highlighted in red",
+      "Note for finance: one payout still in transit, check again next Friday"]),
+    ("report", "Google Chrome", "Payout reconciliation done – Gmail", "https://mail.google.com/mail/u/0/#compose", 5,
+     ["To: finance@tavola.fr | Subject: Payout reconciliation done – week {week}",
+      "Hi Finance, payouts for week {week} are reconciled with the bank, workbook attached. Difference: €{diff}."]),
 ]
 
 SQUAD = [
@@ -183,6 +204,7 @@ def build():
     days = [START + timedelta(n) for n in range((END - START).days + 1)]
     workdays = [d for d in days if d.weekday() < 5]
     mondays = [d for d in workdays if d.weekday() == 0]
+    fridays = [d for d in workdays if d.weekday() == 4]
     refund_days = [d for i, d in enumerate(workdays) if i not in (6, 15)]  # 20 runs
     escalation_day = refund_days[9]
     partner_days = [date(2026, 9, 10), date(2026, 9, 17), date(2026, 9, 24), date(2026, 10, 1)]
@@ -220,6 +242,15 @@ def build():
             kinds = {"login_detour": "troubleshooting"}
         run = f"weekly_report-{d.isoformat()}"
         busy[d].append(st.run_steps(local(d, 14, rng.randint(0, 15)), steps, values, "weekly_report", run, kinds))
+
+    # added later, with its own random generator so the rest of the month stays as it was
+    st.rng, main_rng = random.Random(SEED + 1), st.rng
+    prng = st.rng
+    for n, d in enumerate(fridays[:4]):
+        values = dict(week=37 + n, diff=f"{prng.choice([0, 0, 12.40, 36.90]):.2f}")
+        run = f"payout_recon-{d.isoformat()}"
+        busy[d].append(st.run_steps(local(d, 13, prng.randint(30, 45)), PAYOUT, values, "payout_recon", run, gap=(1, 3)))
+    st.rng = main_rng
 
     for p, d in zip(PARTNERS, partner_days):
         values = dict(p, golive=(d + timedelta(14)).isoformat())
@@ -265,8 +296,8 @@ def build():
     st.captures.sort(key=lambda c: c["content"]["timestamp"])
     return {
         "meta": {"synthetic": True, "person": "Inès, product manager at Tavola", "from": START.isoformat(), "to": END.isoformat(),
-                 "expected_ranking": ["weekly_report", "refund_check", "partner_onboard"],
-                 "expected_runs": {"weekly_report": 5, "refund_check": 20, "partner_onboard": 4}},
+                 "expected_ranking": ["payout_recon", "weekly_report", "refund_check", "partner_onboard"],
+                 "expected_runs": {"payout_recon": 4, "weekly_report": 5, "refund_check": 20, "partner_onboard": 4}},
         "captures": st.captures,
         "truth": st.truth,
     }

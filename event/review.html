@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>THROUGHT review</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>CONCENTRATION review</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -48,9 +48,10 @@ button:hover{border-color:var(--ink)}button.primary:hover{filter:brightness(1.15
 .chip[aria-pressed="false"]{opacity:.45;text-decoration:line-through;border-style:dashed}
 .chip .n{color:var(--muted)}.chip.pending .dot{background:var(--ink)}.chip.confirmed .dot{background:var(--ok)}.chip.rejected .dot{background:var(--bad)}
 .chip.removed .dot{background:transparent;border:1px solid var(--muted)}
+.cut{display:flex;gap:6px;align-items:center;margin:6px -8px 2px;padding:2px 8px;border-top:2px dashed var(--ink);font-size:12px;font-weight:600}
 .sep{width:1px;height:16px;background:var(--line);margin:0 4px}.hidden-note{font-size:11px;color:var(--muted);padding-top:4px}
 </style></head><body>
-<header><h1>THROUGHT · review</h1><span class="muted" id="src"></span>
+<header><h1>CONCENTRATION · review</h1><span class="muted" id="src"></span>
 <button id="expand">Tout déplier</button><button id="collapse">Tout replier</button>
 <span style="flex:1"></span>
 <span id="status" class="muted"></span><button class="primary" id="save">Save decisions</button>
@@ -77,7 +78,11 @@ function renderFilters(){
 const load_open=()=>{try{return JSON.parse(localStorage.openTasks||'[]')}catch{return[]}};
 const open=new Set(load_open());
 const remember=()=>{try{localStorage.openTasks=JSON.stringify([...open])}catch{}};
-const D=t=>dec[t]??={status:'pending',name:t,removed:[],kinds:{}};
+const D=t=>{const d=dec[t]??={status:'pending',name:t,removed:[],kinds:{},splits:[]};d.splits??=[];return d};
+// a run split by the reviewer: a session in d.splits starts a new run (same rule as review.py's save)
+const partsOf=(run,d)=>run.sessions.reduce((ps,s,i)=>{if(i&&d.splits.includes(s.id))ps.push([]);ps[ps.length-1].push(s);return ps},[[]]);
+const partMinutes=(part,d)=>{const k=part.filter(s=>!d.removed.includes(s.id));if(!k.length)return 0;
+  const t0=Math.min(...k.map(s=>+new Date(s.start))),t1=Math.max(...k.map(s=>+new Date(s.start)+s.minutes*60000));return Math.round((t1-t0)/6000)/10};
 const time=ts=>new Date(ts).toLocaleString('en-GB',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 function render(){
   const root=document.getElementById('tasks');root.replaceChildren();
@@ -96,7 +101,7 @@ function render(){
       el('summary',{},
         el('b',{class:'name',title:d.name},d.name),
         el('span',{class:'bars',title:'duration of each run'},...task.runs.map(r=>el('i',{style:`width:${4+r.minutes/max*40}px`,title:`run ${r.run} · ${r.minutes} min`}))),
-        el('span',{class:'muted'},`${task.runs.length} runs · ${total.toFixed(0)} min`),
+        el('span',{class:'muted'},`${task.runs.reduce((n,r)=>n+partsOf(r,d).length,0)} runs · ${total.toFixed(0)} min`),
         pending?el('span',{class:'badge warn'},`${pending} to classify`):'',
         el('span',{style:'flex:1'}),
         el('span',{class:'badge'},d.status),
@@ -120,9 +125,13 @@ function render(){
           el('div',{class:'muted'},`[${st.kind}] preuve à l'écran : “${st.quote}” — ${st.session_id}`))))))}
     const runs=el('div',{class:'runs'});
     task.runs.forEach(run=>{
-      const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${run.minutes} min`));
+      const parts=partsOf(run,d);
+      const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${parts.length>1?partMinutes(parts[0],d):run.minutes} min`));
       let skipped=0;
-      run.sessions.forEach(s=>{
+      run.sessions.forEach((s,i)=>{
+        const split=i>0&&d.splits.includes(s.id);
+        if(split){const n=parts.findIndex(p=>p[0]===s);
+          box.append(el('div',{class:'cut',title:'saved as a separate run'},`✂ Run ${run.run}.${n+1} · ${partMinutes(parts[n],d)} min`))}
         const removed=d.removed.includes(s.id);
         const k=d.kinds[s.id]??s.kind;
         if(hidden.has(removed?'removed':k)){skipped++;return}
@@ -137,6 +146,8 @@ function render(){
           txt,
           el('div',{class:'row'},kind,
             el('button',{onclick:()=>{d.removed=removed?d.removed.filter(x=>x!==s.id):[...d.removed,s.id];render()}},removed?'restore':'remove'),
+            i>0?el('button',{title:'two runs done back to back: a new run starts at this session',
+              onclick:()=>{d.splits=split?d.splits.filter(x=>x!==s.id):[...d.splits,s.id];render()}},split?'merge back':'split here'):'',
             el('span',{class:'muted',title:s.sources.join(', ')},`${s.id} · ${s.sources.length} captures`),
             s.truth?el('span',{class:'badge truth',title:'answer key, synthetic data only'},`key: ${s.truth.task||s.truth.category}${s.truth.kind&&s.truth.kind!=='normal'?' · '+s.truth.kind:''}`):'')));
       });

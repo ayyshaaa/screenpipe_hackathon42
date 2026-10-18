@@ -19,7 +19,7 @@ TRUTH_RUNS_PATH = "fake_data/truth_runs.json"
 
 # "Same step?" cosine threshold per embedding model, picked from find_tasks.py --sweep on the
 # synthetic data. find_tasks.py uses it when --threshold is not given.
-DEFAULT_THRESHOLDS = {"VTXAI/VTX-JEV-2": 0.9, "hashing": 0.6}
+DEFAULT_THRESHOLDS = {"VTXAI/VTX-JEV-2": 0.89, "hashing": 0.6}
 FALLBACK_THRESHOLD = 0.9  # any other model: untested, tune it with --sweep or by hand
 
 

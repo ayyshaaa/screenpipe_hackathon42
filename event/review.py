@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Review page (http://localhost:4300): a person confirms or rejects each proposed task.
 
-  python3 review.py                          # review throught_runs.json
+  python3 review.py                          # review concentration_runs.json
   python3 review.py --runs other.json
   python3 review.py --truth-runs             # look at the answer key (synthetic data only)
   python3 review.py --show-truth             # add answer-key badges next to each session
 
-For each task: rename it, see its runs side by side, remove wrong sessions, classify extra
-sessions as exception / troubleshooting / normal, then Confirm or Reject.
+For each task: rename it, see its runs side by side, remove wrong sessions, split a run that is
+really two runs done back to back, classify extra sessions as exception / troubleshooting / normal,
+then Confirm or Reject.
 Only confirmed tasks are written to reviewed_runs.json (input of export_starter.py).
 Nothing is confirmed automatically.
 """
@@ -49,7 +50,8 @@ def build_data(args):
 
 
 def save(args, data, decisions):
-    """decisions: {task: {status, name, removed: [ids], kinds: {id: kind}}}"""
+    """decisions: {task: {status, name, removed: [ids], kinds: {id: kind}, splits: [ids]}}
+    A session in `splits` starts a new run: run 2026-09-08 split once gives 2026-09-08 and 2026-09-08.2."""
     write_json(STATE_PATH, {"source": args.runs, "decisions": decisions})
     sessions = {s["session_id"]: s for s in load_sessions(args.db)}
     out = []
@@ -57,19 +59,25 @@ def save(args, data, decisions):
         d = decisions.get(task["name"], {})
         if d.get("status") != "confirmed":
             continue
-        removed = set(d.get("removed", []))
+        removed, splits = set(d.get("removed", [])), set(d.get("splits", []))
         for run in task["runs"]:
-            kept = [s for s in run["sessions"] if s["id"] not in removed]
-            if not kept:
-                continue
-            out.append({
-                "task": (d.get("name") or task["name"]).strip(),
-                "proposed_as": task["name"],  # links back to task_descriptions.json
-                "run": run["run"],
-                "sessions": [s["id"] for s in kept],
-                "minutes": run_minutes([sessions[s["id"]] for s in kept]),
-                "session_kinds": {s["id"]: d.get("kinds", {}).get(s["id"], s["kind"]) for s in kept},
-            })
+            parts = [[]]
+            for s in run["sessions"]:
+                if s["id"] in splits and parts[-1]:
+                    parts.append([])
+                parts[-1].append(s)
+            for i, part in enumerate(parts):
+                kept = [s for s in part if s["id"] not in removed]
+                if not kept:
+                    continue
+                out.append({
+                    "task": (d.get("name") or task["name"]).strip(),
+                    "proposed_as": task["name"],  # links back to task_descriptions.json
+                    "run": run["run"] if i == 0 else f"{run['run']}.{i + 1}",
+                    "sessions": [s["id"] for s in kept],
+                    "minutes": run_minutes([sessions[s["id"]] for s in kept]),
+                    "session_kinds": {s["id"]: d.get("kinds", {}).get(s["id"], s["kind"]) for s in kept},
+                })
     write_json(REVIEWED_PATH, out)
     return len(out)
 
