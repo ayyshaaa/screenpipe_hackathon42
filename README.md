@@ -106,7 +106,8 @@ reviewable procedure (SOP).
     ├── embed.py               step 2  – sessions → vectors
     ├── find_tasks.py          step 3  – vectors → candidate tasks and runs
     ├── describe_tasks.py      step 4  – local LLM names and describes each task
-    ├── review.py              step 5  – review web page
+    ├── review.py              step 5  – review web page (server)
+    ├── review.html            step 5  – the page itself (HTML + JS, reloaded on every F5)
     ├── export_starter.py      step 6  – export to hackathon-starter formats
     ├── check_pipeline.py      end-to-end test
     ├── RUN.md                 one-page cheat sheet of the run order
@@ -339,12 +340,13 @@ Each step below has **Concept** (what it means in plain words) and **In the code
   - **remove** a session that doesn't belong (e.g. the Slack popup); **restore** to undo.
   - Sessions highlighted in **yellow** are *extra*. Each needs a kind: `exception`, `troubleshooting`, or `normal`. **Confirm task** is blocked while any extra session is still `unclassified`.
   - **Reject (not a task)** for false positives such as the Squad sync meeting.
+  - Each task is one folded line (name, run-length bars, minutes, sessions left to classify, ✓/✗); click it to unfold. Sessions are one line each with a colored dot for their kind, and the ones still `unclassified` open by themselves. **Tout déplier / Tout replier** and **masquer confirmés/rejetés** are in the header.
   - Click a session's text to expand it; hover its ID to see its source capture IDs.
   - With `--show-truth`, dashed **key:** badges show the answer key (synthetic data only) so you can check yourself.
   - **Save decisions** writes the files.
 - **In the code:**
   - `build_data()` joins `throught_runs.json` + `trail.db` + `task_descriptions.json` (+ answer key if `--show-truth`) into one JSON for the page; it refuses to start if the runs mention sessions that no longer exist (re-run the pipeline).
-  - The page is plain HTML + JavaScript embedded in the `PAGE` string, served by a `ThreadingHTTPServer` with `GET /`, `GET /api/data`, `POST /api/save`. It uses HTTP/1.1 and the page retries loading 3 times, because Windows → WSL `localhost` forwarding sometimes resets connections.
+  - The page is plain HTML + JavaScript in `review.html` (read on every request, so edits show up with F5), served by a `ThreadingHTTPServer` with `GET /`, `GET /api/data`, `POST /api/save`. It uses HTTP/1.1 and the page retries loading 3 times, because Windows → WSL `localhost` forwarding sometimes resets connections.
   - `save()` writes `review_state.json` (all decisions, so you can close and resume) and `reviewed_runs.json` (**confirmed tasks only**, removed sessions dropped, minutes recomputed from what's left, each session's kind).
   - `--truth-runs` opens the answer key itself in the page; `--runs other.json` reviews any runs file; `--port` changes the port.
 

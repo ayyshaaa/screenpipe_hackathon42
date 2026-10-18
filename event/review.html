@@ -42,7 +42,7 @@ button:hover{border-color:var(--ink)}button.primary:hover{filter:brightness(1.15
 .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}select{font:inherit;font-size:12px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:4px}
 .badge{font-size:11px;padding:1px 6px;border-radius:10px;border:1px solid var(--line)}.badge.truth{border-style:dashed}
 .badge.warn{border-color:var(--warn)}
-.warn{color:var(--warn)}.desc{font-size:12px;margin-top:8px}.desc>summary{display:inline-flex}.desc li{margin:2px 0}
+.warn{color:var(--warn)}.desc{font-size:12px;margin-top:8px}.desc>summary{display:inline-flex}.desc li{margin:4px 0}
 .filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;flex-basis:100%}
 .chip{display:inline-flex;gap:5px;align-items:center;padding:2px 10px;border-radius:999px}
 .chip[aria-pressed="false"]{opacity:.45;text-decoration:line-through;border-style:dashed}
@@ -107,11 +107,17 @@ function render(){
         el('button',{class:'ok',onclick:confirm},'Confirm task'),
         el('button',{class:'bad',onclick:reject},'Reject (not a task)')),
       pending?el('div',{class:'warn row'},`${pending} highlighted session(s) are not regular steps: classify as exception / troubleshooting / normal, or remove.`):'');
+    // LLM draft of the procedure, read from ONE run: one numbered step per cited session
+    const stepOf={};
     if(task.description){const ds=task.description;
+      (ds.steps||[]).forEach((st,i)=>(stepOf[st.session_id]??=[]).push(i+1));
       card.append(el('details',{class:'desc'},
         el('summary',{},el('span',{class:'muted'},'▸ Local LLM suggests: '),el('b',{},ds.name||''),
           el('button',{onclick:e=>{e.preventDefault();d.name=ds.name;render()}},'use name')),
-        el('ol',{},...(ds.steps||[]).map(st=>el('li',{},`${st.text} `,el('span',{class:'muted'},`[${st.kind}] “${st.quote}” — ${st.session_id}`))))))}
+        el('div',{class:'muted'},`Procédure proposée d'après le run ${ds.run} . Chaque étape cite une session de ce run, repérée par le badge « étape N ».`),
+        el('ol',{},...(ds.steps||[]).map(st=>el('li',{},
+          el('b',{},st.text.split('\n')[0]),
+          el('div',{class:'muted'},`[${st.kind}] preuve à l'écran : “${st.quote}” — ${st.session_id}`))))))}
     const runs=el('div',{class:'runs'});
     task.runs.forEach(run=>{
       const box=el('div',{class:'run'},el('h3',{},`Run ${run.run} · ${run.minutes} min`));
@@ -124,7 +130,9 @@ function render(){
         const txt=el('div',{class:'txt',onclick:e=>e.target.classList.toggle('open')},s.text);
         // one line per session; unfolded only when it still needs a decision
         box.append(el('details',{class:'s '+k+(s.extra?' extra':'')+(removed?' removed':''),...(k==='unclassified'&&!removed?{open:''}:{})},
-          el('summary',{title:k},el('span',{class:'dot'}),el('span',{class:'w'},s.window||s.app),el('span',{class:'muted'},`${s.minutes} min`)),
+          el('summary',{title:k},el('span',{class:'dot'}),el('span',{class:'w'},s.window||s.app),
+            stepOf[s.id]?el('span',{class:'badge',title:'step of the LLM suggestion above'},(stepOf[s.id].length>1?'étapes ':'étape ')+stepOf[s.id].join(', ')):'',
+            el('span',{class:'muted'},`${s.minutes} min`)),
           el('div',{class:'row muted'},`${time(s.start)} · ${s.app}`,s.share?el('span',{class:'badge',title:'runs of this task that contain this kind of step'},'in '+s.share+' runs'):''),
           txt,
           el('div',{class:'row'},kind,

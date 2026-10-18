@@ -1,49 +1,52 @@
 {
   "Squad sync – Google Meet → Squad sync notes – Notion": {
-    "name": "Capture action items",
+    "name": "Assign tasks",
     "run": "2026-10-05",
     "steps": [
       {
-        "text": "Squad sync | Inès, Karim, Léa, Tom | sprint 45\nKarim: checkout bug fixed | Léa: Lyon launch blockers | Tom: on-call",
+        "text": "Extract actions from meeting discussion",
         "session_id": "s_a797d79981",
         "quote": "Karim: checkout bug fixed | Léa: Lyon launch blockers | Tom: on-call",
         "kind": "normal"
-      },
-      {
-        "text": "Squad sync – sprint 45 – notes\nAction items: Karim → release notes, Léa → Lyon courier contract",
-        "session_id": "s_428e8fd1c9",
-        "quote": "Action items: Karim → release notes, Léa → Lyon courier contract",
-        "kind": "normal"
       }
     ],
-    "rejected": [],
+    "rejected": [
+      {
+        "kind": "normal",
+        "quote": "Action items: Karim → release notes, Lé- → Lyon courier contract",
+        "session": 2,
+        "text": "Record action items in Notion",
+        "session_id": "s_428e8fd1c9",
+        "reason": "quote not found in session text"
+      }
+    ],
     "model": "qwen3:4b-instruct",
-    "seconds": 7.2
+    "seconds": 14.0
   },
   "Orders overview – Metabase → Weekly KPI report – Gmail": {
-    "name": "Generate Weekly KPI Report",
+    "name": "Generate Weekly Report",
     "run": "2026-09-07",
     "steps": [
       {
-        "text": "Orders overview week 37 | Last 7 days | Paris + Lyon",
+        "text": "Filter orders by week and cities",
         "session_id": "s_9623598350",
         "quote": "Orders overview week 37 | Last 7 days | Paris + Lyon",
         "kind": "normal"
       },
       {
-        "text": "Download full results | orders_week_37.csv",
+        "text": "Export order data to CSV file",
         "session_id": "s_2c7b9c00b1",
-        "quote": "Download full results | orders_week_37.csv",
+        "quote": "Export complete: 2623 rows, 14 columns",
         "kind": "normal"
       },
       {
-        "text": "Total orders 2623 | Revenue €74 862 | vs last week -2.2%",
+        "text": "Update KPI report with new data",
         "session_id": "s_e4eeedfea0",
         "quote": "Total orders 2623 | Revenue €74 862 | vs last week -2.2%",
         "kind": "normal"
       },
       {
-        "text": "Hi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue.",
+        "text": "Send weekly KPI report via email",
         "session_id": "s_b563fe9962",
         "quote": "Hi all, here is the weekly report for week 37: 2623 orders, €74 862 revenue.",
         "kind": "normal"
@@ -51,53 +54,59 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 7.5
+    "seconds": 5.7
   },
   "Refund requests – Zendesk → Ticket ## – Zendesk": {
-    "name": "Process Refund",
+    "name": "Process refund",
     "run": "2026-10-05",
     "steps": [
       {
-        "text": "Refund requests | 6 open | oldest ticket #48876\n#48876 A. Petit: refund request order TAV-93034",
+        "text": "Find refund request by ticket number",
         "session_id": "s_ed56572d1c",
         "quote": "Refund requests | 6 open | oldest ticket #48876",
         "kind": "normal"
       },
       {
-        "text": "Search: TAV-93034 | €15.53 | Succeeded\nRefund €15.53 to A. Petit | Refund issued",
+        "text": "Search for order in Stripe",
         "session_id": "s_7544959785",
         "quote": "Search: TAV-93034 | €15.53 | Succeeded",
         "kind": "normal"
       },
       {
-        "text": "Macro: Refund confirmed | Hello A. Petit, your refund of €15.53 is on its way.\nTicket #48876 status: Solved",
+        "text": "Issue refund to customer in Stripe",
+        "session_id": "s_7544959785",
+        "quote": "Refund €15.53 to A. Petit | Refund issued",
+        "kind": "normal"
+      },
+      {
+        "text": "Confirm refund to customer in ticket",
         "session_id": "s_323e5002e3",
-        "quote": "Macro: Refund confirmed | Hello A. Petit, your refund of €15.53 is on its way.",
+        "quote": "Hello A. Petit, your refund of €15.53 is on its way.",
         "kind": "normal"
       }
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 6.1
+    "seconds": 5.7
   },
   "Partners – Tavola Admin → Partner onboarding checklist – Notion": {
-    "name": "Add Partner",
+    "name": "Add partner to system",
     "run": "2026-10-01",
     "steps": [
       {
-        "text": "Search company: La Cantine Verte",
+        "text": "Search for company using SIRET number",
         "session_id": "s_f51356db93",
         "quote": "Search company: La Cantine Verte",
         "kind": "normal"
       },
       {
-        "text": "Create partner: La Cantine Verte | city Lyon | commission 15%",
+        "text": "Create partner record with city and commission",
         "session_id": "s_c130b42077",
         "quote": "Create partner: La Cantine Verte | city Lyon | commission 15%",
         "kind": "normal"
       },
       {
-        "text": "Onboarding checklist – La Cantine Verte",
+        "text": "Update onboarding checklist with status items",
         "session_id": "s_a1e752fc55",
         "quote": "Onboarding checklist – La Cantine Verte",
         "kind": "normal"
@@ -105,6 +114,6 @@
     ],
     "rejected": [],
     "model": "qwen3:4b-instruct",
-    "seconds": 6.3
+    "seconds": 6.4
   }
 }
