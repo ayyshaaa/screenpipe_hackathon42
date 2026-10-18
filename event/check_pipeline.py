@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """End-to-end test on the SYNTHETIC data, in a throwaway copy of the folder.
 
-  python3 check_pipeline.py --threshold 0.8                     # JEV-2
-  python3 check_pipeline.py --model hashing --threshold 0.6      # no model download needed
+  python3 check_pipeline.py                                     # JEV-2, its default threshold
+  python3 check_pipeline.py --model hashing                      # no model download needed
+  python3 check_pipeline.py --threshold 0.85                     # force a threshold
   python3 check_pipeline.py --starter ~/hackathon-starter        # also runs bun run repetition
 
 Fails (exit 1) if: a hidden task is missed (< 80% of its runs), the 3 tasks are not ranked
@@ -43,7 +44,7 @@ def run(cmd, cwd):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--model", default="VTXAI/VTX-JEV-2")
-    p.add_argument("--threshold", type=float, default=0.8)
+    p.add_argument("--threshold", type=float, help="default: picked from the model by find_tasks.py")
     p.add_argument("--starter", help="path to hackathon-starter, to run bun run repetition on the export")
     p.add_argument("--keep", action="store_true", help="keep the temp folder to inspect it")
     args = p.parse_args()
@@ -63,10 +64,11 @@ def main():
         server = subprocess.Popen([py, "fake_screenpipe.py", "serve", "--port", str(port)], cwd=work,
                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         time.sleep(1.5)
-        run([py, "ingest.py", "--url", f"http://127.0.0.1:{port}", "--since", "2026-09-07T00:00:00Z", "--once"], work)
+        run([py, "ingest.py", "--url", f"http://127.0.0.1:{port}", "--from", "2026-09-07", "--once"], work)
         run([py, "label_sessions.py"], work)
         run([py, "embed.py", "--model", args.model], work)
-        print(run([py, "find_tasks.py", "--threshold", str(args.threshold), "--score"], work))
+        thr = ["--threshold", str(args.threshold)] if args.threshold is not None else []
+        print(run([py, "find_tasks.py", *thr, "--score"], work))
 
         sys.path.insert(0, work)
         from common import read_json

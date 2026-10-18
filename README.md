@@ -48,7 +48,7 @@ reviewable procedure (SOP).
 | **Session** | A stretch of time in one app + one window, with no pause longer than 5 minutes. | Row of table `sessions`. ID like `s_9623598350` (hash of its first capture ID, so it stays the same if you re-ingest). |
 | **Embedding** | A list of 256 numbers that represents what a session's text is about. | `embeddings.npz`, one vector per session, length 1 (L2-normalised). |
 | **Cosine similarity** | A score from −1 to 1: how much two embeddings point in the same direction. 1 = same meaning. | Because vectors have length 1, cosine = dot product (`a @ b`). |
-| **Threshold** | The cosine above which we say "these two sessions are the same kind of step". | `find_tasks.py --threshold`. |
+| **Threshold** | The cosine above which we say "these two sessions are the same kind of step". | `find_tasks.py --threshold`; default picked from the embedding model (`DEFAULT_THRESHOLDS` in `common.py`). |
 | **Step type** | A group of sessions that are the same step done on different days ("export from Metabase"). | Cluster label from `cluster()` in `find_tasks.py`. |
 | **Task** | A group of step types that happen together, in order, on ≥ 3 days. | Connected component of linked step types. |
 | **Run** | One occurrence of a task on one day. | One entry in `throught_runs.json`. |
@@ -94,6 +94,7 @@ reviewable procedure (SOP).
 ```
 ~/throught/
 ├── README.md                  this file
+├── Makefile                   runs the pipeline (make help)
 ├── requirements.txt           Python dependencies (pip install -r requirements.txt)
 ├── .venv/                     Python virtual environment (shared, not committed)
 ├── hackathon-starter/         screenpipe's starter (Bun / TypeScript), steps 7 and 8
@@ -180,7 +181,32 @@ cd hackathon-starter && bun run demo   # sanity check: no dependencies needed
 
 ## 6. Launch the MVP (quick start)
 
-You need **two terminals**: one keeps the fake screenpipe running, the other runs the pipeline.
+**With make (one terminal)**, from the repo root (`make help` lists every target and variable):
+
+```bash
+make install                                         # once: .venv + requirements
+make pipeline FROM=2026-09-07 TO=2026-10-06          # fake screenpipe + steps 1 → 3, the whole month
+make pipeline FROM=2026-09-14 TO=2026-09-27          # same on 2 weeks (trail.db keeps only this range)
+make pipeline FROM=2026-09-07                        # from 7 Sep to the most recent data
+make review                                          # 5 → http://localhost:4300, Save, then Ctrl+C
+make export repetition desk                          # 6, 7, 8
+```
+
+`make pipeline` starts the fake screenpipe itself and stops it at the end (no `make fake-up` needed).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `FROM`, `TO` | empty | UTC range; `TO` needs `FROM`; a bare date is a whole day; empty = all history |
+| `FAKE` | `1` | `0` = real screenpipe on :3030 (no answer key, no `--score` / `--show-truth`) |
+| `MODEL` | `VTXAI/VTX-JEV-2` | `hashing` = no download needed |
+| `THRESHOLD` | empty | empty = picked from `MODEL` (0.9 JEV-2, 0.6 hashing); set it to override |
+| `MIN_DAYS` | `3` | a task must repeat on at least this many days to count as repetitive |
+| `TYPES`, `URL` | `ocr,accessibility`, from `FAKE` | passed to `ingest.py` |
+
+With `MIN_DAYS=3`, a 2-week range has only 2 runs of each weekly task, so weekly tasks are expected to
+drop out (on 14 → 27 Sep only `refund_check` is found).
+
+**By hand**, you need **two terminals**: one keeps the fake screenpipe running, the other runs the pipeline.
 
 **Terminal A** (leave it running):
 
@@ -196,11 +222,11 @@ python3 fake_screenpipe.py serve --port 3031       # 0b : fake screenpipe API
 cd ~/screenpipe_hackathon42/event && source ../.venv/bin/activate
 export HF_HUB_OFFLINE=1
 
-python3 ingest.py --url http://localhost:3031 --since 2026-09-07T00:00:00Z --once   # 1
+python3 ingest.py --url http://localhost:3031 --from 2026-09-07 --once              # 1
 python3 label_sessions.py                                                           # 1b (fake data only)
 python3 embed.py                                                                    # 2
 python3 find_tasks.py --sweep                                                       # 2b (optional: precision/recall table)
-python3 find_tasks.py --threshold 0.9 --score                                       # 3  (0.9, see section 9)
+python3 find_tasks.py --score                                                       # 3  (threshold from the model, see below)
 python3 describe_tasks.py --model qwen3:4b-instruct                                 # 4  (optional, ~1 min per task on CPU)
 python3 review.py --show-truth                                                      # 5  → open http://localhost:4300
 ```
@@ -272,7 +298,8 @@ Each step below has **Concept** (what it means in plain words) and **In the code
   2. `to_capture()` turns `OCR`, `UI` and `Audio` results into one common shape with a **stable source ID** (`ocr:<frame_id>`, `ui:<id>`, `audio:<chunk_id>`), cleans whitespace, and drops empty ones. `Input` and `Memory` are ignored on purpose (see section 14).
   3. `store()` does `INSERT OR IGNORE` into `captures` (primary key = source ID), so re-running ingest never duplicates.
   4. `rebuild_sessions()` walks all captures in time order and starts a new session when the **app or window changes** or the **gap is longer than `--gap-min`** (default 5 min). Inside a session, identical text (SHA-1 of lowercased text) is kept once — OCR and UI often see the same screen. Session text is capped at 4,000 characters. The table `sessions` is rebuilt from scratch each time.
-  - `--once` runs one pass; without it, it polls every `--every` seconds (default 60), asking only for captures newer than the latest stored one.
+  - **Time range:** `--from START` alone = from START to the most recent data; `--from START --to END` = a fixed range; no `--from` = all history. `--to` without `--from` is an error. A bare date is a whole UTC day (`--to 2026-09-13` ends at 23:59:59). `trail.db` only keeps the chosen range: captures outside it are deleted before ingesting. The range is stored in table `meta`; when it changes, the outputs of later steps (`embeddings.npz`, `throught_runs.json`, `task_descriptions.json`, `reviewed_runs.json`, exports, answer-key files) are deleted because they describe the old range. `review_state.json` is kept.
+  - `--once` runs one pass; without it, it polls every `--every` seconds (default 60), asking only for captures newer than the latest stored one (still capped by `--to` if given).
   - **Result on the synthetic data:** 2,386 captures → **321 sessions**.
 
 ### Step 1b — `label_sessions.py`: answer key per session (synthetic only)
@@ -293,7 +320,7 @@ Each step below has **Concept** (what it means in plain words) and **In the code
   - Vectors are L2-normalised, then **centered**: the average vector is subtracted and they are normalised again. Why: a static model points almost every text in roughly the same direction (most pairs have cosine > 0.8); removing the common part keeps only what makes sessions different. Turn it off with `--no-center`.
   - Output: `embeddings.npz` with `ids`, `vectors` (321 × 256), `model`, `input`, `centered`.
 
-### Step 2b — `find_tasks.py --sweep`: choose the threshold
+### Step 2b — `find_tasks.py --sweep`: check the threshold
 
 - **Concept:** the threshold is the most important setting. Too low = different steps get merged; too high = the same step on different days gets split. The sweep measures this against the answer key.
 - **In the code:** for every pair of sessions **on different days**, "same" means same task *and* same step in the answer key. For each threshold it prints **precision** (of the pairs we call similar, how many really are the same step) and **recall** (of the truly-same pairs, how many we catch). Measured on our data with JEV-2:
@@ -303,7 +330,7 @@ Each step below has **Concept** (what it means in plain words) and **In the code
   | precision | 0.16 | 0.26 | **0.37** | 0.34 | 0.25 |
   | recall    | 0.99 | 0.98 | **0.82** | 0.69 | 0.34 |
 
-  Precision peaks at 0.90 with recall still above 0.8. Low precision overall is expected: this is pair-by-pair, before the "repeats on several days in the same order" rule of step 3 filters most mistakes out.
+  Precision peaks at 0.90 with recall still above 0.8, which is why 0.9 is the default for JEV-2 (`DEFAULT_THRESHOLDS` in `common.py`). The sweep needs the answer key, so it only runs on the synthetic data; on real data the per-model default is used. Low precision overall is expected: this is pair-by-pair, before the "repeats on several days in the same order" rule of step 3 filters most mistakes out.
 
 ### Step 3 — `find_tasks.py`: vectors → candidate tasks and runs
 
@@ -376,7 +403,7 @@ See [section 10](#10-testing-the-whole-pipeline).
 |---|---|
 | Step-by-step summaries | Every script prints a short summary in the terminal (counts, runs, minutes, `--score` verdicts). |
 | Sessions in the database | `sqlite3 trail.db "SELECT start_ts, minutes, app, window FROM sessions LIMIT 20;"` (install with `sudo apt install sqlite3`) |
-| Candidate tasks | `python3 find_tasks.py --threshold 0.9 --score`, or open `throught_runs.json`. |
+| Candidate tasks | `python3 find_tasks.py --score`, or open `throught_runs.json`. |
 | Review page | `python3 review.py --show-truth` → http://localhost:4300 |
 | The perfect answer, for comparison | `python3 review.py --truth-runs` → http://localhost:4300 |
 | What you confirmed | `reviewed_runs.json` (and `review_state.json` for all decisions incl. rejections). |
@@ -402,9 +429,10 @@ Measured on **16 Oct 2026** with JEV-2, `window+text`, centered, on the files in
 
 ### 9.1 Detection (`find_tasks.py`)
 
-**Important:** `RUN.md` says `--threshold 0.8`, but the current `throught_runs.json` was produced with
-**`--threshold 0.9`** (re-running at 0.9 gives an identical file). At 0.8 the refund task disappears
-completely — see below. **Use 0.9 with JEV-2.**
+**Threshold:** `find_tasks.py` picks it from the embedding model stored in `embeddings.npz`
+(`DEFAULT_THRESHOLDS` in `common.py`: **0.9 for JEV-2**, **0.6 for hashing**; any other model gets 0.9
+with a warning). At 0.8 with JEV-2 the refund task disappears completely, see below. `--threshold`
+still overrides it.
 
 | Hidden task | Expected | We have (threshold 0.9) | Verdict |
 |---|---|---|---|
@@ -431,7 +459,7 @@ The *extra* sessions flagged inside runs are exactly the ones we planted:
 - **Why the partner runs are shorter (41.9 vs 79.2 min).** The first step, *"New partner application – Gmail"*, contains each restaurant's name, city and cuisine, so each week's email lands in a different step type and never repeats on 3 days. Since run minutes are measured from the first *detected* session, the application step (and on 17 Sep the Pappers step too) is outside the run. The missing Sushi Kan run accounts for the rest.
 - **Why refund is 1.8 min short.** On 7 Sep the Zendesk queue session went into a different step type and starts *before* the run's first detected session, so it isn't even picked up as an extra (extras are only searched *inside* the run's time span). That run reads 2.47 min instead of 4.25.
 - **Why the meeting is ranked first.** It *is* repeated, same steps, same order, every Monday, 30 min. Nothing in the screen text says "this is a meeting, not a process". Deciding that is a judgement call, which is why the review step exists.
-- **Why the fallback works better here.** `embed.py --model hashing` + `--threshold 0.6` finds **4/4** partner runs and passes the full test (section 10). On this synthetic data, exact shared words ("SIRET", "Partner", "Tavola Admin") are a strong signal. Real data is messier; we keep JEV-2 as the default because it captures meaning, not just shared words, and the review step catches its misses.
+- **Why the fallback works better here.** `embed.py --model hashing` (threshold 0.6, picked automatically) finds **4/4** partner runs and passes the full test (section 10). On this synthetic data, exact shared words ("SIRET", "Partner", "Tavola Admin") are a strong signal. Real data is messier; we keep JEV-2 as the default because it captures meaning, not just shared words, and the review step catches its misses.
 
 ### 9.2 LLM descriptions (`describe_tasks.py`)
 
@@ -469,17 +497,17 @@ A proposed meeting is only a **WARNING** (the reviewer handles it). Your real fi
 
 ```bash
 cd ~/throught/event && source ../.venv/bin/activate
-HF_HUB_OFFLINE=1 python3 check_pipeline.py --threshold 0.9 --starter ~/throught/hackathon-starter
-python3 check_pipeline.py --model hashing --threshold 0.6 --starter ~/throught/hackathon-starter
+HF_HUB_OFFLINE=1 python3 check_pipeline.py --starter ~/throught/hackathon-starter
+python3 check_pipeline.py --model hashing --starter ~/throught/hackathon-starter
 ```
 
 Results today:
 
 | Command | Result | Why |
 |---|---|---|
-| JEV-2, `--threshold 0.8` (the RUN.md default) | ❌ **FAILED**: refund 0/20, partner 3/4, ranking wrong | All refund steps merge into one step type (section 9.1). |
-| JEV-2, `--threshold 0.9` | ❌ **FAILED** only on partner 3/4 (75 % < 80 %) | Sushi Kan exception run missed. |
-| hashing, `--threshold 0.6` | ✅ **PASSED** (5/5, 20/20, 4/4) in ~3 s | Shared exact words are a strong signal on synthetic data. |
+| JEV-2, `--threshold 0.8` (forced) | ❌ **FAILED**: refund 0/20, partner 3/4, ranking wrong | All refund steps merge into one step type (section 9.1). |
+| JEV-2 (default threshold 0.9) | ❌ **FAILED** only on partner 3/4 (75 % < 80 %) | Sushi Kan exception run missed. |
+| hashing (default threshold 0.6) | ✅ **PASSED** (5/5, 20/20, 4/4) in ~3 s | Shared exact words are a strong signal on synthetic data. |
 
 ---
 
@@ -489,7 +517,7 @@ Results today:
 2. If it requires a key: `export SCREENPIPE_API_KEY=…` (or `SCREENPIPE_LOCAL_API_KEY`).
 3. Run the same pipeline, but:
    - skip steps 0, 0b and **1b** (there is no answer key for real data),
-   - step 1: `python3 ingest.py --url http://localhost:3030 --since <UTC ISO date> --once` (add `--types ocr,accessibility,audio` for audio transcripts; drop `--once` to keep polling),
+   - step 1: `python3 ingest.py --url http://localhost:3030 --from <date> [--to <date>] --once` (or `make pipeline FAKE=0 FROM=<date> [TO=<date>]`) (add `--types ocr,accessibility,audio` for audio transcripts; drop `--once` to keep polling),
    - drop `--score`, `--sweep` and `--show-truth` (they need the answer key).
 4. Only capture permissioned work. Review everything before sharing.
 
@@ -503,7 +531,7 @@ Results today:
 | `screenpipe returned HTTP 401/403` | Set `SCREENPIPE_API_KEY` (real screenpipe only). |
 | `N sessions have no embedding: run embed.py again after ingest` | Every ingest rebuilds sessions: re-run `embed.py` (and `label_sessions.py` on fake data). |
 | `… mentions sessions not in trail.db` (review/export) | Same cause: re-run steps 2 → 3 after the ingest. |
-| JEV-2 tries to download / no internet | Download once (section 5.2), then `export HF_HUB_OFFLINE=1`. Or use `--model hashing` + `--threshold 0.6`. |
+| JEV-2 tries to download / no internet | Download once (section 5.2), then `export HF_HUB_OFFLINE=1`. Or use `--model hashing` (its threshold, 0.6, is picked automatically). |
 | `ModuleNotFoundError: model2vec` / `numpy` | Activate the venv: `source ~/throught/.venv/bin/activate`. |
 | `Ollama call failed … Is it running?` | `ollama serve &` then `ollama list`; `ollama pull qwen3:4b-instruct` if missing. |
 | `reply was not complete JSON` | Raise `--num-predict 2500` or lower `--max-chars 200`. |
@@ -511,7 +539,7 @@ Results today:
 | **Confirm task** shows an alert | Classify or remove every yellow (extra) session first. |
 | `reviewed_runs.json not found` / `has no confirmed runs` | Confirm at least one task on the review page and press **Save decisions**. |
 | `Address already in use` | Another copy is running: `Ctrl+C` it, or use `--port`. |
-| Refund task missing from results | You used `--threshold 0.8` with JEV-2. Use 0.9. |
+| Refund task missing from results | You forced `--threshold 0.8` with JEV-2. Drop `--threshold` (default 0.9). |
 
 ---
 
@@ -520,7 +548,7 @@ Results today:
 | File | Written by | Shape |
 |---|---|---|
 | `fake_data/story.json` | `fake_story.py` | `{"meta": {...}, "captures": [screenpipe /search results], "truth": {source_id: {category, task, step, run, kind}}}` |
-| `trail.db` | `ingest.py` | SQLite. `captures(source_id, kind, ts, app, window, url, text)`; `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids, n_captures)` |
+| `trail.db` | `ingest.py` | SQLite. `captures(source_id, kind, ts, app, window, url, text)`; `meta(key, value)` (the `--from`/`--to` range); `sessions(session_id, start_ts, end_ts, minutes, app, window, url, text, source_ids, n_captures)` |
 | `fake_data/session_truth.json` | `label_sessions.py` | `{session_id: {category, task, step, run, kind, purity}}` |
 | `fake_data/truth_runs.json` | `label_sessions.py` | like `throught_runs.json` + `session_kinds` |
 | `embeddings.npz` | `embed.py` | numpy archive: `ids`, `vectors` (n × 256, float32), `model`, `input`, `centered` |
